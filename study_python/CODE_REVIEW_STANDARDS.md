@@ -1,0 +1,117 @@
+<!-- Источник: https://github.com/tasanakorn/cc-marketplace, plugins/python-dev/skills/python-code-review/SKILL.md
+     Автор: Tasanakorn Phaipool (tasanakorn@gmail.com), MIT License.
+     Скопировано 2026-07-12 как чек-лист для ревью кода в study_python/, а не как отдельный установленный skill. -->
+
+# Python Code Review — стандарты
+
+Специализированный набор критериев для ревью Python-кода: PEP8, тайп-хинты, современные практики, качество кода.
+
+## Что проверяется
+
+1. **PEP8**
+   - Naming: `snake_case` для функций/переменных, `PascalCase` для классов, `UPPER_SNAKE_CASE` для констант, `_leading_underscore` для приватных
+   - Длина строки ≤ 88 символов (Black standard)
+   - Отступы: 4 пробела
+   - Порядок импортов: stdlib → third-party → local
+   - Docstring на публичных функциях/классах
+
+2. **Тайп-хинты**
+   - У всех функций — аннотации параметров и возврата
+   - Современный синтаксис (Python 3.9+): `list[]`, `dict[]`, `tuple[]`, `set[]` вместо `List[]`, `Dict[]` и т.д.
+   - `X | None` вместо `Optional[X]` (Python 3.10+)
+   - Не злоупотреблять `Any`
+
+3. **Структура кода**
+   - Организация модулей/импортов
+   - `__init__.py`, `__main__.py` там, где нужно
+   - Сцепленность и связность модулей
+
+4. **Best practices**
+   - Context manager'ы (`with`) вместо ручного управления ресурсами
+   - f-строки вместо `%` и `.format()`
+   - Комплексные выражения → comprehensions, где это уместно
+   - Явные исключения вместо голого `except:`
+
+5. **Антипаттерны**
+   - Мутабельные default-аргументы (`def f(x=[])`)
+   - Голый `except:`
+   - Избыточное использование `global`
+   - Неописательные имена переменных
+   - Высокая цикломатическая сложность (>10), функции длиннее ~20 строк, вложенность >3 уровней
+
+6. **Документация**
+   - Docstring на публичных функциях/классах, формат Google или NumPy
+   - Описание параметров и возвращаемого значения
+
+## Примеры
+
+**Мутабельный default:**
+```python
+# ❌
+def append_to(element: str, target: list[str] = []) -> list[str]:
+    target.append(element)
+    return target
+
+# ✅
+def append_to(element: str, target: list[str] | None = None) -> list[str]:
+    if target is None:
+        target = []
+    target.append(element)
+    return target
+```
+
+**Голый except:**
+```python
+# ❌
+try:
+    risky_operation()
+except:
+    pass
+
+# ✅
+try:
+    risky_operation()
+except ValueError as e:
+    logger.error(f"Invalid value: {e}")
+    raise
+```
+
+**Слишком сложная функция:**
+```python
+# ❌
+def process_user(user):
+    if user:
+        if user.active:
+            if user.email:
+                if "@" in user.email:
+                    return user.email.lower()
+    return None
+
+# ✅
+def process_user(user: User | None) -> str | None:
+    if not user or not user.active or not user.email:
+        return None
+    if "@" not in user.email:
+        return None
+    return user.email.lower()
+```
+
+## Формат вывода ревью
+
+```
+## Code Review
+
+**Критично 🔴** — баги, антипаттерны, которые сломают код (мутабельные default, голый except)
+**Важно 🟡** — сложность, читаемость, отсутствие тайп-хинтов
+**Мелочи 🔵** — стиль, f-строки, comprehensions
+
+**Что хорошо ✅** — что уже сделано правильно
+
+**Дальше** — что поправить первым делом
+```
+
+## Инструменты (когда дойдём до этой темы)
+
+- `ruff` — линтинг и форматирование
+- `mypy` — статическая проверка типов
+- `pytest` — тесты
