@@ -1,0 +1,923 @@
+<title>Python Backend Roadmap</title>
+<style>
+  :root {
+    --bg: #EDEEEA;
+    --bg-raised: #F7F7F4;
+    --ink: #2A2E33;
+    --ink-dim: #5B6169;
+    --ink-faint: #8C9198;
+    --rail: #C7CAC3;
+    --rail-done: #5C7A4F;
+    --accent: #3D6E68;
+    --accent-soft: #DCE6E3;
+    --card-border: #D8DAD3;
+    --now-bg: #FBF6E9;
+    --now-border: #C9A227;
+    --shadow: 0 1px 2px rgba(30,32,28,0.06), 0 1px 1px rgba(30,32,28,0.04);
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #15171A;
+    --bg-raised: #1C1F23;
+    --ink: #E4E6E8;
+    --ink-dim: #9BA1A8;
+    --ink-faint: #676D74;
+    --rail: #34383D;
+    --rail-done: #7FA36E;
+    --accent: #6FADA5;
+    --accent-soft: #22302E;
+    --card-border: #2B2F34;
+    --now-bg: #262214;
+    --now-border: #A9842A;
+    --shadow: 0 1px 3px rgba(0,0,0,0.4);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #15171A;
+      --bg-raised: #1C1F23;
+      --ink: #E4E6E8;
+      --ink-dim: #9BA1A8;
+      --ink-faint: #676D74;
+      --rail: #34383D;
+      --rail-done: #7FA36E;
+      --accent: #6FADA5;
+      --accent-soft: #22302E;
+      --card-border: #2B2F34;
+      --now-bg: #262214;
+      --now-border: #A9842A;
+      --shadow: 0 1px 3px rgba(0,0,0,0.4);
+    }
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, "SF Pro Text", "Segoe UI", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+  }
+
+  .page {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 3.5rem 1.5rem 6rem;
+  }
+
+  header.top {
+    margin-bottom: 3rem;
+  }
+
+  .eyebrow {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.6rem;
+  }
+
+  h1 {
+    font-size: 1.9rem;
+    font-weight: 650;
+    letter-spacing: -0.01em;
+    margin: 0 0 0.5rem;
+    text-wrap: balance;
+  }
+
+  .sub {
+    color: var(--ink-dim);
+    font-size: 0.98rem;
+    max-width: 60ch;
+    margin: 0 0 1.6rem;
+  }
+
+  .overview {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: var(--bg-raised);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 0.9rem 1.1rem;
+    box-shadow: var(--shadow);
+  }
+
+  .overview-track {
+    flex: 1;
+    height: 6px;
+    background: var(--rail);
+    border-radius: 3px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .overview-fill {
+    height: 100%;
+    background: var(--rail-done);
+    border-radius: 3px;
+    width: var(--pct, 12%);
+  }
+
+  .overview-label {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.8rem;
+    color: var(--ink-dim);
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.1rem;
+    margin-top: 0.9rem;
+    font-size: 0.76rem;
+    color: var(--ink-dim);
+  }
+
+  .legend span {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .legend .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .legend .dot.done { background: var(--rail-done); }
+  .legend .dot.seen { background: var(--now-border); }
+  .legend .dot.todo { background: var(--rail); }
+
+  .stages {
+    position: relative;
+  }
+
+  .stages::before {
+    content: "";
+    position: absolute;
+    left: 19px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: var(--rail);
+  }
+
+  .stage {
+    position: relative;
+    padding-left: 52px;
+    margin-bottom: 1.1rem;
+  }
+
+  .stage-node {
+    position: absolute;
+    left: 0;
+    top: 0.15rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--bg-raised);
+    border: 2px solid var(--rail);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--ink-faint);
+    z-index: 1;
+  }
+
+  .stage.done .stage-node {
+    background: var(--rail-done);
+    border-color: var(--rail-done);
+    color: #fff;
+  }
+
+  .stage.active .stage-node {
+    background: var(--now-bg);
+    border-color: var(--now-border);
+    color: var(--now-border);
+  }
+
+  .stage.progress .stage-node {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .card {
+    background: var(--bg-raised);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 0.95rem 1.15rem 1.05rem;
+    box-shadow: var(--shadow);
+  }
+
+  .stage.active .card {
+    border-color: var(--now-border);
+    background: var(--now-bg);
+  }
+
+  .card-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 0.15rem;
+  }
+
+  .card-title {
+    font-size: 1.02rem;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+  }
+
+  .status-pill {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 0.18rem 0.5rem;
+    border-radius: 999px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .status-pill.done { background: var(--accent-soft); color: var(--rail-done); }
+  .status-pill.active { background: var(--now-border); color: #fff; }
+  .status-pill.progress { background: var(--accent-soft); color: var(--accent); }
+  .status-pill.todo { color: var(--ink-faint); background: transparent; border: 1px solid var(--rail); }
+
+  .card-desc {
+    color: var(--ink-dim);
+    font-size: 0.89rem;
+    margin: 0.15rem 0 0.6rem;
+  }
+
+  .topics {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .topics li {
+    display: contents;
+  }
+
+  .topic-btn {
+    font: inherit;
+    font-size: 0.78rem;
+    padding: 0.22rem 0.55rem;
+    border-radius: 6px;
+    background: var(--bg);
+    border: 1px solid var(--card-border);
+    color: var(--ink-dim);
+    display: flex;
+    align-items: center;
+    gap: 0.32rem;
+    cursor: default;
+  }
+
+  .topic-btn:disabled {
+    opacity: 0.75;
+  }
+
+  .topic-btn.has-note {
+    cursor: pointer;
+  }
+
+  .topic-btn.has-note:hover {
+    border-color: var(--accent);
+    color: var(--ink);
+  }
+
+  .topic-btn.has-note:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+  }
+
+  .stage.done .topic-btn,
+  .stage.active .topic-btn.covered {
+    color: var(--ink);
+  }
+
+  .topic-btn.covered::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--rail-done);
+    flex-shrink: 0;
+  }
+
+  .topic-btn.seen {
+    color: var(--ink);
+  }
+
+  .topic-btn.seen::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--now-border);
+    flex-shrink: 0;
+  }
+
+  .topic-btn.pending::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--rail);
+    flex-shrink: 0;
+  }
+
+  .topic-btn .chevron {
+    font-size: 0.65rem;
+    color: var(--ink-faint);
+    margin-left: 0.05rem;
+  }
+
+  .note {
+    font-size: 0.8rem;
+    color: var(--ink-faint);
+    margin-top: 0.55rem;
+    padding-top: 0.55rem;
+    border-top: 1px dashed var(--card-border);
+  }
+
+  footer.meta {
+    margin-top: 2.5rem;
+    font-size: 0.78rem;
+    color: var(--ink-faint);
+    text-align: center;
+  }
+
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(20, 22, 20, 0.42);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 4vh 1.25rem;
+    overflow-y: auto;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s ease;
+    z-index: 10;
+  }
+
+  .overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .panel {
+    background: var(--bg-raised);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    max-width: 620px;
+    width: 100%;
+    padding: 1.5rem 1.6rem 1.7rem;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+    transform: translateY(-8px);
+    transition: transform 0.15s ease;
+  }
+
+  .overlay.open .panel {
+    transform: translateY(0);
+  }
+
+  .panel-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.9rem;
+  }
+
+  .panel-title {
+    font-size: 1.15rem;
+    font-weight: 650;
+    letter-spacing: -0.01em;
+  }
+
+  .panel-close {
+    font: inherit;
+    background: none;
+    border: 1px solid var(--card-border);
+    color: var(--ink-dim);
+    width: 28px;
+    height: 28px;
+    border-radius: 7px;
+    cursor: pointer;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+
+  .panel-close:hover {
+    border-color: var(--accent);
+    color: var(--ink);
+  }
+
+  .panel-body h3 {
+    font-size: 0.72rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 1.1rem 0 0.4rem;
+  }
+
+  .panel-body h3:first-child {
+    margin-top: 0;
+  }
+
+  .panel-body p {
+    font-size: 0.92rem;
+    color: var(--ink-dim);
+    margin: 0 0 0.5rem;
+  }
+
+  .panel-body pre {
+    background: var(--bg);
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    padding: 0.7rem 0.85rem;
+    overflow-x: auto;
+    margin: 0 0 0.5rem;
+  }
+
+  .panel-body code {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.82rem;
+    color: var(--ink);
+  }
+
+  .panel-body pre code {
+    display: block;
+    line-height: 1.55;
+  }
+
+  .panel-body ul {
+    margin: 0 0 0.5rem;
+    padding-left: 1.2rem;
+    font-size: 0.88rem;
+    color: var(--ink-dim);
+  }
+
+  .panel-body li + li {
+    margin-top: 0.2rem;
+  }
+
+  .panel-body .file-tag {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.72rem;
+    color: var(--ink-faint);
+    margin: 0 0 0.3rem;
+  }
+
+  .panel-foot {
+    margin-top: 1.1rem;
+    padding-top: 0.7rem;
+    border-top: 1px dashed var(--card-border);
+    font-size: 0.78rem;
+    color: var(--ink-faint);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .stage {
+      animation: rise 0.35s ease backwards;
+    }
+    .stage:nth-child(1) { animation-delay: 0.02s; }
+    .stage:nth-child(2) { animation-delay: 0.05s; }
+    .stage:nth-child(3) { animation-delay: 0.08s; }
+    .stage:nth-child(4) { animation-delay: 0.11s; }
+    .stage:nth-child(5) { animation-delay: 0.14s; }
+    .stage:nth-child(6) { animation-delay: 0.17s; }
+    .stage:nth-child(7) { animation-delay: 0.20s; }
+    .stage:nth-child(8) { animation-delay: 0.23s; }
+    .stage:nth-child(9) { animation-delay: 0.26s; }
+    .stage:nth-child(10) { animation-delay: 0.29s; }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  }
+</style>
+
+<div class="page">
+  <header class="top">
+    <div class="eyebrow">python → backend developer</div>
+    <h1>Дорожная карта</h1>
+    <p class="sub">Stepik закрывает синтаксис (этап 0). Дальше — самостоятельные этапы до backend-разработчика. Обновляется по ходу занятий.</p>
+    <div class="overview">
+      <span class="overview-label">Этап 0 из 9</span>
+      <div class="overview-track"><div class="overview-fill" style="--pct: 9%"></div></div>
+      <span class="overview-label">~9%</span>
+    </div>
+    <div class="legend">
+      <span><span class="dot done"></span>пройдено</span>
+      <span><span class="dot seen"></span>знаком, не закреплено</span>
+      <span><span class="dot todo"></span>впереди</span>
+    </div>
+  </header>
+
+  <div class="stages">
+
+    <div class="stage progress">
+      <div class="stage-node">0</div>
+      <div class="card">
+        <div class="card-head">
+          <span class="card-title">Синтаксис Python</span>
+          <span class="status-pill progress">в процессе</span>
+        </div>
+        <p class="card-desc">Курс Stepik «Python для начинающих» — раздел 9 из ~15 (строки). Разобрано 15 упражнений: подразделы 09.1–09.3.</p>
+        <ul class="topics">
+          <li><button class="topic-btn covered has-note" data-topic="types">типы данных<span class="chevron">▾</span></button></li>
+          <li><button class="topic-btn covered has-note" data-topic="branching">ветвления<span class="chevron">▾</span></button></li>
+          <li><button class="topic-btn covered has-note" data-topic="loops">циклы<span class="chevron">▾</span></button></li>
+          <li><button class="topic-btn covered has-note" data-topic="strings">строки<span class="chevron">▾</span></button></li>
+          <li><button class="topic-btn seen has-note" data-topic="collections">списки / кортежи<span class="chevron">▾</span></button></li>
+          <li><button class="topic-btn seen has-note" data-topic="collections">словари<span class="chevron">▾</span></button></li>
+          <li><button class="topic-btn pending" disabled>функции</button></li>
+          <li><button class="topic-btn pending" disabled>исключения</button></li>
+          <li><button class="topic-btn pending" disabled>файлы</button></li>
+        </ul>
+        <div class="note">Через ChatGPT (май–июль) забежал вперёд программы: трогал списки, словари, comprehensions, map / lambda — помечено «знаком, не закреплено». Отдельно уверенно спрашивает про асимптотику: O(1), O(n), O(n²).</div>
+      </div>
+    </div>
+
+    <div class="stage">
+      <div class="stage-node">1</div>
+      <div class="card">
+        <div class="card-head">
+          <span class="card-title">ООП и продвинутый Python</span>
+          <span class="status-pill todo">впереди</span>
+        </div>
+        <p class="card-desc">Дополняем Stepik своими материалами, если курс не закроет глубоко.</p>
+        <ul class="topics">
+          <li><button class="topic-btn pending" disabled>классы</button></li>
+          <li><button class="topic-btn seen has-note" data-topic="advanced">comprehensions<span class="chevron">▾</span></button></li>
+          <li><button class="topic-btn pending" disabled>декораторы</button></li>
+          <li><button class="topic-btn seen has-note" data-topic="advanced">генераторы<span class="chevron">▾</span></button></li>
+          <li><button class="topic-btn pending" disabled>context manager'ы</button></li>
+          <li><button class="topic-btn pending" disabled>itertools / functools</button></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="stage">
+      <div class="stage-node">2</div>
+      <div class="card">
+        <div class="card-head">
+          <span class="card-title">Git и контроль версий</span>
+          <span class="status-pill todo">впереди</span>
+        </div>
+        <p class="card-desc">Сначала локально, GitHub — отдельным шагом позже.</p>
+        <ul class="topics">
+          <li><button class="topic-btn pending" disabled>коммиты</button></li>
+          <li><button class="topic-btn pending" disabled>ветки</button></li>
+          <li><button class="topic-btn pending" disabled>история</button></li>
+          <li><button class="topic-btn pending" disabled>GitHub</button></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="stage">
+      <div class="stage-node">3</div>
+      <div class="card">
+        <div class="card-head">
+          <span class="card-title">SQL и базы данных</span>
+          <span class="status-pill todo">впереди</span>
+        </div>
+        <p class="card-desc">SQLite → PostgreSQL.</p>
+        <ul class="topics">
+          <li><button class="topic-btn pending" disabled>CRUD</button></li>
+          <li><button class="topic-btn pending" disabled>проектирование схем</button></li>
+          <li><button class="topic-btn pending" disabled>JOIN'ы</button></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="stage">
+      <div class="stage-node">4</div>
+      <div class="card">
+        <div class="card-head">
+          <span class="card-title">Тестирование</span>
+          <span class="status-pill todo">впереди</span>
+        </div>
+        <p class="card-desc">pytest — привычка тестировать код с ранних практик.</p>
+        <ul class="topics">
+          <li><button class="topic-btn pending" disabled>pytest</button></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="stage">
+      <div class="stage-node">5</div>
+      <div class="card">
+        <div class="card-head">
+          <span class="card-title">Backend-фреймворк</span>
+          <span class="status-pill todo">впереди</span>
+        </div>
+        <p class="card-desc">FastAPI сначала (типизация, async, чище объясняет REST), затем Django при необходимости.</p>
+        <ul class="topics">
+          <li><button class="topic-btn pending" disabled>FastAPI</button></li>
+          <li><button class="topic-btn pending" disabled>Django</button></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="stage">
+      <div class="stage-node">6</div>
+      <div class="card">
+        <div class="card-head">
+          <span class="card-title">REST API и аутентификация</span>
+          <span class="status-pill todo">впереди</span>
+        </div>
+        <p class="card-desc">Проектирование API, авторизация пользователей.</p>
+        <ul class="topics">
+          <li><button class="topic-btn pending" disabled>REST design</button></li>
+          <li><button class="topic-btn pending" disabled>JWT / OAuth</button></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="stage">
+      <div class="stage-node">7</div>
+      <div class="card">
+        <div class="card-head">
+          <span class="card-title">Docker</span>
+          <span class="status-pill todo">впереди</span>
+        </div>
+        <p class="card-desc">Контейнеризация простого приложения.</p>
+        <ul class="topics">
+          <li><button class="topic-btn pending" disabled>Docker</button></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="stage">
+      <div class="stage-node">8</div>
+      <div class="card">
+        <div class="card-head">
+          <span class="card-title">Кэширование и фоновые задачи</span>
+          <span class="status-pill todo">впереди</span>
+        </div>
+        <p class="card-desc">Ознакомительно.</p>
+        <ul class="topics">
+          <li><button class="topic-btn pending" disabled>Redis</button></li>
+          <li><button class="topic-btn pending" disabled>Celery / RQ</button></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="stage">
+      <div class="stage-node">9</div>
+      <div class="card">
+        <div class="card-head">
+          <span class="card-title">Деплой и CI/CD</span>
+          <span class="status-pill todo">впереди</span>
+        </div>
+        <p class="card-desc">Ознакомительно, не глубоко.</p>
+        <ul class="topics">
+          <li><button class="topic-btn pending" disabled>GitHub Actions</button></li>
+          <li><button class="topic-btn pending" disabled>облако</button></li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="meta">обновлено 2026-07-13 · пет-проект стартует после этапа 1</footer>
+</div>
+
+<div class="overlay" id="overlay">
+  <div class="panel" role="dialog" aria-modal="true" aria-labelledby="panel-title">
+    <div class="panel-head">
+      <span class="panel-title" id="panel-title"></span>
+      <button class="panel-close" id="panel-close" aria-label="Закрыть">✕</button>
+    </div>
+    <div class="panel-body" id="panel-body"></div>
+  </div>
+</div>
+
+<script>
+  const NOTES = {
+    types: {
+      title: "Типы данных",
+      html: `
+        <p>Основные встроенные типы и проверка типа значения.</p>
+        <pre><code>x = 5            # int
+y = 3.14         # float
+s = "text"       # str
+b = True         # bool
+lst = [1, 2]     # list
+tpl = (1, 2)     # tuple
+d = {"a": 1}     # dict
+st = {1, 2}      # set
+
+type(x)          # <class 'int'>
+isinstance(x, int)  # True</code></pre>
+        <h3>Преобразование</h3>
+        <pre><code>int("5")     # 5
+float("3.1") # 3.1
+str(5)       # "5"
+bool(0)      # False, 0 и "" всегда False</code></pre>
+      `
+    },
+    branching: {
+      title: "Ветвления",
+      html: `
+        <p>if / elif / else — выполняется первая подошедшая ветка.</p>
+        <pre><code>age = 20
+
+if age < 18:
+    print("несовершеннолетний")
+elif age < 65:
+    print("взрослый")
+else:
+    print("пенсионер")</code></pre>
+        <h3>Тернарный (в одну строку)</h3>
+        <pre><code>status = "взрослый" if age >= 18 else "ребёнок"</code></pre>
+        <h3>Полезно помнить</h3>
+        <ul>
+          <li>and / or / not — логические операторы</li>
+          <li>сравнения можно объединять: <code>0 < x < 10</code></li>
+        </ul>
+      `
+    },
+    loops: {
+      title: "Циклы",
+      html: `
+        <pre><code># while — пока условие верно
+i = 0
+while i < 5:
+    print(i)
+    i += 1
+
+# for — перебор последовательности
+for i in range(5):       # 0 1 2 3 4
+    print(i)
+
+for ch in "abc":
+    print(ch)</code></pre>
+        <h3>break / continue</h3>
+        <pre><code>for i in range(10):
+    if i == 3:
+        continue   # пропустить итерацию
+    if i == 7:
+        break      # выйти из цикла
+    print(i)</code></pre>
+        <h3>enumerate — индекс + значение</h3>
+        <pre><code>for index, ch in enumerate("abc", start=1):
+    print(index, ch)</code></pre>
+      `
+    },
+    strings: {
+      title: "Строки — практика 09.1–09.3",
+      html: `
+        <p>15 упражнений Stepik, раздел 9. Ниже — реальные приёмы из <code>practice/09/</code>, а не общая теория.</p>
+
+        <h3>Индексация и срезы</h3>
+        <p class="file-tag">09_02_slices_1.py, 09_02_slices_2.py — полный проход по видам срезов:</p>
+        <pre><code>text[0]        # первый символ
+text[-2]       # второй с конца
+text[:5:]      # первые 5 символов
+text[:-2:]     # всё, кроме двух последних
+text[::2]      # символы через один (чётные индексы)
+text[1::2]     # символы через один (нечётные индексы)
+text[::-1]     # разворот строки целиком
+text[::-2]     # разворот + через один символ</code></pre>
+        <p class="file-tag">09_02_palindrom.py — проверка палиндрома через срез-разворот:</p>
+        <pre><code>word = input()
+print("YES" if word == word[::-1] else "NO")</code></pre>
+        <p class="file-tag">09_02_dve_polovinki.py — срез по вычисляемой середине строки:</p>
+        <pre><code>mid = (len(text) + 1) // 2
+first, second = text[:mid], text[mid:]
+print(second + first)</code></pre>
+        <p class="file-tag">09_01_v_stolbik_2.py — разворот через срез + перебор:</p>
+        <pre><code>for char in text[::-1]:
+    print(char)</code></pre>
+
+        <h3>Методы строк</h3>
+        <p class="file-tag">09_03_swap_case.py:</p>
+        <pre><code>print(text.swapcase())</code></pre>
+        <p class="file-tag">09_03_zaglavnye_bukvy.py — split() + isupper():</p>
+        <pre><code>name, surname = input().split()
+ok = name[0].isupper() and surname[0].isupper()</code></pre>
+        <p class="file-tag">09_01_cifra_2.py — isdigit() + for...else:</p>
+        <pre><code>for ch in text:
+    if ch.isdigit():
+        print("Цифра")
+        break
+else:
+    print("Цифр нет")</code></pre>
+        <p class="file-tag">09_01_glasnye_soglasnye.py — lower() + in по набору символов:</p>
+        <pre><code>text = input().lower()
+vowels = "ауоыиэяюе"
+if ch in vowels:
+    count += 1</code></pre>
+
+        <h3>Перебор строк и enumerate</h3>
+        <p class="file-tag">09_01_po_odnomu.py — enumerate со start=1:</p>
+        <pre><code>for index, ch in enumerate(text, start=1):
+    print(f"{index}) {ch}")</code></pre>
+        <p class="file-tag">09_01_summa_cifr.py, 09_01_skolko_raz.py, 09_01_odinakovye_sosedi.py — накопление счётчиков и сравнение соседних символов:</p>
+        <pre><code>total = 0
+for digit in num_str:
+    total += int(digit)          # summa_cifr
+
+for i in range(len(line) - 1):
+    if line[i] == line[i + 1]:   # odinakovye_sosedi
+        count += 1</code></pre>
+
+        <h3>while + срезы</h3>
+        <p class="file-tag">09_01_decimal_to_binary.py — перевод в двоичную систему вручную:</p>
+        <pre><code>bits = []
+while num > 0:
+    bits.append(num % 2)
+    num //= 2
+print(*bits[::-1], sep="")</code></pre>
+
+        <div class="panel-foot">15 упражнений · 09.1–09.3 · обновлено 2026-07-12</div>
+      `
+    },
+    collections: {
+      title: "Списки, кортежи, словари — забег вперёд",
+      html: `
+        <p>На Stepik эти темы ещё не пройдены, но в чатах с ChatGPT (май–июль) ты их активно трогал. Помечены как «знаком, но не закреплено»: на ревью я оставляю решения на твоём текущем уровне, а эти конструкции иногда показываю как бонус «на вырост».</p>
+        <h3>Списки — что уже встречал</h3>
+        <pre><code>nums = []
+nums.append(x)          # добавить в конец
+nums.index(5)           # позиция элемента
+nums.sort()             # отсортировать на месте
+nums.reverse()          # развернуть на месте
+nums[-1]                # последний элемент
+digits = list(str(n))   # число → список цифр
+nums = list(map(int, parts))  # строки → числа</code></pre>
+        <h3>Кортежи и словари</h3>
+        <pre><code>point = (x, y)          # кортеж — неизменяемый
+d = {"a": 1, "b": 2}    # словарь
+d["a"]                  # доступ по ключу → 1</code></pre>
+        <div class="panel-foot">знаком, не закреплено · режим ревью: мягко подталкивать</div>
+      `
+    },
+    advanced: {
+      title: "Comprehensions и функциональщина — забег вперёд",
+      html: `
+        <p>Видел через ChatGPT, разбирал, как это работает, но по собственным словам пока не закрепил. Официально появятся на этапе 1.</p>
+        <h3>Списковые включения и генераторы</h3>
+        <pre><code>squares = [i * i for i in range(10)]
+total = sum(x for x in nums if x > 0)</code></pre>
+        <h3>map / filter / lambda</h3>
+        <pre><code>nums = list(map(int, parts))
+neg = list(filter(lambda x: x < 0, nums))</code></pre>
+        <div class="panel-foot">знаком, не закреплено · этап 1</div>
+      `
+    }
+  };
+
+  const overlay = document.getElementById("overlay");
+  const panelTitle = document.getElementById("panel-title");
+  const panelBody = document.getElementById("panel-body");
+  let lastFocused = null;
+
+  function openNote(key) {
+    const note = NOTES[key];
+    if (!note) return;
+    panelTitle.textContent = note.title;
+    panelBody.innerHTML = note.html;
+    lastFocused = document.activeElement;
+    overlay.classList.add("open");
+    document.getElementById("panel-close").focus();
+  }
+
+  function closeNote() {
+    overlay.classList.remove("open");
+    if (lastFocused) lastFocused.focus();
+  }
+
+  document.querySelectorAll(".topic-btn.has-note").forEach(btn => {
+    btn.addEventListener("click", () => openNote(btn.dataset.topic));
+  });
+
+  document.getElementById("panel-close").addEventListener("click", closeNote);
+  overlay.addEventListener("click", e => {
+    if (e.target === overlay) closeNote();
+  });
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape" && overlay.classList.contains("open")) closeNote();
+  });
+</script>
