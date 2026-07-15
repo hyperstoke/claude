@@ -1,0 +1,3 @@
+- [No code autocomplete](feedback_no_code_autocomplete.md) — user disabled VS Code inline suggestions/Copilot & Pylance linting while learning Python
+- [GitHub sync](project_github_sync.md) — папка claude/ = git-репо, приватный remote hyperstoke/claude; pull/push по просьбе; gh в ~/.local/bin
+- [Mac node/firecrawl](project_mac_node_firecrawl.md) — на Mac нет Homebrew; node в ~/.local/nodejs, firecrawl CLI + ключ настроены; PATH/ключ в ~/.zshrc
