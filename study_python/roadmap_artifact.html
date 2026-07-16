@@ -1,71 +1,82 @@
-<title>Python Backend Roadmap</title>
+<title>Python Backend — панель ученика</title>
 <style>
   :root {
-    --bg: #EDEEEA;
-    --bg-raised: #F7F7F4;
-    --ink: #2A2E33;
-    --ink-dim: #5B6169;
-    --ink-faint: #8C9198;
-    --rail: #C7CAC3;
-    --rail-done: #5C7A4F;
-    --accent: #3D6E68;
-    --accent-soft: #DCE6E3;
-    --card-border: #D8DAD3;
-    --now-bg: #FBF6E9;
-    --now-border: #C9A227;
-    --shadow: 0 1px 2px rgba(30,32,28,0.06), 0 1px 1px rgba(30,32,28,0.04);
-    --heat-0: #E4E5DF;
-    --heat-1: #CFDCC6;
-    --heat-2: #A3BE93;
-    --heat-3: #77A061;
-    --heat-4: #4A6B3D;
+    --bg: #F4F2F8;
+    --panel: #FBFAFE;
+    --raised: #FFFFFF;
+    --inset: #EEEBF5;
+    --ink: #1E1A28;
+    --ink-dim: #5A5470;
+    --ink-faint: #8B85A0;
+    --border: #E4DFF0;
+    --border-strong: #D3CCE6;
+    --accent: #6D4BC7;
+    --accent-ink: #FFFFFF;
+    --accent-soft: #EEE9FA;
+    --now: #A9761A;
+    --now-soft: #F6EEDD;
+    --shadow: 0 1px 2px rgba(40,30,60,0.06), 0 2px 8px rgba(40,30,60,0.04);
+    --shadow-lg: 0 12px 40px rgba(40,25,70,0.14);
+    --heat-0: #EAE7F0;
+    --heat-1: #D6CDEE;
+    --heat-2: #B7A3E4;
+    --heat-3: #9575DA;
+    --heat-4: #6D4BC7;
   }
 
   :root[data-theme="dark"] {
-    --bg: #15171A;
-    --bg-raised: #1C1F23;
-    --ink: #E4E6E8;
-    --ink-dim: #9BA1A8;
-    --ink-faint: #676D74;
-    --rail: #34383D;
-    --rail-done: #7FA36E;
-    --accent: #6FADA5;
-    --accent-soft: #22302E;
-    --card-border: #2B2F34;
-    --now-bg: #262214;
-    --now-border: #A9842A;
-    --shadow: 0 1px 3px rgba(0,0,0,0.4);
-    --heat-0: #23262B;
-    --heat-1: #2F4A28;
-    --heat-2: #44693B;
-    --heat-3: #618F4F;
-    --heat-4: #86B96D;
+    --bg: #0C0A11;
+    --panel: #100D16;
+    --raised: #16121F;
+    --inset: #1A1626;
+    --ink: #ECEAF2;
+    --ink-dim: #A6A0B8;
+    --ink-faint: #6B6580;
+    --border: #241F30;
+    --border-strong: #322A42;
+    --accent: #B79CFF;
+    --accent-ink: #17102B;
+    --accent-soft: #1F1834;
+    --now: #E0A93F;
+    --now-soft: #241C10;
+    --shadow: 0 1px 2px rgba(0,0,0,0.4);
+    --shadow-lg: 0 16px 48px rgba(0,0,0,0.55);
+    --heat-0: #1A1622;
+    --heat-1: #3A2E5C;
+    --heat-2: #5B44A0;
+    --heat-3: #7C5CE6;
+    --heat-4: #A78BFF;
   }
 
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --bg: #15171A;
-      --bg-raised: #1C1F23;
-      --ink: #E4E6E8;
-      --ink-dim: #9BA1A8;
-      --ink-faint: #676D74;
-      --rail: #34383D;
-      --rail-done: #7FA36E;
-      --accent: #6FADA5;
-      --accent-soft: #22302E;
-      --card-border: #2B2F34;
-      --now-bg: #262214;
-      --now-border: #A9842A;
-      --shadow: 0 1px 3px rgba(0,0,0,0.4);
-      --heat-0: #23262B;
-      --heat-1: #2F4A28;
-      --heat-2: #44693B;
-      --heat-3: #618F4F;
-      --heat-4: #86B96D;
+      --bg: #0C0A11;
+      --panel: #100D16;
+      --raised: #16121F;
+      --inset: #1A1626;
+      --ink: #ECEAF2;
+      --ink-dim: #A6A0B8;
+      --ink-faint: #6B6580;
+      --border: #241F30;
+      --border-strong: #322A42;
+      --accent: #B79CFF;
+      --accent-ink: #17102B;
+      --accent-soft: #1F1834;
+      --now: #E0A93F;
+      --now-soft: #241C10;
+      --shadow: 0 1px 2px rgba(0,0,0,0.4);
+      --shadow-lg: 0 16px 48px rgba(0,0,0,0.55);
+      --heat-0: #1A1622;
+      --heat-1: #3A2E5C;
+      --heat-2: #5B44A0;
+      --heat-3: #7C5CE6;
+      --heat-4: #A78BFF;
     }
   }
 
   * { box-sizing: border-box; }
+
+  html, body { height: 100%; }
 
   body {
     margin: 0;
@@ -76,890 +87,771 @@
     line-height: 1.5;
   }
 
-  .page {
-    max-width: 760px;
-    margin: 0 auto;
-    padding: 3.5rem 1.5rem 6rem;
-  }
-
-  header.top {
-    margin-bottom: 3rem;
-  }
-
-  .eyebrow {
+  .mono {
     font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-    font-size: 0.72rem;
-    letter-spacing: 0.09em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 0.6rem;
-  }
-
-  h1 {
-    font-size: 1.9rem;
-    font-weight: 650;
-    letter-spacing: -0.01em;
-    margin: 0 0 0.5rem;
-    text-wrap: balance;
-  }
-
-  .sub {
-    color: var(--ink-dim);
-    font-size: 0.98rem;
-    max-width: 60ch;
-    margin: 0 0 1.6rem;
-  }
-
-  .overview {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    background: var(--bg-raised);
-    border: 1px solid var(--card-border);
-    border-radius: 10px;
-    padding: 0.9rem 1.1rem;
-    box-shadow: var(--shadow);
-  }
-
-  .overview-track {
-    flex: 1;
-    height: 6px;
-    background: var(--rail);
-    border-radius: 3px;
-    overflow: hidden;
-    position: relative;
-  }
-
-  .overview-fill {
-    height: 100%;
-    background: var(--rail-done);
-    border-radius: 3px;
-    width: var(--pct, 12%);
-  }
-
-  .overview-label {
-    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-    font-size: 0.8rem;
-    color: var(--ink-dim);
-    white-space: nowrap;
     font-variant-numeric: tabular-nums;
   }
 
-  .legend {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.1rem;
-    margin-top: 0.9rem;
-    font-size: 0.76rem;
-    color: var(--ink-dim);
+  /* ── App shell ─────────────────────────────────────────── */
+  .app {
+    display: grid;
+    grid-template-columns: 244px 1fr;
+    min-height: 100vh;
   }
 
-  .legend span {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-  }
-
-  .legend .dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
-  .legend .dot.done { background: var(--rail-done); }
-  .legend .dot.seen { background: var(--now-border); }
-  .legend .dot.todo { background: var(--rail); }
-
-  .pulse {
-    background: var(--bg-raised);
-    border: 1px solid var(--card-border);
-    border-radius: 10px;
-    padding: 1.05rem 1.15rem 1.1rem;
-    box-shadow: var(--shadow);
-    margin-bottom: 2.8rem;
-  }
-
-  .pulse-head {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 0.75rem;
-    margin-bottom: 0.9rem;
-  }
-
-  .pulse-stats {
-    display: flex;
-    gap: 1.8rem;
-    margin-bottom: 1rem;
-  }
-
-  .stat {
+  .sidebar {
+    position: sticky;
+    top: 0;
+    align-self: start;
+    height: 100vh;
+    background: var(--panel);
+    border-right: 1px solid var(--border);
+    padding: 1.6rem 1.1rem 1.2rem;
     display: flex;
     flex-direction: column;
+    gap: 1.4rem;
   }
 
-  .stat-num {
+  .brand {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .brand .glyph {
     font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-    font-size: 1.35rem;
-    font-weight: 650;
-    font-variant-numeric: tabular-nums;
-    color: var(--ink);
-    line-height: 1.2;
-  }
-
-  .stat-num .unit {
-    font-size: 0.75rem;
-    font-weight: 500;
-    color: var(--ink-faint);
-    margin-left: 0.15rem;
-  }
-
-  .stat-label {
     font-size: 0.7rem;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--ink-faint);
+    color: var(--accent);
   }
 
-  .hm-flex {
-    display: flex;
-    gap: 0.45rem;
-    align-items: flex-end;
+  .brand .who {
+    font-size: 0.98rem;
+    font-weight: 650;
+    letter-spacing: -0.01em;
   }
 
-  .hm-days {
-    display: grid;
-    grid-template-rows: repeat(7, 11px);
-    gap: 3px;
-    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-    font-size: 0.6rem;
-    color: var(--ink-faint);
-    flex-shrink: 0;
-  }
-
-  .hm-days span:nth-child(1) { grid-row: 1; }
-  .hm-days span:nth-child(2) { grid-row: 3; }
-  .hm-days span:nth-child(3) { grid-row: 5; }
-
-  .hm-wrap {
-    overflow-x: auto;
-    padding-bottom: 2px;
-  }
-
-  .hm-months {
-    position: relative;
-    height: 15px;
-    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-    font-size: 0.62rem;
-    color: var(--ink-faint);
-  }
-
-  .hm-months span {
-    position: absolute;
-    top: 0;
-    white-space: nowrap;
-  }
-
-  .heatmap {
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: 11px;
-    grid-template-rows: repeat(7, 11px);
-    gap: 3px;
-    width: max-content;
-  }
-
-  .hm-cell {
-    width: 11px;
-    height: 11px;
-    border-radius: 3px;
-    background: var(--heat-0);
-  }
-
-  .hm-cell.l1 { background: var(--heat-1); }
-  .hm-cell.l2 { background: var(--heat-2); }
-  .hm-cell.l3 { background: var(--heat-3); }
-  .hm-cell.l4 { background: var(--heat-4); }
-
-  .hm-cell.nodata {
-    background: transparent;
-    box-shadow: inset 0 0 0 1px var(--card-border);
-  }
-
-  .hm-cell.future {
-    background: transparent;
-  }
-
-  .hm-cell.today {
-    outline: 1.5px solid var(--now-border);
-    outline-offset: 1px;
-  }
-
-  .hm-cell:hover:not(.future) {
-    outline: 1.5px solid var(--accent);
-    outline-offset: 1px;
-  }
-
-  .hm-foot {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-    margin-top: 0.65rem;
-    font-size: 0.72rem;
-    color: var(--ink-faint);
-  }
-
-  .hm-scale {
-    display: flex;
-    align-items: center;
-    gap: 3px;
-    flex-shrink: 0;
-  }
-
-  .hm-scale i {
-    width: 10px;
-    height: 10px;
-    border-radius: 3px;
-    display: block;
-  }
-
-  .deadline {
-    display: flex;
-    align-items: baseline;
-    gap: 0.6rem;
-    flex-wrap: wrap;
-    margin-top: 0.9rem;
-    padding-top: 0.85rem;
-    border-top: 1px dashed var(--card-border);
-    font-size: 0.85rem;
-    color: var(--ink-dim);
-  }
-
-  .deadline .dl-days {
-    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-    font-variant-numeric: tabular-nums;
-    color: var(--ink);
-    font-weight: 600;
-  }
-
-  .deadline .dl-note {
-    flex-basis: 100%;
+  .brand .goal {
     font-size: 0.74rem;
     color: var(--ink-faint);
   }
 
-  .hm-tip {
-    position: fixed;
-    z-index: 20;
-    background: var(--bg-raised);
-    border: 1px solid var(--card-border);
-    border-radius: 8px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.18);
-    padding: 0.4rem 0.6rem;
-    font-size: 0.76rem;
-    color: var(--ink);
-    pointer-events: none;
-    max-width: 240px;
+  .nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
   }
 
-  .hm-tip .tip-date {
-    color: var(--ink-faint);
-    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-    font-size: 0.68rem;
-  }
-
-  @media (max-width: 480px) {
-    .pulse-stats { gap: 1.2rem; }
-    .stat-num { font-size: 1.15rem; }
-  }
-
-  .stages {
-    position: relative;
-  }
-
-  .stages::before {
-    content: "";
-    position: absolute;
-    left: 19px;
-    top: 8px;
-    bottom: 8px;
-    width: 2px;
-    background: var(--rail);
-  }
-
-  .stage {
-    position: relative;
-    padding-left: 52px;
-    margin-bottom: 1.1rem;
-  }
-
-  .stage-node {
-    position: absolute;
-    left: 0;
-    top: 0.15rem;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: var(--bg-raised);
-    border: 2px solid var(--rail);
+  .nav-btn {
+    font: inherit;
+    text-align: left;
     display: flex;
     align-items: center;
-    justify-content: center;
+    gap: 0.6rem;
+    padding: 0.5rem 0.65rem;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--ink-dim);
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.12s ease, color 0.12s ease;
+  }
+
+  .nav-btn .idx {
     font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-    font-size: 0.85rem;
-    font-weight: 600;
+    font-size: 0.68rem;
     color: var(--ink-faint);
-    z-index: 1;
+    width: 1.1em;
   }
 
-  .stage.done .stage-node {
-    background: var(--rail-done);
-    border-color: var(--rail-done);
-    color: #fff;
+  .nav-btn:hover {
+    background: var(--inset);
+    color: var(--ink);
   }
 
-  .stage.active .stage-node {
-    background: var(--now-bg);
-    border-color: var(--now-border);
-    color: var(--now-border);
+  .nav-btn.active {
+    background: var(--accent-soft);
+    color: var(--ink);
+    border-color: var(--border-strong);
   }
 
-  .stage.progress .stage-node {
-    border-color: var(--accent);
-    color: var(--accent);
+  .nav-btn.active .idx { color: var(--accent); }
+
+  .nav-btn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
   }
 
-  .card {
-    background: var(--bg-raised);
-    border: 1px solid var(--card-border);
+  .side-streak {
+    margin-top: auto;
+    background: var(--raised);
+    border: 1px solid var(--border);
     border-radius: 10px;
-    padding: 0.95rem 1.15rem 1.05rem;
+    padding: 0.8rem 0.9rem;
+  }
+
+  .side-streak .row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .flame {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+    box-shadow: 0 0 0 0 var(--accent);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .flame.live { animation: pulse 2.2s ease-out infinite; }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent); }
+      70% { box-shadow: 0 0 0 7px transparent; }
+      100% { box-shadow: 0 0 0 0 transparent; }
+    }
+  }
+
+  .side-streak .num {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 1.5rem;
+    font-weight: 650;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .side-streak .cap {
+    font-size: 0.72rem;
+    color: var(--ink-faint);
+    margin-top: 0.3rem;
+  }
+
+  .theme-toggle {
+    font: inherit;
+    font-size: 0.74rem;
+    color: var(--ink-faint);
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 0.35rem 0.55rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    justify-content: center;
+  }
+  .theme-toggle:hover { color: var(--ink); border-color: var(--border-strong); }
+
+  /* ── Main ──────────────────────────────────────────────── */
+  .main {
+    padding: 2.4rem 2.4rem 4rem;
+    max-width: 920px;
+  }
+
+  .view { animation: fade 0.22s ease; }
+  .view[hidden] { display: none; }
+  @media (prefers-reduced-motion: no-preference) {
+    @keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+  }
+
+  .eyebrow {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+
+  h1.view-title {
+    font-size: 1.7rem;
+    font-weight: 680;
+    letter-spacing: -0.015em;
+    margin: 0 0 0.4rem;
+    text-wrap: balance;
+  }
+
+  .view-sub {
+    color: var(--ink-dim);
+    font-size: 0.94rem;
+    margin: 0 0 2rem;
+    max-width: 60ch;
+  }
+
+  /* ── Stat tiles ────────────────────────────────────────── */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.8rem;
+    margin-bottom: 1.6rem;
+  }
+
+  .tile {
+    background: var(--raised);
+    border: 1px solid var(--border);
+    border-radius: 11px;
+    padding: 0.95rem 1rem 1rem;
     box-shadow: var(--shadow);
   }
 
-  .stage.active .card {
-    border-color: var(--now-border);
-    background: var(--now-bg);
+  .tile .t-num {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 1.55rem;
+    font-weight: 650;
+    line-height: 1.1;
+    font-variant-numeric: tabular-nums;
   }
+
+  .tile .t-num .unit {
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--ink-faint);
+    margin-left: 0.2rem;
+  }
+
+  .tile .t-cap {
+    font-size: 0.7rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-top: 0.35rem;
+  }
+
+  .tile.accent { border-color: var(--accent); background: var(--accent-soft); }
+  .tile.accent .t-num { color: var(--accent); }
+
+  /* ── Cards ─────────────────────────────────────────────── */
+  .card {
+    background: var(--raised);
+    border: 1px solid var(--border);
+    border-radius: 11px;
+    padding: 1.1rem 1.2rem 1.15rem;
+    box-shadow: var(--shadow);
+  }
+
+  .card + .card, .stat-grid + .card, .card + .stages { margin-top: 1.2rem; }
 
   .card-head {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
     gap: 0.75rem;
-    margin-bottom: 0.15rem;
+    margin-bottom: 0.6rem;
   }
 
-  .card-title {
-    font-size: 1.02rem;
-    font-weight: 600;
-    letter-spacing: -0.005em;
-  }
+  .card-title { font-size: 1.02rem; font-weight: 620; letter-spacing: -0.005em; }
 
   .status-pill {
     font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-    font-size: 0.68rem;
-    letter-spacing: 0.05em;
+    font-size: 0.66rem;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
-    padding: 0.18rem 0.5rem;
+    padding: 0.2rem 0.5rem;
     border-radius: 999px;
     white-space: nowrap;
     flex-shrink: 0;
   }
-
-  .status-pill.done { background: var(--accent-soft); color: var(--rail-done); }
-  .status-pill.active { background: var(--now-border); color: #fff; }
+  .status-pill.done { background: var(--accent-soft); color: var(--accent); }
+  .status-pill.active { background: var(--now); color: #1a1205; }
   .status-pill.progress { background: var(--accent-soft); color: var(--accent); }
-  .status-pill.todo { color: var(--ink-faint); background: transparent; border: 1px solid var(--rail); }
+  .status-pill.todo { color: var(--ink-faint); background: transparent; border: 1px solid var(--border-strong); }
 
-  .card-desc {
-    color: var(--ink-dim);
-    font-size: 0.89rem;
-    margin: 0.15rem 0 0.6rem;
+  /* ── Deadline card ─────────────────────────────────────── */
+  .dl-line { display: flex; align-items: baseline; gap: 0.55rem; flex-wrap: wrap; }
+  .dl-big {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 1.15rem; font-weight: 650; color: var(--ink); font-variant-numeric: tabular-nums;
+  }
+  .dl-track { height: 6px; background: var(--inset); border-radius: 3px; overflow: hidden; margin-top: 0.85rem; }
+  .dl-fill { height: 100%; background: var(--accent); border-radius: 3px; }
+  .dl-note { font-size: 0.74rem; color: var(--ink-faint); margin-top: 0.6rem; }
+
+  /* ── Heatmap ───────────────────────────────────────────── */
+  .hm-flex { display: flex; gap: 0.5rem; align-items: flex-start; }
+  .hm-days {
+    display: grid; grid-template-rows: repeat(7, 13px); gap: 3px;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.6rem; color: var(--ink-faint); flex-shrink: 0; padding-top: 17px;
+  }
+  .hm-days span:nth-child(1) { grid-row: 1; }
+  .hm-days span:nth-child(2) { grid-row: 3; }
+  .hm-days span:nth-child(3) { grid-row: 5; }
+
+  .hm-wrap { overflow-x: auto; padding-bottom: 3px; }
+  .hm-months {
+    position: relative; height: 15px;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.62rem; color: var(--ink-faint);
+  }
+  .hm-months span { position: absolute; top: 0; white-space: nowrap; }
+
+  .heatmap {
+    display: grid; grid-auto-flow: column; grid-auto-columns: 13px;
+    grid-template-rows: repeat(7, 13px); gap: 3px; width: max-content;
+  }
+  .hm-cell { width: 13px; height: 13px; border-radius: 3px; background: var(--heat-0); }
+  .hm-cell.l1 { background: var(--heat-1); }
+  .hm-cell.l2 { background: var(--heat-2); }
+  .hm-cell.l3 { background: var(--heat-3); }
+  .hm-cell.l4 { background: var(--heat-4); }
+  .hm-cell.nodata { background: transparent; box-shadow: inset 0 0 0 1px var(--border); }
+  .hm-cell.future { background: transparent; }
+  .hm-cell.today { outline: 1.5px solid var(--now); outline-offset: 1px; }
+  .hm-cell.clickable:not(.future) { cursor: pointer; }
+  .hm-cell.clickable:not(.future):hover { outline: 1.5px solid var(--accent); outline-offset: 1px; }
+  .hm-cell.selected { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+  .hm-foot {
+    display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+    flex-wrap: wrap; margin-top: 0.85rem; font-size: 0.72rem; color: var(--ink-faint);
+  }
+  .hm-scale { display: flex; align-items: center; gap: 3px; flex-shrink: 0; }
+  .hm-scale i { width: 12px; height: 12px; border-radius: 3px; display: block; }
+
+  /* mini preview (overview) */
+  .mini { cursor: pointer; }
+  .mini .heatmap { grid-auto-columns: 11px; grid-template-rows: repeat(7, 11px); }
+  .mini .hm-cell { width: 11px; height: 11px; }
+
+  /* ── Calendar layout with detail ───────────────────────── */
+  .cal-grid { display: grid; grid-template-columns: 1fr 260px; gap: 1.2rem; align-items: start; }
+
+  .day-detail {
+    background: var(--raised); border: 1px solid var(--border); border-radius: 11px;
+    padding: 1.05rem 1.1rem 1.15rem; box-shadow: var(--shadow); position: sticky; top: 1.5rem;
+  }
+  .dd-date {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.72rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-faint);
+  }
+  .dd-head { font-size: 1.25rem; font-weight: 660; margin: 0.15rem 0 0.9rem; letter-spacing: -0.01em; }
+  .dd-metrics { display: flex; gap: 1.4rem; margin-bottom: 0.9rem; }
+  .dd-metric .m-num {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 1.2rem; font-weight: 650; font-variant-numeric: tabular-nums;
+  }
+  .dd-metric .m-cap { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-faint); }
+  .dd-note { font-size: 0.88rem; color: var(--ink-dim); border-top: 1px dashed var(--border); padding-top: 0.75rem; }
+  .dd-empty { font-size: 0.88rem; color: var(--ink-faint); }
+  .level-chip {
+    display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.72rem;
+    color: var(--ink-dim); margin-top: 0.5rem;
+  }
+  .level-chip i { width: 11px; height: 11px; border-radius: 3px; display: block; }
+
+  /* ── Roadmap stages ────────────────────────────────────── */
+  .overview-mini-track {
+    display: flex; align-items: center; gap: 1rem; margin-bottom: 1.6rem;
+    background: var(--raised); border: 1px solid var(--border); border-radius: 11px;
+    padding: 0.9rem 1.1rem; box-shadow: var(--shadow);
+  }
+  .overview-track { flex: 1; height: 6px; background: var(--inset); border-radius: 3px; overflow: hidden; }
+  .overview-fill { height: 100%; background: var(--accent); border-radius: 3px; width: var(--pct, 9%); }
+  .overview-label {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.8rem; color: var(--ink-dim); white-space: nowrap; font-variant-numeric: tabular-nums;
   }
 
-  .topics {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
+  .stages { position: relative; }
+  .stages::before {
+    content: ""; position: absolute; left: 19px; top: 8px; bottom: 8px; width: 2px; background: var(--border-strong);
   }
-
-  .topics li {
-    display: contents;
+  .stage { position: relative; padding-left: 52px; margin-bottom: 1.1rem; }
+  .stage-node {
+    position: absolute; left: 0; top: 0.15rem; width: 40px; height: 40px; border-radius: 50%;
+    background: var(--raised); border: 2px solid var(--border-strong); display: flex; align-items: center;
+    justify-content: center; font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.85rem; font-weight: 600; color: var(--ink-faint); z-index: 1;
   }
+  .stage.done .stage-node { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .stage.active .stage-node { background: var(--now-soft); border-color: var(--now); color: var(--now); }
+  .stage.progress .stage-node { border-color: var(--accent); color: var(--accent); }
 
+  .stage .card { box-shadow: var(--shadow); }
+  .stage.active .card { border-color: var(--now); background: var(--now-soft); }
+
+  .card-desc { color: var(--ink-dim); font-size: 0.89rem; margin: 0.15rem 0 0.6rem; }
+
+  .topics { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .topics li { display: contents; }
   .topic-btn {
-    font: inherit;
-    font-size: 0.78rem;
-    padding: 0.22rem 0.55rem;
-    border-radius: 6px;
-    background: var(--bg);
-    border: 1px solid var(--card-border);
-    color: var(--ink-dim);
-    display: flex;
-    align-items: center;
-    gap: 0.32rem;
-    cursor: default;
+    font: inherit; font-size: 0.78rem; padding: 0.22rem 0.55rem; border-radius: 6px;
+    background: var(--bg); border: 1px solid var(--border); color: var(--ink-dim);
+    display: flex; align-items: center; gap: 0.32rem; cursor: default;
   }
+  .topic-btn:disabled { opacity: 0.7; }
+  .topic-btn.has-note { cursor: pointer; }
+  .topic-btn.has-note:hover { border-color: var(--accent); color: var(--ink); }
+  .topic-btn.has-note:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .stage.done .topic-btn, .stage.active .topic-btn.covered { color: var(--ink); }
+  .topic-btn.covered::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+  .topic-btn.seen { color: var(--ink); }
+  .topic-btn.seen::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--now); flex-shrink: 0; }
+  .topic-btn.pending::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--border-strong); flex-shrink: 0; }
+  .topic-btn .chevron { font-size: 0.65rem; color: var(--ink-faint); margin-left: 0.05rem; }
 
-  .topic-btn:disabled {
-    opacity: 0.75;
-  }
+  .note { font-size: 0.8rem; color: var(--ink-faint); margin-top: 0.55rem; padding-top: 0.55rem; border-top: 1px dashed var(--border); }
+  .legend { display: flex; flex-wrap: wrap; gap: 1.1rem; margin: 1rem 0 0; font-size: 0.76rem; color: var(--ink-dim); }
+  .legend span { display: flex; align-items: center; gap: 0.4rem; }
+  .legend .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .legend .dot.done { background: var(--accent); }
+  .legend .dot.seen { background: var(--now); }
+  .legend .dot.todo { background: var(--border-strong); }
 
-  .topic-btn.has-note {
-    cursor: pointer;
-  }
-
-  .topic-btn.has-note:hover {
-    border-color: var(--accent);
-    color: var(--ink);
-  }
-
-  .topic-btn.has-note:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 1px;
-  }
-
-  .stage.done .topic-btn,
-  .stage.active .topic-btn.covered {
-    color: var(--ink);
-  }
-
-  .topic-btn.covered::before {
-    content: "";
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--rail-done);
-    flex-shrink: 0;
-  }
-
-  .topic-btn.seen {
-    color: var(--ink);
-  }
-
-  .topic-btn.seen::before {
-    content: "";
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--now-border);
-    flex-shrink: 0;
-  }
-
-  .topic-btn.pending::before {
-    content: "";
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--rail);
-    flex-shrink: 0;
-  }
-
-  .topic-btn .chevron {
-    font-size: 0.65rem;
-    color: var(--ink-faint);
-    margin-left: 0.05rem;
-  }
-
-  .note {
-    font-size: 0.8rem;
-    color: var(--ink-faint);
-    margin-top: 0.55rem;
-    padding-top: 0.55rem;
-    border-top: 1px dashed var(--card-border);
-  }
-
-  footer.meta {
-    margin-top: 2.5rem;
-    font-size: 0.78rem;
-    color: var(--ink-faint);
-    text-align: center;
-  }
-
+  /* ── Modal ─────────────────────────────────────────────── */
   .overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(20, 22, 20, 0.42);
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    padding: 4vh 1.25rem;
-    overflow-y: auto;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.15s ease;
-    z-index: 10;
+    position: fixed; inset: 0; background: rgba(10,6,20,0.55); display: flex; align-items: flex-start;
+    justify-content: center; padding: 4vh 1.25rem; overflow-y: auto; opacity: 0; pointer-events: none;
+    transition: opacity 0.15s ease; z-index: 30;
   }
-
-  .overlay.open {
-    opacity: 1;
-    pointer-events: auto;
-  }
-
+  .overlay.open { opacity: 1; pointer-events: auto; }
   .panel {
-    background: var(--bg-raised);
-    border: 1px solid var(--card-border);
-    border-radius: 12px;
-    max-width: 620px;
-    width: 100%;
-    padding: 1.5rem 1.6rem 1.7rem;
-    box-shadow: 0 12px 40px rgba(0,0,0,0.25);
-    transform: translateY(-8px);
-    transition: transform 0.15s ease;
+    background: var(--raised); border: 1px solid var(--border); border-radius: 12px; max-width: 620px;
+    width: 100%; padding: 1.5rem 1.6rem 1.7rem; box-shadow: var(--shadow-lg);
+    transform: translateY(-8px); transition: transform 0.15s ease;
   }
-
-  .overlay.open .panel {
-    transform: translateY(0);
-  }
-
-  .panel-head {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 1rem;
-    margin-bottom: 0.9rem;
-  }
-
-  .panel-title {
-    font-size: 1.15rem;
-    font-weight: 650;
-    letter-spacing: -0.01em;
-  }
-
+  .overlay.open .panel { transform: translateY(0); }
+  .panel-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 0.9rem; }
+  .panel-title { font-size: 1.15rem; font-weight: 650; letter-spacing: -0.01em; }
   .panel-close {
-    font: inherit;
-    background: none;
-    border: 1px solid var(--card-border);
-    color: var(--ink-dim);
-    width: 28px;
-    height: 28px;
-    border-radius: 7px;
-    cursor: pointer;
-    flex-shrink: 0;
-    line-height: 1;
+    font: inherit; background: none; border: 1px solid var(--border); color: var(--ink-dim);
+    width: 28px; height: 28px; border-radius: 7px; cursor: pointer; flex-shrink: 0; line-height: 1;
   }
+  .panel-close:hover { border-color: var(--accent); color: var(--ink); }
+  .panel-body h3 { font-size: 0.72rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--accent); margin: 1.1rem 0 0.4rem; }
+  .panel-body h3:first-child { margin-top: 0; }
+  .panel-body p { font-size: 0.92rem; color: var(--ink-dim); margin: 0 0 0.5rem; }
+  .panel-body pre { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 0.7rem 0.85rem; overflow-x: auto; margin: 0 0 0.5rem; }
+  .panel-body code { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 0.82rem; color: var(--ink); }
+  .panel-body pre code { display: block; line-height: 1.55; }
+  .panel-body ul { margin: 0 0 0.5rem; padding-left: 1.2rem; font-size: 0.88rem; color: var(--ink-dim); }
+  .panel-body li + li { margin-top: 0.2rem; }
+  .panel-body .file-tag { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 0.72rem; color: var(--ink-faint); margin: 0 0 0.3rem; }
+  .panel-foot { margin-top: 1.1rem; padding-top: 0.7rem; border-top: 1px dashed var(--border); font-size: 0.78rem; color: var(--ink-faint); }
 
-  .panel-close:hover {
-    border-color: var(--accent);
-    color: var(--ink);
+  .hm-tip {
+    position: fixed; z-index: 40; background: var(--raised); border: 1px solid var(--border-strong);
+    border-radius: 8px; box-shadow: var(--shadow-lg); padding: 0.4rem 0.6rem; font-size: 0.76rem;
+    color: var(--ink); pointer-events: none; max-width: 240px;
   }
+  .hm-tip .tip-date { color: var(--ink-faint); font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 0.68rem; }
 
-  .panel-body h3 {
-    font-size: 0.72rem;
-    letter-spacing: 0.07em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin: 1.1rem 0 0.4rem;
-  }
-
-  .panel-body h3:first-child {
-    margin-top: 0;
-  }
-
-  .panel-body p {
-    font-size: 0.92rem;
-    color: var(--ink-dim);
-    margin: 0 0 0.5rem;
-  }
-
-  .panel-body pre {
-    background: var(--bg);
-    border: 1px solid var(--card-border);
-    border-radius: 8px;
-    padding: 0.7rem 0.85rem;
-    overflow-x: auto;
-    margin: 0 0 0.5rem;
-  }
-
-  .panel-body code {
-    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-    font-size: 0.82rem;
-    color: var(--ink);
-  }
-
-  .panel-body pre code {
-    display: block;
-    line-height: 1.55;
-  }
-
-  .panel-body ul {
-    margin: 0 0 0.5rem;
-    padding-left: 1.2rem;
-    font-size: 0.88rem;
-    color: var(--ink-dim);
-  }
-
-  .panel-body li + li {
-    margin-top: 0.2rem;
-  }
-
-  .panel-body .file-tag {
-    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-    font-size: 0.72rem;
-    color: var(--ink-faint);
-    margin: 0 0 0.3rem;
-  }
-
-  .panel-foot {
-    margin-top: 1.1rem;
-    padding-top: 0.7rem;
-    border-top: 1px dashed var(--card-border);
-    font-size: 0.78rem;
-    color: var(--ink-faint);
-  }
-
-  @media (prefers-reduced-motion: no-preference) {
-    .stage {
-      animation: rise 0.35s ease backwards;
+  /* ── Responsive ────────────────────────────────────────── */
+  @media (max-width: 780px) {
+    .app { grid-template-columns: 1fr; }
+    .sidebar {
+      position: static; height: auto; flex-direction: row; align-items: center; flex-wrap: wrap;
+      gap: 0.8rem; border-right: none; border-bottom: 1px solid var(--border); padding: 1rem 1.2rem;
     }
-    .stage:nth-child(1) { animation-delay: 0.02s; }
-    .stage:nth-child(2) { animation-delay: 0.05s; }
-    .stage:nth-child(3) { animation-delay: 0.08s; }
-    .stage:nth-child(4) { animation-delay: 0.11s; }
-    .stage:nth-child(5) { animation-delay: 0.14s; }
-    .stage:nth-child(6) { animation-delay: 0.17s; }
-    .stage:nth-child(7) { animation-delay: 0.20s; }
-    .stage:nth-child(8) { animation-delay: 0.23s; }
-    .stage:nth-child(9) { animation-delay: 0.26s; }
-    .stage:nth-child(10) { animation-delay: 0.29s; }
-    @keyframes rise {
-      from { opacity: 0; transform: translateY(6px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    .brand { flex: 1 1 100%; }
+    .nav { flex-direction: row; flex-wrap: wrap; }
+    .side-streak { margin-top: 0; padding: 0.5rem 0.7rem; }
+    .side-streak .cap { display: none; }
+    .side-streak .row { gap: 0.4rem; }
+    .side-streak .num { font-size: 1.1rem; }
+    .main { padding: 1.6rem 1.3rem 3rem; }
+    .stat-grid { grid-template-columns: repeat(2, 1fr); }
+    .cal-grid { grid-template-columns: 1fr; }
+    .day-detail { position: static; }
   }
 </style>
 
-<div class="page">
-  <header class="top">
-    <div class="eyebrow">python → backend developer</div>
-    <h1>Дорожная карта</h1>
-    <p class="sub">Stepik закрывает синтаксис (этап 0). Дальше — самостоятельные этапы до backend-разработчика. Обновляется по ходу занятий.</p>
-    <div class="overview">
-      <span class="overview-label">Этап 0 из 9</span>
-      <div class="overview-track"><div class="overview-fill" style="--pct: 9%"></div></div>
-      <span class="overview-label">~9%</span>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="glyph">py → backend</span>
+      <span class="who">Панель ученика</span>
+      <span class="goal">путь к backend-разработчику</span>
     </div>
-    <div class="legend">
-      <span><span class="dot done"></span>пройдено</span>
-      <span><span class="dot seen"></span>знаком, не закреплено</span>
-      <span><span class="dot todo"></span>впереди</span>
-    </div>
-  </header>
 
-  <section class="pulse" aria-label="Пульс занятий: календарь активности, стрик и дедлайн">
-    <div class="pulse-head">
-      <span class="card-title">Пульс занятий</span>
-      <span class="status-pill progress" id="dl-pill">в графике</span>
-    </div>
-    <div class="pulse-stats">
-      <div class="stat">
-        <span class="stat-num" id="stat-streak">—</span>
-        <span class="stat-label">стрик, дней подряд</span>
-      </div>
-      <div class="stat">
-        <span class="stat-num" id="stat-record">—</span>
-        <span class="stat-label">рекорд стрика</span>
-      </div>
-      <div class="stat">
-        <span class="stat-num" id="stat-tasks">—</span>
-        <span class="stat-label">задач разобрано</span>
-      </div>
-    </div>
-    <div class="hm-flex">
-      <div class="hm-days" aria-hidden="true"><span>пн</span><span>ср</span><span>пт</span></div>
-      <div class="hm-wrap">
-        <div class="hm-months" id="hm-months"></div>
-        <div class="heatmap" id="heatmap" role="img" aria-label="Календарь дней занятий: чем темнее клетка, тем больше сделано за день"></div>
-      </div>
-    </div>
-    <div class="hm-foot">
-      <span>учёт с 11 июля — раньше занимался прямо на Stepik, тех данных нет</span>
-      <span class="hm-scale" aria-hidden="true">меньше
-        <i style="background: var(--heat-0)"></i>
-        <i style="background: var(--heat-1)"></i>
-        <i style="background: var(--heat-2)"></i>
-        <i style="background: var(--heat-3)"></i>
-        <i style="background: var(--heat-4)"></i>
-        больше</span>
-    </div>
-    <div class="deadline" id="deadline"></div>
-  </section>
+    <nav class="nav" aria-label="Разделы">
+      <button class="nav-btn active" data-view="overview"><span class="idx">01</span>Обзор</button>
+      <button class="nav-btn" data-view="calendar"><span class="idx">02</span>Календарь</button>
+      <button class="nav-btn" data-view="roadmap"><span class="idx">03</span>Дорожная карта</button>
+    </nav>
 
-  <div class="stages">
+    <div class="side-streak">
+      <div class="row">
+        <span class="flame" id="side-flame"></span>
+        <span class="num" id="side-streak-num">—</span>
+      </div>
+      <div class="cap">дней подряд · рекорд <span id="side-record">—</span></div>
+    </div>
 
-    <div class="stage progress">
-      <div class="stage-node">0</div>
+    <button class="theme-toggle" id="theme-toggle" aria-label="Переключить тему">◐ тема</button>
+  </aside>
+
+  <main class="main">
+
+    <!-- ── Обзор ───────────────────────────────────── -->
+    <section class="view" id="view-overview">
+      <div class="eyebrow">сводка</div>
+      <h1 class="view-title">Обзор</h1>
+      <p class="view-sub">Раздел 9 курса Stepik «Python для начинающих» — строки. Дальше самостоятельные этапы до backend-разработчика.</p>
+
+      <div class="stat-grid">
+        <div class="tile accent">
+          <div class="t-num" id="ov-streak">—</div>
+          <div class="t-cap">стрик, дней</div>
+        </div>
+        <div class="tile">
+          <div class="t-num" id="ov-record">—</div>
+          <div class="t-cap">рекорд стрика</div>
+        </div>
+        <div class="tile">
+          <div class="t-num" id="ov-tasks">—</div>
+          <div class="t-cap">задач разобрано</div>
+        </div>
+        <div class="tile">
+          <div class="t-num" id="ov-dl">—<span class="unit">дн.</span></div>
+          <div class="t-cap">до дедлайна</div>
+        </div>
+      </div>
+
       <div class="card">
         <div class="card-head">
-          <span class="card-title">Синтаксис Python</span>
-          <span class="status-pill progress">в процессе</span>
+          <span class="card-title">Дедлайн раздела</span>
+          <span class="status-pill progress" id="ov-dl-pill">в графике</span>
         </div>
-        <p class="card-desc">Курс Stepik «Python для начинающих» — раздел 9 из ~15 (строки): темы 9.1–9.4 пройдены, 9.5 (Unicode, ord/chr) в процессе. Разобрана 31 задача в practice/.</p>
-        <ul class="topics">
-          <li><button class="topic-btn covered has-note" data-topic="types">типы данных<span class="chevron">▾</span></button></li>
-          <li><button class="topic-btn covered has-note" data-topic="branching">ветвления<span class="chevron">▾</span></button></li>
-          <li><button class="topic-btn covered has-note" data-topic="loops">циклы<span class="chevron">▾</span></button></li>
-          <li><button class="topic-btn covered has-note" data-topic="strings">строки<span class="chevron">▾</span></button></li>
-          <li><button class="topic-btn seen has-note" data-topic="collections">списки / кортежи<span class="chevron">▾</span></button></li>
-          <li><button class="topic-btn seen has-note" data-topic="collections">словари<span class="chevron">▾</span></button></li>
-          <li><button class="topic-btn pending" disabled>функции</button></li>
-          <li><button class="topic-btn pending" disabled>исключения</button></li>
-          <li><button class="topic-btn pending" disabled>файлы</button></li>
-        </ul>
-        <div class="note">Через ChatGPT (май–июль) забежал вперёд программы: трогал списки, словари, comprehensions, map / lambda — помечено «знаком, не закреплено». Отдельно уверенно спрашивает про асимптотику: O(1), O(n), O(n²).</div>
+        <div class="dl-line">
+          <span>Цель: <strong id="ov-dl-goal">раздел 9 «Строки»</strong> до <span class="dl-big" id="ov-dl-date">—</span></span>
+        </div>
+        <div class="dl-track"><div class="dl-fill" id="ov-dl-fill"></div></div>
+        <div class="dl-note" id="ov-dl-note"></div>
       </div>
-    </div>
 
-    <div class="stage">
-      <div class="stage-node">1</div>
-      <div class="card">
+      <div class="card mini" id="ov-mini-card" role="button" tabindex="0" aria-label="Открыть календарь занятий">
         <div class="card-head">
-          <span class="card-title">ООП и продвинутый Python</span>
-          <span class="status-pill todo">впереди</span>
+          <span class="card-title">Последние недели</span>
+          <span class="status-pill todo">весь календарь →</span>
         </div>
-        <p class="card-desc">Дополняем Stepik своими материалами, если курс не закроет глубоко.</p>
-        <ul class="topics">
-          <li><button class="topic-btn pending" disabled>классы</button></li>
-          <li><button class="topic-btn seen has-note" data-topic="advanced">comprehensions<span class="chevron">▾</span></button></li>
-          <li><button class="topic-btn pending" disabled>декораторы</button></li>
-          <li><button class="topic-btn seen has-note" data-topic="advanced">генераторы<span class="chevron">▾</span></button></li>
-          <li><button class="topic-btn pending" disabled>context manager'ы</button></li>
-          <li><button class="topic-btn pending" disabled>itertools / functools</button></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="stage">
-      <div class="stage-node">2</div>
-      <div class="card">
-        <div class="card-head">
-          <span class="card-title">Git и контроль версий</span>
-          <span class="status-pill todo">впереди</span>
+        <div class="hm-flex">
+          <div class="hm-wrap">
+            <div class="heatmap" id="mini-heatmap" aria-hidden="true"></div>
+          </div>
         </div>
-        <p class="card-desc">Сначала локально, GitHub — отдельным шагом позже.</p>
-        <ul class="topics">
-          <li><button class="topic-btn pending" disabled>коммиты</button></li>
-          <li><button class="topic-btn pending" disabled>ветки</button></li>
-          <li><button class="topic-btn pending" disabled>история</button></li>
-          <li><button class="topic-btn pending" disabled>GitHub</button></li>
-        </ul>
       </div>
-    </div>
+    </section>
 
-    <div class="stage">
-      <div class="stage-node">3</div>
-      <div class="card">
-        <div class="card-head">
-          <span class="card-title">SQL и базы данных</span>
-          <span class="status-pill todo">впереди</span>
+    <!-- ── Календарь ───────────────────────────────── -->
+    <section class="view" id="view-calendar" hidden>
+      <div class="eyebrow">активность</div>
+      <h1 class="view-title">Календарь занятий</h1>
+      <p class="view-sub">Каждый квадрат — день. Чем темнее фиолетовый, тем больше сделано: число задач и новизна темы. Нажми день, чтобы увидеть детали.</p>
+
+      <div class="cal-grid">
+        <div class="card">
+          <div class="hm-flex">
+            <div class="hm-days" aria-hidden="true"><span>пн</span><span>ср</span><span>пт</span></div>
+            <div class="hm-wrap">
+              <div class="hm-months" id="cal-months"></div>
+              <div class="heatmap" id="cal-heatmap" role="img" aria-label="Календарь дней занятий: чем темнее клетка, тем больше сделано за день"></div>
+            </div>
+          </div>
+          <div class="hm-foot">
+            <span>учёт с 11 июля — раньше занимался прямо на Stepik, тех данных нет</span>
+            <span class="hm-scale" aria-hidden="true">меньше
+              <i style="background: var(--heat-0)"></i>
+              <i style="background: var(--heat-1)"></i>
+              <i style="background: var(--heat-2)"></i>
+              <i style="background: var(--heat-3)"></i>
+              <i style="background: var(--heat-4)"></i>
+              больше</span>
+          </div>
         </div>
-        <p class="card-desc">SQLite → PostgreSQL.</p>
-        <ul class="topics">
-          <li><button class="topic-btn pending" disabled>CRUD</button></li>
-          <li><button class="topic-btn pending" disabled>проектирование схем</button></li>
-          <li><button class="topic-btn pending" disabled>JOIN'ы</button></li>
-        </ul>
-      </div>
-    </div>
 
-    <div class="stage">
-      <div class="stage-node">4</div>
-      <div class="card">
-        <div class="card-head">
-          <span class="card-title">Тестирование</span>
-          <span class="status-pill todo">впереди</span>
+        <aside class="day-detail" id="day-detail" aria-live="polite"></aside>
+      </div>
+    </section>
+
+    <!-- ── Дорожная карта ──────────────────────────── -->
+    <section class="view" id="view-roadmap" hidden>
+      <div class="eyebrow">python → backend developer</div>
+      <h1 class="view-title">Дорожная карта</h1>
+      <p class="view-sub">Stepik закрывает синтаксис (этап 0). Дальше — самостоятельные этапы. Нажми на тему с ▾, чтобы открыть конспект.</p>
+
+      <div class="overview-mini-track">
+        <span class="overview-label">Этап 0 из 9</span>
+        <div class="overview-track"><div class="overview-fill" style="--pct: 9%"></div></div>
+        <span class="overview-label">~9%</span>
+      </div>
+
+      <div class="legend">
+        <span><span class="dot done"></span>пройдено</span>
+        <span><span class="dot seen"></span>знаком, не закреплено</span>
+        <span><span class="dot todo"></span>впереди</span>
+      </div>
+
+      <div class="stages" style="margin-top: 1.6rem;">
+
+        <div class="stage progress">
+          <div class="stage-node">0</div>
+          <div class="card">
+            <div class="card-head">
+              <span class="card-title">Синтаксис Python</span>
+              <span class="status-pill progress">в процессе</span>
+            </div>
+            <p class="card-desc">Курс Stepik «Python для начинающих» — раздел 9 из ~15 (строки): темы 9.1–9.4 пройдены, 9.5 (Unicode, ord/chr) в процессе. Разобрана 31 задача в practice/.</p>
+            <ul class="topics">
+              <li><button class="topic-btn covered has-note" data-topic="types">типы данных<span class="chevron">▾</span></button></li>
+              <li><button class="topic-btn covered has-note" data-topic="branching">ветвления<span class="chevron">▾</span></button></li>
+              <li><button class="topic-btn covered has-note" data-topic="loops">циклы<span class="chevron">▾</span></button></li>
+              <li><button class="topic-btn covered has-note" data-topic="strings">строки<span class="chevron">▾</span></button></li>
+              <li><button class="topic-btn seen has-note" data-topic="collections">списки / кортежи<span class="chevron">▾</span></button></li>
+              <li><button class="topic-btn seen has-note" data-topic="collections">словари<span class="chevron">▾</span></button></li>
+              <li><button class="topic-btn pending" disabled>функции</button></li>
+              <li><button class="topic-btn pending" disabled>исключения</button></li>
+              <li><button class="topic-btn pending" disabled>файлы</button></li>
+            </ul>
+            <div class="note">Через ChatGPT (май–июль) забежал вперёд программы: трогал списки, словари, comprehensions, map / lambda — помечено «знаком, не закреплено». Отдельно уверенно спрашивает про асимптотику: O(1), O(n), O(n²).</div>
+          </div>
         </div>
-        <p class="card-desc">pytest — привычка тестировать код с ранних практик.</p>
-        <ul class="topics">
-          <li><button class="topic-btn pending" disabled>pytest</button></li>
-        </ul>
-      </div>
-    </div>
 
-    <div class="stage">
-      <div class="stage-node">5</div>
-      <div class="card">
-        <div class="card-head">
-          <span class="card-title">Backend-фреймворк</span>
-          <span class="status-pill todo">впереди</span>
+        <div class="stage">
+          <div class="stage-node">1</div>
+          <div class="card">
+            <div class="card-head">
+              <span class="card-title">ООП и продвинутый Python</span>
+              <span class="status-pill todo">впереди</span>
+            </div>
+            <p class="card-desc">Дополняем Stepik своими материалами, если курс не закроет глубоко.</p>
+            <ul class="topics">
+              <li><button class="topic-btn pending" disabled>классы</button></li>
+              <li><button class="topic-btn seen has-note" data-topic="advanced">comprehensions<span class="chevron">▾</span></button></li>
+              <li><button class="topic-btn pending" disabled>декораторы</button></li>
+              <li><button class="topic-btn seen has-note" data-topic="advanced">генераторы<span class="chevron">▾</span></button></li>
+              <li><button class="topic-btn pending" disabled>context manager'ы</button></li>
+              <li><button class="topic-btn pending" disabled>itertools / functools</button></li>
+            </ul>
+          </div>
         </div>
-        <p class="card-desc">FastAPI сначала (типизация, async, чище объясняет REST), затем Django при необходимости.</p>
-        <ul class="topics">
-          <li><button class="topic-btn pending" disabled>FastAPI</button></li>
-          <li><button class="topic-btn pending" disabled>Django</button></li>
-        </ul>
-      </div>
-    </div>
 
-    <div class="stage">
-      <div class="stage-node">6</div>
-      <div class="card">
-        <div class="card-head">
-          <span class="card-title">REST API и аутентификация</span>
-          <span class="status-pill todo">впереди</span>
+        <div class="stage">
+          <div class="stage-node">2</div>
+          <div class="card">
+            <div class="card-head">
+              <span class="card-title">Git и контроль версий</span>
+              <span class="status-pill todo">впереди</span>
+            </div>
+            <p class="card-desc">Сначала локально, GitHub — отдельным шагом позже.</p>
+            <ul class="topics">
+              <li><button class="topic-btn pending" disabled>коммиты</button></li>
+              <li><button class="topic-btn pending" disabled>ветки</button></li>
+              <li><button class="topic-btn pending" disabled>история</button></li>
+              <li><button class="topic-btn pending" disabled>GitHub</button></li>
+            </ul>
+          </div>
         </div>
-        <p class="card-desc">Проектирование API, авторизация пользователей.</p>
-        <ul class="topics">
-          <li><button class="topic-btn pending" disabled>REST design</button></li>
-          <li><button class="topic-btn pending" disabled>JWT / OAuth</button></li>
-        </ul>
-      </div>
-    </div>
 
-    <div class="stage">
-      <div class="stage-node">7</div>
-      <div class="card">
-        <div class="card-head">
-          <span class="card-title">Docker</span>
-          <span class="status-pill todo">впереди</span>
+        <div class="stage">
+          <div class="stage-node">3</div>
+          <div class="card">
+            <div class="card-head">
+              <span class="card-title">SQL и базы данных</span>
+              <span class="status-pill todo">впереди</span>
+            </div>
+            <p class="card-desc">SQLite → PostgreSQL.</p>
+            <ul class="topics">
+              <li><button class="topic-btn pending" disabled>CRUD</button></li>
+              <li><button class="topic-btn pending" disabled>проектирование схем</button></li>
+              <li><button class="topic-btn pending" disabled>JOIN'ы</button></li>
+            </ul>
+          </div>
         </div>
-        <p class="card-desc">Контейнеризация простого приложения.</p>
-        <ul class="topics">
-          <li><button class="topic-btn pending" disabled>Docker</button></li>
-        </ul>
-      </div>
-    </div>
 
-    <div class="stage">
-      <div class="stage-node">8</div>
-      <div class="card">
-        <div class="card-head">
-          <span class="card-title">Кэширование и фоновые задачи</span>
-          <span class="status-pill todo">впереди</span>
+        <div class="stage">
+          <div class="stage-node">4</div>
+          <div class="card">
+            <div class="card-head">
+              <span class="card-title">Тестирование</span>
+              <span class="status-pill todo">впереди</span>
+            </div>
+            <p class="card-desc">pytest — привычка тестировать код с ранних практик.</p>
+            <ul class="topics"><li><button class="topic-btn pending" disabled>pytest</button></li></ul>
+          </div>
         </div>
-        <p class="card-desc">Ознакомительно.</p>
-        <ul class="topics">
-          <li><button class="topic-btn pending" disabled>Redis</button></li>
-          <li><button class="topic-btn pending" disabled>Celery / RQ</button></li>
-        </ul>
-      </div>
-    </div>
 
-    <div class="stage">
-      <div class="stage-node">9</div>
-      <div class="card">
-        <div class="card-head">
-          <span class="card-title">Деплой и CI/CD</span>
-          <span class="status-pill todo">впереди</span>
+        <div class="stage">
+          <div class="stage-node">5</div>
+          <div class="card">
+            <div class="card-head">
+              <span class="card-title">Backend-фреймворк</span>
+              <span class="status-pill todo">впереди</span>
+            </div>
+            <p class="card-desc">FastAPI сначала (типизация, async, чище объясняет REST), затем Django при необходимости.</p>
+            <ul class="topics">
+              <li><button class="topic-btn pending" disabled>FastAPI</button></li>
+              <li><button class="topic-btn pending" disabled>Django</button></li>
+            </ul>
+          </div>
         </div>
-        <p class="card-desc">Ознакомительно, не глубоко.</p>
-        <ul class="topics">
-          <li><button class="topic-btn pending" disabled>GitHub Actions</button></li>
-          <li><button class="topic-btn pending" disabled>облако</button></li>
-        </ul>
+
+        <div class="stage">
+          <div class="stage-node">6</div>
+          <div class="card">
+            <div class="card-head">
+              <span class="card-title">REST API и аутентификация</span>
+              <span class="status-pill todo">впереди</span>
+            </div>
+            <p class="card-desc">Проектирование API, авторизация пользователей.</p>
+            <ul class="topics">
+              <li><button class="topic-btn pending" disabled>REST design</button></li>
+              <li><button class="topic-btn pending" disabled>JWT / OAuth</button></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="stage">
+          <div class="stage-node">7</div>
+          <div class="card">
+            <div class="card-head">
+              <span class="card-title">Docker</span>
+              <span class="status-pill todo">впереди</span>
+            </div>
+            <p class="card-desc">Контейнеризация простого приложения.</p>
+            <ul class="topics"><li><button class="topic-btn pending" disabled>Docker</button></li></ul>
+          </div>
+        </div>
+
+        <div class="stage">
+          <div class="stage-node">8</div>
+          <div class="card">
+            <div class="card-head">
+              <span class="card-title">Кэширование и фоновые задачи</span>
+              <span class="status-pill todo">впереди</span>
+            </div>
+            <p class="card-desc">Ознакомительно.</p>
+            <ul class="topics">
+              <li><button class="topic-btn pending" disabled>Redis</button></li>
+              <li><button class="topic-btn pending" disabled>Celery / RQ</button></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="stage">
+          <div class="stage-node">9</div>
+          <div class="card">
+            <div class="card-head">
+              <span class="card-title">Деплой и CI/CD</span>
+              <span class="status-pill todo">впереди</span>
+            </div>
+            <p class="card-desc">Ознакомительно, не глубоко.</p>
+            <ul class="topics">
+              <li><button class="topic-btn pending" disabled>GitHub Actions</button></li>
+              <li><button class="topic-btn pending" disabled>облако</button></li>
+            </ul>
+          </div>
+        </div>
+
       </div>
-    </div>
+      <footer class="note" style="border: none; text-align: left; margin-top: 1.5rem;">обновлено 2026-07-16 · пет-проект стартует после этапа 1</footer>
+    </section>
 
-  </div>
-
-  <footer class="meta">обновлено 2026-07-16 · пет-проект стартует после этапа 1</footer>
+  </main>
 </div>
 
 <div class="overlay" id="overlay">
@@ -973,6 +865,7 @@
 </div>
 
 <script>
+  /* ── Данные тем (конспекты) ─────────────────────────────── */
   const NOTES = {
     types: {
       title: "Типы данных",
@@ -987,7 +880,7 @@ tpl = (1, 2)     # tuple
 d = {"a": 1}     # dict
 st = {1, 2}      # set
 
-type(x)          # <class 'int'>
+type(x)          # &lt;class 'int'&gt;
 isinstance(x, int)  # True</code></pre>
         <h3>Преобразование</h3>
         <pre><code>int("5")     # 5
@@ -1002,18 +895,18 @@ bool(0)      # False, 0 и "" всегда False</code></pre>
         <p>if / elif / else — выполняется первая подошедшая ветка.</p>
         <pre><code>age = 20
 
-if age < 18:
+if age &lt; 18:
     print("несовершеннолетний")
-elif age < 65:
+elif age &lt; 65:
     print("взрослый")
 else:
     print("пенсионер")</code></pre>
         <h3>Тернарный (в одну строку)</h3>
-        <pre><code>status = "взрослый" if age >= 18 else "ребёнок"</code></pre>
+        <pre><code>status = "взрослый" if age &gt;= 18 else "ребёнок"</code></pre>
         <h3>Полезно помнить</h3>
         <ul>
           <li>and / or / not — логические операторы</li>
-          <li>сравнения можно объединять: <code>0 < x < 10</code></li>
+          <li>сравнения можно объединять: <code>0 &lt; x &lt; 10</code></li>
         </ul>
       `
     },
@@ -1022,7 +915,7 @@ else:
       html: `
         <pre><code># while — пока условие верно
 i = 0
-while i < 5:
+while i &lt; 5:
     print(i)
     i += 1
 
@@ -1048,7 +941,6 @@ for ch in "abc":
       title: "Строки — практика 09.1–09.3",
       html: `
         <p>15 упражнений Stepik, раздел 9. Ниже — реальные приёмы из <code>practice/09/</code>, а не общая теория.</p>
-
         <h3>Индексация и срезы</h3>
         <p class="file-tag">09_02_slices_1.py, 09_02_slices_2.py — полный проход по видам срезов:</p>
         <pre><code>text[0]        # первый символ
@@ -1066,10 +958,6 @@ print("YES" if word == word[::-1] else "NO")</code></pre>
         <pre><code>mid = (len(text) + 1) // 2
 first, second = text[:mid], text[mid:]
 print(second + first)</code></pre>
-        <p class="file-tag">09_01_v_stolbik_2.py — разворот через срез + перебор:</p>
-        <pre><code>for char in text[::-1]:
-    print(char)</code></pre>
-
         <h3>Методы строк</h3>
         <p class="file-tag">09_03_swap_case.py:</p>
         <pre><code>print(text.swapcase())</code></pre>
@@ -1083,40 +971,13 @@ ok = name[0].isupper() and surname[0].isupper()</code></pre>
         break
 else:
     print("Цифр нет")</code></pre>
-        <p class="file-tag">09_01_glasnye_soglasnye.py — lower() + in по набору символов:</p>
-        <pre><code>text = input().lower()
-vowels = "ауоыиэяюе"
-if ch in vowels:
-    count += 1</code></pre>
-
-        <h3>Перебор строк и enumerate</h3>
-        <p class="file-tag">09_01_po_odnomu.py — enumerate со start=1:</p>
-        <pre><code>for index, ch in enumerate(text, start=1):
-    print(f"{index}) {ch}")</code></pre>
-        <p class="file-tag">09_01_summa_cifr.py, 09_01_skolko_raz.py, 09_01_odinakovye_sosedi.py — накопление счётчиков и сравнение соседних символов:</p>
-        <pre><code>total = 0
-for digit in num_str:
-    total += int(digit)          # summa_cifr
-
-for i in range(len(line) - 1):
-    if line[i] == line[i + 1]:   # odinakovye_sosedi
-        count += 1</code></pre>
-
-        <h3>while + срезы</h3>
-        <p class="file-tag">09_01_decimal_to_binary.py — перевод в двоичную систему вручную:</p>
-        <pre><code>bits = []
-while num > 0:
-    bits.append(num % 2)
-    num //= 2
-print(*bits[::-1], sep="")</code></pre>
-
         <div class="panel-foot">15 упражнений · 09.1–09.3 · обновлено 2026-07-12</div>
       `
     },
     collections: {
       title: "Списки, кортежи, словари — забег вперёд",
       html: `
-        <p>На Stepik эти темы ещё не пройдены, но в чатах с ChatGPT (май–июль) ты их активно трогал. Помечены как «знаком, но не закреплено»: на ревью я оставляю решения на твоём текущем уровне, а эти конструкции иногда показываю как бонус «на вырост».</p>
+        <p>На Stepik эти темы ещё не пройдены, но в чатах с ChatGPT (май–июль) ты их активно трогал. Помечены как «знаком, но не закреплено».</p>
         <h3>Списки — что уже встречал</h3>
         <pre><code>nums = []
 nums.append(x)          # добавить в конец
@@ -1139,51 +1000,17 @@ d["a"]                  # доступ по ключу → 1</code></pre>
         <p>Видел через ChatGPT, разбирал, как это работает, но по собственным словам пока не закрепил. Официально появятся на этапе 1.</p>
         <h3>Списковые включения и генераторы</h3>
         <pre><code>squares = [i * i for i in range(10)]
-total = sum(x for x in nums if x > 0)</code></pre>
+total = sum(x for x in nums if x &gt; 0)</code></pre>
         <h3>map / filter / lambda</h3>
         <pre><code>nums = list(map(int, parts))
-neg = list(filter(lambda x: x < 0, nums))</code></pre>
+neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
         <div class="panel-foot">знаком, не закреплено · этап 1</div>
       `
     }
   };
 
-  const overlay = document.getElementById("overlay");
-  const panelTitle = document.getElementById("panel-title");
-  const panelBody = document.getElementById("panel-body");
-  let lastFocused = null;
-
-  function openNote(key) {
-    const note = NOTES[key];
-    if (!note) return;
-    panelTitle.textContent = note.title;
-    panelBody.innerHTML = note.html;
-    lastFocused = document.activeElement;
-    overlay.classList.add("open");
-    document.getElementById("panel-close").focus();
-  }
-
-  function closeNote() {
-    overlay.classList.remove("open");
-    if (lastFocused) lastFocused.focus();
-  }
-
-  document.querySelectorAll(".topic-btn.has-note").forEach(btn => {
-    btn.addEventListener("click", () => openNote(btn.dataset.topic));
-  });
-
-  document.getElementById("panel-close").addEventListener("click", closeNote);
-  overlay.addEventListener("click", e => {
-    if (e.target === overlay) closeNote();
-  });
-  document.addEventListener("keydown", e => {
-    if (e.key === "Escape" && overlay.classList.contains("open")) closeNote();
-  });
-
-  /* ── Пульс занятий ─────────────────────────────────────────────
-     Данные дублируются из study_python/coach/activity.json при
-     каждом передеплое. level 1–4 — оценка объёма и сложности дня. */
-
+  /* ── Журнал активности ──────────────────────────────────
+     Дублируется из study_python/coach/activity.json. */
   const TRACKING_SINCE = "2026-07-11";
   const ACTIVITY = {
     "2026-07-11": { level: 3, tasks: 7,  note: "9.1 — 7 задач" },
@@ -1198,93 +1025,124 @@ neg = list(filter(lambda x: x < 0, nums))</code></pre>
     date: "2026-07-27",
     note: "оценка по темпу 11–16 июля (~0,7 темы в день, осталось ~7 тем); пересчитывается при каждом обновлении"
   };
-  const GRID_START = "2026-05-04"; /* понедельник, чтобы был виден контекст пары месяцев */
+  const GRID_START = "2026-05-04";
+  const LEVEL_LABEL = { 1: "лёгкий день", 2: "обычная сессия", 3: "плотная сессия", 4: "большой день" };
   const MONTHS_RU = ["янв", "фев", "мар", "апр", "май", "июн", "июл", "авг", "сен", "окт", "ноя", "дек"];
 
-  function ymd(d) {
-    const p = n => String(n).padStart(2, "0");
-    return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`;
-  }
-  function parseYmd(s) {
-    const [y, m, d] = s.split("-").map(Number);
-    return new Date(y, m - 1, d);
-  }
-  function addDays(d, n) {
-    const c = new Date(d);
-    c.setDate(c.getDate() + n);
-    return c;
-  }
-  function fmtRu(d) {
-    return d.toLocaleDateString("ru-RU", { day: "numeric", month: "long" });
-  }
+  const pad = n => String(n).padStart(2, "0");
+  const ymd = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+  const parseYmd = s => { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d); };
+  const addDays = (d, n) => { const c = new Date(d); c.setDate(c.getDate() + n); return c; };
+  const fmtRu = d => d.toLocaleDateString("ru-RU", { day: "numeric", month: "long" });
 
   const today = new Date();
   const todayKey = ymd(today);
 
-  /* календарь */
-  const grid = document.getElementById("heatmap");
-  const monthsRow = document.getElementById("hm-months");
-  const CELL = 14; /* 11px клетка + 3px зазор */
-  let cursor = parseYmd(GRID_START);
-  let col = 0, prevMonth = -1;
-  const weekEnd = addDays(today, (7 - ((today.getDay() + 6) % 7 + 1)));
-  while (cursor <= weekEnd) {
-    const dow = (cursor.getDay() + 6) % 7; /* 0 = понедельник */
-    if (dow === 0) {
-      if (cursor.getMonth() !== prevMonth) {
+  /* ── Рендер heatmap ─────────────────────────────────────── */
+  function renderHeatmap(grid, startKey, opts) {
+    opts = opts || {};
+    grid.textContent = "";
+    let cursor = parseYmd(startKey);
+    /* выровнять старт на понедельник */
+    while (((cursor.getDay() + 6) % 7) !== 0) cursor = addDays(cursor, -1);
+    const weekEnd = addDays(today, 6 - ((today.getDay() + 6) % 7));
+    let col = 0, prevMonth = -1;
+    while (cursor <= weekEnd) {
+      const dow = (cursor.getDay() + 6) % 7;
+      if (dow === 0 && opts.months && cursor.getMonth() !== prevMonth && cursor <= today) {
         const lbl = document.createElement("span");
         lbl.textContent = MONTHS_RU[cursor.getMonth()];
-        lbl.style.left = (col * CELL) + "px";
-        monthsRow.appendChild(lbl);
+        lbl.style.left = (col * 16) + "px";
+        opts.months.appendChild(lbl);
         prevMonth = cursor.getMonth();
       }
+      const key = ymd(cursor);
+      const cell = document.createElement("div");
+      cell.className = "hm-cell";
+      cell.dataset.date = key;
+      if (cursor > today) cell.className += " future";
+      else if (ACTIVITY[key]) cell.className += " l" + ACTIVITY[key].level;
+      else if (key < TRACKING_SINCE) cell.className += " nodata";
+      if (key === todayKey) cell.className += " today";
+      if (opts.clickable) cell.className += " clickable";
+      grid.appendChild(cell);
+      if (dow === 6) col += 1;
+      cursor = addDays(cursor, 1);
     }
-    const key = ymd(cursor);
-    const cell = document.createElement("div");
-    cell.className = "hm-cell";
-    cell.dataset.date = key;
-    if (cursor > today) {
-      cell.className += " future";
-    } else if (ACTIVITY[key]) {
-      cell.className += " l" + ACTIVITY[key].level;
-    } else if (key < TRACKING_SINCE) {
-      cell.className += " nodata";
-    }
-    if (key === todayKey) cell.className += " today";
-    grid.appendChild(cell);
-    if (dow === 6) col += 1;
-    cursor = addDays(cursor, 1);
   }
 
-  /* тултип */
+  const calGrid = document.getElementById("cal-heatmap");
+  const calMonths = document.getElementById("cal-months");
+  renderHeatmap(calGrid, GRID_START, { months: calMonths, clickable: true });
+  renderHeatmap(document.getElementById("mini-heatmap"), ymd(addDays(today, -34)), {});
+
+  /* ── Тултип ─────────────────────────────────────────────── */
   const tip = document.createElement("div");
   tip.className = "hm-tip";
   tip.hidden = true;
   document.body.appendChild(tip);
-  grid.addEventListener("mouseover", e => {
+  function cellText(key) {
+    const day = ACTIVITY[key];
+    if (day) return day.note;
+    if (key < TRACKING_SINCE) return "до начала учёта";
+    return "занятий не было";
+  }
+  calGrid.addEventListener("mouseover", e => {
     const cell = e.target.closest(".hm-cell");
     if (!cell || cell.classList.contains("future")) return;
     const key = cell.dataset.date;
-    const day = ACTIVITY[key];
-    const dateStr = fmtRu(parseYmd(key));
-    let text;
-    if (day) {
-      text = day.note;
-    } else if (key < TRACKING_SINCE) {
-      text = "до начала учёта";
-    } else {
-      text = "занятий не было";
-    }
-    tip.innerHTML = `<span class="tip-date">${dateStr}</span><br>${text}`;
+    tip.innerHTML = `<span class="tip-date">${fmtRu(parseYmd(key))}</span><br>${cellText(key)}`;
     tip.hidden = false;
     const r = cell.getBoundingClientRect();
     const tw = tip.offsetWidth;
     tip.style.left = Math.min(Math.max(r.left + r.width / 2 - tw / 2, 8), window.innerWidth - tw - 8) + "px";
     tip.style.top = (r.top - tip.offsetHeight - 8) + "px";
   });
-  grid.addEventListener("mouseleave", () => { tip.hidden = true; });
+  calGrid.addEventListener("mouseleave", () => { tip.hidden = true; });
 
-  /* стрик и счётчики */
+  /* ── Деталь дня ─────────────────────────────────────────── */
+  const detail = document.getElementById("day-detail");
+  let selectedKey = null;
+  function selectDay(key) {
+    if (selectedKey) {
+      const prev = calGrid.querySelector(`.hm-cell[data-date="${selectedKey}"]`);
+      if (prev) prev.classList.remove("selected");
+    }
+    selectedKey = key;
+    const cur = calGrid.querySelector(`.hm-cell[data-date="${key}"]`);
+    if (cur) cur.classList.add("selected");
+    const day = ACTIVITY[key];
+    const dateStr = parseYmd(key).toLocaleDateString("ru-RU", { day: "numeric", month: "long", weekday: "long" });
+    if (day) {
+      detail.innerHTML = `
+        <div class="dd-date">${key === todayKey ? "сегодня" : "день занятий"}</div>
+        <div class="dd-head">${dateStr}</div>
+        <div class="dd-metrics">
+          <div class="dd-metric"><div class="m-num">${day.tasks}</div><div class="m-cap">задач</div></div>
+          <div class="dd-metric"><div class="m-num">L${day.level}</div><div class="m-cap">интенсивность</div></div>
+        </div>
+        <div class="dd-note">${day.note}</div>
+        <div class="level-chip"><i style="background: var(--heat-${day.level})"></i>${LEVEL_LABEL[day.level]}</div>`;
+    } else {
+      const reason = key < TRACKING_SINCE
+        ? "До 11 июля занятия шли прямо на Stepik — этих данных у панели нет."
+        : (key > todayKey ? "Этот день ещё не наступил." : "В этот день кода не было.");
+      detail.innerHTML = `
+        <div class="dd-date">нет данных</div>
+        <div class="dd-head">${dateStr}</div>
+        <div class="dd-empty">${reason}</div>`;
+    }
+  }
+  calGrid.addEventListener("click", e => {
+    const cell = e.target.closest(".hm-cell");
+    if (!cell || cell.classList.contains("future")) return;
+    selectDay(cell.dataset.date);
+  });
+  /* стартовая деталь — последний активный день */
+  const activeDays = Object.keys(ACTIVITY).sort();
+  selectDay(activeDays[activeDays.length - 1]);
+
+  /* ── Стрик и счётчики ───────────────────────────────────── */
   function streakEndingAt(startDate) {
     let n = 0, d = startDate;
     while (ACTIVITY[ymd(d)]) { n += 1; d = addDays(d, -1); }
@@ -1297,26 +1155,82 @@ neg = list(filter(lambda x: x < 0, nums))</code></pre>
     if (!ACTIVITY[ymd(addDays(d, 1))]) record = Math.max(record, streakEndingAt(d));
   });
   const totalTasks = Object.values(ACTIVITY).reduce((s, d) => s + d.tasks, 0);
-  document.getElementById("stat-streak").textContent = current;
-  document.getElementById("stat-record").textContent = record;
-  document.getElementById("stat-tasks").textContent = totalTasks;
 
-  /* дедлайн */
+  document.getElementById("side-streak-num").textContent = current;
+  document.getElementById("side-record").textContent = record;
+  document.getElementById("ov-streak").textContent = current;
+  document.getElementById("ov-record").textContent = record;
+  document.getElementById("ov-tasks").textContent = totalTasks;
+  if (current > 0) document.getElementById("side-flame").classList.add("live");
+
+  /* ── Дедлайн ────────────────────────────────────────────── */
   const dlDate = parseYmd(DEADLINE.date);
   const daysLeft = Math.round((dlDate - parseYmd(todayKey)) / 86400000);
-  const dl = document.getElementById("deadline");
-  const pill = document.getElementById("dl-pill");
-  let daysText;
-  if (daysLeft > 0) {
-    daysText = `осталось <span class="dl-days">${daysLeft} дн.</span>`;
-  } else if (daysLeft === 0) {
-    daysText = `<span class="dl-days">сегодня</span>`;
-  } else {
-    daysText = `просрочен на <span class="dl-days">${-daysLeft} дн.</span>`;
-    pill.textContent = "дедлайн прошёл";
-    pill.className = "status-pill active";
+  const startedKey = activeDays[0];
+  const totalSpan = Math.max(1, Math.round((dlDate - parseYmd(startedKey)) / 86400000));
+  const elapsed = Math.round((parseYmd(todayKey) - parseYmd(startedKey)) / 86400000);
+  const pct = Math.max(0, Math.min(100, Math.round(elapsed / totalSpan * 100)));
+
+  document.getElementById("ov-dl").innerHTML = (daysLeft >= 0 ? daysLeft : 0) + '<span class="unit">дн.</span>';
+  document.getElementById("ov-dl-goal").textContent = DEADLINE.goal;
+  document.getElementById("ov-dl-date").textContent = fmtRu(dlDate);
+  document.getElementById("ov-dl-fill").style.width = pct + "%";
+  document.getElementById("ov-dl-note").textContent = DEADLINE.note;
+  const dlPill = document.getElementById("ov-dl-pill");
+  if (daysLeft < 0) { dlPill.textContent = "дедлайн прошёл"; dlPill.className = "status-pill active"; }
+  else if (daysLeft <= 3) { dlPill.textContent = "финишная прямая"; dlPill.className = "status-pill active"; }
+
+  /* ── Переключение видов ─────────────────────────────────── */
+  const views = { overview: document.getElementById("view-overview"),
+                  calendar: document.getElementById("view-calendar"),
+                  roadmap: document.getElementById("view-roadmap") };
+  const navBtns = document.querySelectorAll(".nav-btn");
+  function showView(name) {
+    Object.entries(views).forEach(([k, el]) => { el.hidden = (k !== name); });
+    navBtns.forEach(b => b.classList.toggle("active", b.dataset.view === name));
+    if (location.hash.slice(1) !== name) history.replaceState(null, "", "#" + name);
+    document.querySelector(".main").scrollTo(0, 0);
+    window.scrollTo(0, 0);
   }
-  dl.innerHTML = `<span>Цель: ${DEADLINE.goal} до <span class="dl-days">${fmtRu(dlDate)}</span></span>
-    <span>·</span> <span>${daysText}</span>
-    <span class="dl-note">${DEADLINE.note}</span>`;
+  navBtns.forEach(b => b.addEventListener("click", () => showView(b.dataset.view)));
+  const miniCard = document.getElementById("ov-mini-card");
+  miniCard.addEventListener("click", () => showView("calendar"));
+  miniCard.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); showView("calendar"); } });
+  const initial = location.hash.slice(1);
+  showView(views[initial] ? initial : "overview");
+
+  /* ── Тема ───────────────────────────────────────────────── */
+  const root = document.documentElement;
+  document.getElementById("theme-toggle").addEventListener("click", () => {
+    const isDark = getComputedStyle(root).getPropertyValue("--bg").trim().toLowerCase().startsWith("#0");
+    const cur = root.getAttribute("data-theme");
+    root.setAttribute("data-theme", cur ? (cur === "dark" ? "light" : "dark") : (isDark ? "light" : "dark"));
+  });
+
+  /* ── Конспекты тем (модалка) ────────────────────────────── */
+  const overlay = document.getElementById("overlay");
+  const panelTitle = document.getElementById("panel-title");
+  const panelBody = document.getElementById("panel-body");
+  let lastFocused = null;
+  function openNote(key) {
+    const note = NOTES[key];
+    if (!note) return;
+    panelTitle.textContent = note.title;
+    panelBody.innerHTML = note.html;
+    lastFocused = document.activeElement;
+    overlay.classList.add("open");
+    document.getElementById("panel-close").focus();
+  }
+  function closeNote() {
+    overlay.classList.remove("open");
+    if (lastFocused) lastFocused.focus();
+  }
+  document.querySelectorAll(".topic-btn.has-note").forEach(btn => {
+    btn.addEventListener("click", () => openNote(btn.dataset.topic));
+  });
+  document.getElementById("panel-close").addEventListener("click", closeNote);
+  overlay.addEventListener("click", e => { if (e.target === overlay) closeNote(); });
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape" && overlay.classList.contains("open")) closeNote();
+  });
 </script>
