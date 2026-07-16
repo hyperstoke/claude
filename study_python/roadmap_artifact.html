@@ -14,6 +14,11 @@
     --now-bg: #FBF6E9;
     --now-border: #C9A227;
     --shadow: 0 1px 2px rgba(30,32,28,0.06), 0 1px 1px rgba(30,32,28,0.04);
+    --heat-0: #E4E5DF;
+    --heat-1: #CFDCC6;
+    --heat-2: #A3BE93;
+    --heat-3: #77A061;
+    --heat-4: #4A6B3D;
   }
 
   :root[data-theme="dark"] {
@@ -30,6 +35,11 @@
     --now-bg: #262214;
     --now-border: #A9842A;
     --shadow: 0 1px 3px rgba(0,0,0,0.4);
+    --heat-0: #23262B;
+    --heat-1: #2F4A28;
+    --heat-2: #44693B;
+    --heat-3: #618F4F;
+    --heat-4: #86B96D;
   }
 
   @media (prefers-color-scheme: dark) {
@@ -47,6 +57,11 @@
       --now-bg: #262214;
       --now-border: #A9842A;
       --shadow: 0 1px 3px rgba(0,0,0,0.4);
+      --heat-0: #23262B;
+      --heat-1: #2F4A28;
+      --heat-2: #44693B;
+      --heat-3: #618F4F;
+      --heat-4: #86B96D;
     }
   }
 
@@ -155,6 +170,211 @@
   .legend .dot.done { background: var(--rail-done); }
   .legend .dot.seen { background: var(--now-border); }
   .legend .dot.todo { background: var(--rail); }
+
+  .pulse {
+    background: var(--bg-raised);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 1.05rem 1.15rem 1.1rem;
+    box-shadow: var(--shadow);
+    margin-bottom: 2.8rem;
+  }
+
+  .pulse-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 0.9rem;
+  }
+
+  .pulse-stats {
+    display: flex;
+    gap: 1.8rem;
+    margin-bottom: 1rem;
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .stat-num {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 1.35rem;
+    font-weight: 650;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+
+  .stat-num .unit {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--ink-faint);
+    margin-left: 0.15rem;
+  }
+
+  .stat-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  .hm-flex {
+    display: flex;
+    gap: 0.45rem;
+    align-items: flex-end;
+  }
+
+  .hm-days {
+    display: grid;
+    grid-template-rows: repeat(7, 11px);
+    gap: 3px;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.6rem;
+    color: var(--ink-faint);
+    flex-shrink: 0;
+  }
+
+  .hm-days span:nth-child(1) { grid-row: 1; }
+  .hm-days span:nth-child(2) { grid-row: 3; }
+  .hm-days span:nth-child(3) { grid-row: 5; }
+
+  .hm-wrap {
+    overflow-x: auto;
+    padding-bottom: 2px;
+  }
+
+  .hm-months {
+    position: relative;
+    height: 15px;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.62rem;
+    color: var(--ink-faint);
+  }
+
+  .hm-months span {
+    position: absolute;
+    top: 0;
+    white-space: nowrap;
+  }
+
+  .heatmap {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 11px;
+    grid-template-rows: repeat(7, 11px);
+    gap: 3px;
+    width: max-content;
+  }
+
+  .hm-cell {
+    width: 11px;
+    height: 11px;
+    border-radius: 3px;
+    background: var(--heat-0);
+  }
+
+  .hm-cell.l1 { background: var(--heat-1); }
+  .hm-cell.l2 { background: var(--heat-2); }
+  .hm-cell.l3 { background: var(--heat-3); }
+  .hm-cell.l4 { background: var(--heat-4); }
+
+  .hm-cell.nodata {
+    background: transparent;
+    box-shadow: inset 0 0 0 1px var(--card-border);
+  }
+
+  .hm-cell.future {
+    background: transparent;
+  }
+
+  .hm-cell.today {
+    outline: 1.5px solid var(--now-border);
+    outline-offset: 1px;
+  }
+
+  .hm-cell:hover:not(.future) {
+    outline: 1.5px solid var(--accent);
+    outline-offset: 1px;
+  }
+
+  .hm-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 0.65rem;
+    font-size: 0.72rem;
+    color: var(--ink-faint);
+  }
+
+  .hm-scale {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    flex-shrink: 0;
+  }
+
+  .hm-scale i {
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+    display: block;
+  }
+
+  .deadline {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    margin-top: 0.9rem;
+    padding-top: 0.85rem;
+    border-top: 1px dashed var(--card-border);
+    font-size: 0.85rem;
+    color: var(--ink-dim);
+  }
+
+  .deadline .dl-days {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .deadline .dl-note {
+    flex-basis: 100%;
+    font-size: 0.74rem;
+    color: var(--ink-faint);
+  }
+
+  .hm-tip {
+    position: fixed;
+    z-index: 20;
+    background: var(--bg-raised);
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+    padding: 0.4rem 0.6rem;
+    font-size: 0.76rem;
+    color: var(--ink);
+    pointer-events: none;
+    max-width: 240px;
+  }
+
+  .hm-tip .tip-date {
+    color: var(--ink-faint);
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.68rem;
+  }
+
+  @media (max-width: 480px) {
+    .pulse-stats { gap: 1.2rem; }
+    .stat-num { font-size: 1.15rem; }
+  }
 
   .stages {
     position: relative;
@@ -533,6 +753,45 @@
     </div>
   </header>
 
+  <section class="pulse" aria-label="Пульс занятий: календарь активности, стрик и дедлайн">
+    <div class="pulse-head">
+      <span class="card-title">Пульс занятий</span>
+      <span class="status-pill progress" id="dl-pill">в графике</span>
+    </div>
+    <div class="pulse-stats">
+      <div class="stat">
+        <span class="stat-num" id="stat-streak">—</span>
+        <span class="stat-label">стрик, дней подряд</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num" id="stat-record">—</span>
+        <span class="stat-label">рекорд стрика</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num" id="stat-tasks">—</span>
+        <span class="stat-label">задач разобрано</span>
+      </div>
+    </div>
+    <div class="hm-flex">
+      <div class="hm-days" aria-hidden="true"><span>пн</span><span>ср</span><span>пт</span></div>
+      <div class="hm-wrap">
+        <div class="hm-months" id="hm-months"></div>
+        <div class="heatmap" id="heatmap" role="img" aria-label="Календарь дней занятий: чем темнее клетка, тем больше сделано за день"></div>
+      </div>
+    </div>
+    <div class="hm-foot">
+      <span>учёт с 11 июля — раньше занимался прямо на Stepik, тех данных нет</span>
+      <span class="hm-scale" aria-hidden="true">меньше
+        <i style="background: var(--heat-0)"></i>
+        <i style="background: var(--heat-1)"></i>
+        <i style="background: var(--heat-2)"></i>
+        <i style="background: var(--heat-3)"></i>
+        <i style="background: var(--heat-4)"></i>
+        больше</span>
+    </div>
+    <div class="deadline" id="deadline"></div>
+  </section>
+
   <div class="stages">
 
     <div class="stage progress">
@@ -542,7 +801,7 @@
           <span class="card-title">Синтаксис Python</span>
           <span class="status-pill progress">в процессе</span>
         </div>
-        <p class="card-desc">Курс Stepik «Python для начинающих» — раздел 9 из ~15 (строки). Разобрано 15 упражнений: подразделы 09.1–09.3.</p>
+        <p class="card-desc">Курс Stepik «Python для начинающих» — раздел 9 из ~15 (строки): темы 9.1–9.4 пройдены, 9.5 (Unicode, ord/chr) в процессе. Разобрана 31 задача в practice/.</p>
         <ul class="topics">
           <li><button class="topic-btn covered has-note" data-topic="types">типы данных<span class="chevron">▾</span></button></li>
           <li><button class="topic-btn covered has-note" data-topic="branching">ветвления<span class="chevron">▾</span></button></li>
@@ -700,7 +959,7 @@
 
   </div>
 
-  <footer class="meta">обновлено 2026-07-13 · пет-проект стартует после этапа 1</footer>
+  <footer class="meta">обновлено 2026-07-16 · пет-проект стартует после этапа 1</footer>
 </div>
 
 <div class="overlay" id="overlay">
@@ -920,4 +1179,144 @@ neg = list(filter(lambda x: x < 0, nums))</code></pre>
   document.addEventListener("keydown", e => {
     if (e.key === "Escape" && overlay.classList.contains("open")) closeNote();
   });
+
+  /* ── Пульс занятий ─────────────────────────────────────────────
+     Данные дублируются из study_python/coach/activity.json при
+     каждом передеплое. level 1–4 — оценка объёма и сложности дня. */
+
+  const TRACKING_SINCE = "2026-07-11";
+  const ACTIVITY = {
+    "2026-07-11": { level: 3, tasks: 7,  note: "9.1 — 7 задач" },
+    "2026-07-12": { level: 4, tasks: 13, note: "9.1–9.3 — 13 задач, coach" },
+    "2026-07-13": { level: 2, tasks: 3,  note: "9.3 — 3 задачи" },
+    "2026-07-14": { level: 2, tasks: 3,  note: "9.3 — 3 задачи, coach" },
+    "2026-07-15": { level: 2, tasks: 4,  note: "9.3 — 4 задачи (Mac и ПК), тема 9.4" },
+    "2026-07-16": { level: 2, tasks: 1,  note: "9.4 — задача, старт темы 9.5" }
+  };
+  const DEADLINE = {
+    goal: "раздел 9 «Строки»",
+    date: "2026-07-27",
+    note: "оценка по темпу 11–16 июля (~0,7 темы в день, осталось ~7 тем); пересчитывается при каждом обновлении"
+  };
+  const GRID_START = "2026-05-04"; /* понедельник, чтобы был виден контекст пары месяцев */
+  const MONTHS_RU = ["янв", "фев", "мар", "апр", "май", "июн", "июл", "авг", "сен", "окт", "ноя", "дек"];
+
+  function ymd(d) {
+    const p = n => String(n).padStart(2, "0");
+    return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`;
+  }
+  function parseYmd(s) {
+    const [y, m, d] = s.split("-").map(Number);
+    return new Date(y, m - 1, d);
+  }
+  function addDays(d, n) {
+    const c = new Date(d);
+    c.setDate(c.getDate() + n);
+    return c;
+  }
+  function fmtRu(d) {
+    return d.toLocaleDateString("ru-RU", { day: "numeric", month: "long" });
+  }
+
+  const today = new Date();
+  const todayKey = ymd(today);
+
+  /* календарь */
+  const grid = document.getElementById("heatmap");
+  const monthsRow = document.getElementById("hm-months");
+  const CELL = 14; /* 11px клетка + 3px зазор */
+  let cursor = parseYmd(GRID_START);
+  let col = 0, prevMonth = -1;
+  const weekEnd = addDays(today, (7 - ((today.getDay() + 6) % 7 + 1)));
+  while (cursor <= weekEnd) {
+    const dow = (cursor.getDay() + 6) % 7; /* 0 = понедельник */
+    if (dow === 0) {
+      if (cursor.getMonth() !== prevMonth) {
+        const lbl = document.createElement("span");
+        lbl.textContent = MONTHS_RU[cursor.getMonth()];
+        lbl.style.left = (col * CELL) + "px";
+        monthsRow.appendChild(lbl);
+        prevMonth = cursor.getMonth();
+      }
+    }
+    const key = ymd(cursor);
+    const cell = document.createElement("div");
+    cell.className = "hm-cell";
+    cell.dataset.date = key;
+    if (cursor > today) {
+      cell.className += " future";
+    } else if (ACTIVITY[key]) {
+      cell.className += " l" + ACTIVITY[key].level;
+    } else if (key < TRACKING_SINCE) {
+      cell.className += " nodata";
+    }
+    if (key === todayKey) cell.className += " today";
+    grid.appendChild(cell);
+    if (dow === 6) col += 1;
+    cursor = addDays(cursor, 1);
+  }
+
+  /* тултип */
+  const tip = document.createElement("div");
+  tip.className = "hm-tip";
+  tip.hidden = true;
+  document.body.appendChild(tip);
+  grid.addEventListener("mouseover", e => {
+    const cell = e.target.closest(".hm-cell");
+    if (!cell || cell.classList.contains("future")) return;
+    const key = cell.dataset.date;
+    const day = ACTIVITY[key];
+    const dateStr = fmtRu(parseYmd(key));
+    let text;
+    if (day) {
+      text = day.note;
+    } else if (key < TRACKING_SINCE) {
+      text = "до начала учёта";
+    } else {
+      text = "занятий не было";
+    }
+    tip.innerHTML = `<span class="tip-date">${dateStr}</span><br>${text}`;
+    tip.hidden = false;
+    const r = cell.getBoundingClientRect();
+    const tw = tip.offsetWidth;
+    tip.style.left = Math.min(Math.max(r.left + r.width / 2 - tw / 2, 8), window.innerWidth - tw - 8) + "px";
+    tip.style.top = (r.top - tip.offsetHeight - 8) + "px";
+  });
+  grid.addEventListener("mouseleave", () => { tip.hidden = true; });
+
+  /* стрик и счётчики */
+  function streakEndingAt(startDate) {
+    let n = 0, d = startDate;
+    while (ACTIVITY[ymd(d)]) { n += 1; d = addDays(d, -1); }
+    return n;
+  }
+  const current = ACTIVITY[todayKey] ? streakEndingAt(today) : streakEndingAt(addDays(today, -1));
+  let record = 0;
+  Object.keys(ACTIVITY).forEach(key => {
+    const d = parseYmd(key);
+    if (!ACTIVITY[ymd(addDays(d, 1))]) record = Math.max(record, streakEndingAt(d));
+  });
+  const totalTasks = Object.values(ACTIVITY).reduce((s, d) => s + d.tasks, 0);
+  document.getElementById("stat-streak").textContent = current;
+  document.getElementById("stat-record").textContent = record;
+  document.getElementById("stat-tasks").textContent = totalTasks;
+
+  /* дедлайн */
+  const dlDate = parseYmd(DEADLINE.date);
+  const daysLeft = Math.round((dlDate - parseYmd(todayKey)) / 86400000);
+  const dl = document.getElementById("deadline");
+  const pill = document.getElementById("dl-pill");
+  let daysText;
+  if (daysLeft > 0) {
+    daysText = `осталось <span class="dl-days">${daysLeft} дн.</span>`;
+  } else if (daysLeft === 0) {
+    daysText = `<span class="dl-days">сегодня</span>`;
+  } else {
+    daysText = `просрочен на <span class="dl-days">${-daysLeft} дн.</span>`;
+    pill.textContent = "дедлайн прошёл";
+    pill.className = "status-pill active";
+  }
+  dl.innerHTML = `<span>Цель: ${DEADLINE.goal} до <span class="dl-days">${fmtRu(dlDate)}</span></span>
+    <span>·</span> <span>${daysText}</span>
+    <span class="dl-note">${DEADLINE.note}</span>`;
 </script>
