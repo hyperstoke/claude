@@ -5,3 +5,4 @@
 - [Firecrawl usage policy](firecrawl-usage-policy.md) — Firecrawl CLI на ПК с 2026-07-15; только нестабильные факты, через research-skill с кэшем
 - [Python interpreter path](python-interpreter-path.md) — рабочий Python на ПК лежит в uv, системный `python` не работает
 - [Review style: soft nudge](review-style-soft-nudge.md) — «мягко подталкивать» для тем, что видел, но не закрепил
+- [Task docstring format](feedback-task-docstring-format.md) — условие coach-задач оформлять `"""..."""`, не `#`; примеры в кавычках + `#`-пояснения

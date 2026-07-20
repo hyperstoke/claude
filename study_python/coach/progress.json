@@ -24,6 +24,16 @@
       "ease": 2.5,
       "last_seen": "2026-07-20",
       "next_review": "2026-07-21"
+    },
+    "разбор строки: обход индексом, срез, chr": {
+      "attempts": 1,
+      "grades": [
+        5
+      ],
+      "interval_days": 1,
+      "ease": 2.6,
+      "last_seen": "2026-07-21",
+      "next_review": "2026-07-22"
     }
   }
 }

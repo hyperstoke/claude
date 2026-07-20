@@ -110,6 +110,14 @@
         { "name": "Шифр Цезаря", "kind": "пройдено", "file": "study_python/practice/09/09_05/09_05_shifr_cezarya.py" },
         { "name": "Контрольная буква (закрепление ord/chr)", "kind": "повторено", "file": "study_python/practice/coach_tasks/control_letter.py" }
       ]
+    },
+    "2026-07-21": {
+      "level": 1,
+      "tasks": 1,
+      "note": "9.5 — закрепление ручного разбора строки (разэкранирование CSV-поля), решено чисто",
+      "items": [
+        { "name": "Разэкранирование CSV-поля (закрепление разбора строки)", "kind": "повторено", "file": "study_python/practice/coach_tasks/csv_unescape.py" }
+      ]
     }
   }
 }
