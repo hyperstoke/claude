@@ -1,19 +1,115 @@
 {
-  "_comment": "Журнал активности для календаря на сайте прогресса. level 1-4 — оценка Claude: объём (число задач) + сложность/новизна темы. Обновляется в конце сессии, где пользователь писал код; данные дублируются в ACTIVITY внутри roadmap_artifact.html при передеплое. Дни 11-16 июля восстановлены по git и mtime файлов (оценка).",
+  "_comment": "Журнал активности для календаря на сайте прогресса. level 1-4 — оценка Claude: объём (число задач) + сложность/новизна темы. items — конкретные задачи дня: name, kind (изучено|пройдено|повторено|пример), file (путь от корня репо или null). Пишется СРАЗУ, как только за сессию написан код (не в конце сессии), затем прогоняется scripts/build_site.py и данные попадают в roadmap_artifact.html. Дни 11-18 июля восстановлены по заметкам, нумерации разделов и git-датам — привязка файл→день местами приблизительная.",
   "tracking_since": "2026-07-11",
   "deadline": {
-    "goal": "Закрыть раздел 9 «Строковый тип данных»",
+    "goal": "раздел 9 «Строки»",
     "date": "2026-07-27",
-    "basis": "оценка от 2026-07-16: пройдено 9.1–9.4 за 6 дней (~0.7 темы/день), осталось ~7 тем; пересчитывать при каждом обновлении"
+    "basis": "пересчёт от 2026-07-20: разделы 9.1–9.4 пройдены, 9.5 (ord/chr) в процессе; темп ~0.7 темы/день держится"
   },
   "days": {
-    "2026-07-11": { "level": 3, "tasks": 7, "note": "9.1 — 7 задач" },
-    "2026-07-12": { "level": 4, "tasks": 13, "note": "9.1–9.3 — 13 задач, coach" },
-    "2026-07-13": { "level": 2, "tasks": 3, "note": "9.3 — 3 задачи" },
-    "2026-07-14": { "level": 2, "tasks": 3, "note": "9.3 — 3 задачи, coach" },
-    "2026-07-15": { "level": 2, "tasks": 4, "note": "9.3 — 4 задачи (Mac и ПК), тема 9.4" },
-    "2026-07-16": { "level": 2, "tasks": 2, "note": "9.4 — задача, тема 9.5: ord/chr, соотнести символы, следующая буква" },
-    "2026-07-17": { "level": 1, "tasks": 2, "note": "9.5 — символы в диапазоне, простой шифр" },
-    "2026-07-18": { "level": 2, "tasks": 1, "note": "9.5 — самое тяжёлое слово (бегущий максимум, дался не сразу)" }
+    "2026-07-11": {
+      "level": 3,
+      "tasks": 7,
+      "note": "9.1 «Строки: индексация и срезы» — 7 задач",
+      "items": [
+        { "name": "Сумма цифр", "kind": "пройдено", "file": "study_python/practice/09/09_01/09_01_summa_cifr.py" },
+        { "name": "Цифра (вариант 2)", "kind": "пройдено", "file": "study_python/practice/09/09_01/09_01_cifra_2.py" },
+        { "name": "Сложение в столбик", "kind": "пройдено", "file": "study_python/practice/09/09_01/09_01_v_stolbik_2.py" },
+        { "name": "Перевод в двоичную систему", "kind": "пройдено", "file": "study_python/practice/09/09_01/09_01_decimal_to_binary.py" },
+        { "name": "Инициалы (ФИО)", "kind": "пройдено", "file": "study_python/practice/09/09_01/09_01_fio.py" },
+        { "name": "Гласные и согласные", "kind": "пройдено", "file": "study_python/practice/09/09_01/09_01_glasnye_soglasnye.py" },
+        { "name": "Сколько раз встречается", "kind": "пройдено", "file": "study_python/practice/09/09_01/09_01_skolko_raz.py" }
+      ]
+    },
+    "2026-07-12": {
+      "level": 4,
+      "tasks": 13,
+      "note": "9.1–9.3 — плотный день, 13 задач (в т.ч. первая coach-задача)",
+      "items": [
+        { "name": "Одинаковые соседи", "kind": "пройдено", "file": "study_python/practice/09/09_01/09_01_odinakovye_sosedi.py" },
+        { "name": "По одному", "kind": "пройдено", "file": "study_python/practice/09/09_01/09_01_po_odnomu.py" },
+        { "name": "Две половинки", "kind": "пройдено", "file": "study_python/practice/09/09_02/09_02_dve_polovinki.py" },
+        { "name": "Палиндром", "kind": "пройдено", "file": "study_python/practice/09/09_02/09_02_palindrom.py" },
+        { "name": "Срезы (1)", "kind": "пройдено", "file": "study_python/practice/09/09_02/09_02_slices_1.py" },
+        { "name": "Срезы (2)", "kind": "пройдено", "file": "study_python/practice/09/09_02/09_02_slices_2.py" },
+        { "name": "com или ru", "kind": "пройдено", "file": "study_python/practice/09/09_03/09_03_com_or_ru.py" },
+        { "name": "Хороший оттенок", "kind": "пройдено", "file": "study_python/practice/09/09_03/09_03_horoshiy_ottenok.py" },
+        { "name": "Количество слов", "kind": "пройдено", "file": "study_python/practice/09/09_03/09_03_kolichestvo_slov.py" },
+        { "name": "Количество цифр", "kind": "пройдено", "file": "study_python/practice/09/09_03/09_03_kolichestvo_tsifr.py" },
+        { "name": "Нижний регистр", "kind": "пройдено", "file": "study_python/practice/09/09_03/09_03_nizgniy_registr.py" },
+        { "name": "Смена регистра (swapcase)", "kind": "пройдено", "file": "study_python/practice/09/09_03/09_03_swap_case.py" },
+        { "name": "Заглавные буквы", "kind": "пройдено", "file": "study_python/practice/09/09_03/09_03_zaglavnye_bukvy.py" }
+      ]
+    },
+    "2026-07-13": {
+      "level": 2,
+      "tasks": 3,
+      "note": "9.3 «Методы строк. Часть 1» — 3 задачи",
+      "items": [
+        { "name": "Первый и последний", "kind": "пройдено", "file": "study_python/practice/09/09_03/09_03_pervii_i_poslednii.py" },
+        { "name": "Самый частотный символ", "kind": "пройдено", "file": "study_python/practice/09/09_03/09_03_samyy_chastotnyy_simvol.py" },
+        { "name": "Очень странные дела", "kind": "пройдено", "file": "study_python/practice/09/09_03/09_03_ochen_strannye_dela.py" }
+      ]
+    },
+    "2026-07-14": {
+      "level": 2,
+      "tasks": 3,
+      "note": "9.3 — 2 задачи + coach-практика (нормализация slug)",
+      "items": [
+        { "name": "Минутка генетики", "kind": "пройдено", "file": "study_python/practice/09/09_03/09_03_minutka_genetiki.py" },
+        { "name": "Плохие комментарии", "kind": "пройдено", "file": "study_python/practice/09/09_03/09_03_plohie_kommentarii.py" },
+        { "name": "Нормализация slug (coach)", "kind": "пример", "file": "study_python/practice/coach_tasks/normalize_slug.py" }
+      ]
+    },
+    "2026-07-15": {
+      "level": 2,
+      "tasks": 4,
+      "note": "9.3 остаток + coach (Mac и ПК), начало темы 9.4",
+      "items": [
+        { "name": "Автомобильный номер", "kind": "пройдено", "file": "study_python/practice/09/09_03/09_03_avtomobilnyy_nomer.py" },
+        { "name": "Проверка никнейма", "kind": "пройдено", "file": "study_python/practice/09/09_03/09_03_proverka_nikneima.py" },
+        { "name": "Удаление фрагмента", "kind": "пройдено", "file": "study_python/practice/09/09_03/09_03_udalenie_fragmenta.py" },
+        { "name": "Палиндром-запрос, дедуп (coach)", "kind": "пример", "file": "study_python/practice/coach_tasks/is_palindrome_query.py" }
+      ]
+    },
+    "2026-07-16": {
+      "level": 2,
+      "tasks": 3,
+      "note": "9.4 «Форматирование строк» + старт 9.5 (Unicode: ord/chr)",
+      "items": [
+        { "name": "Похудение", "kind": "пройдено", "file": "study_python/practice/09/09_04/09_04_pohudenie.py" },
+        { "name": "Соотнести символы и коды", "kind": "изучено", "file": "study_python/practice/09/09_05/09_05_sootnesti_simvoly_i_kody.py" },
+        { "name": "Следующая буква", "kind": "пройдено", "file": "study_python/practice/09/09_05/09_05_sleduyuschaya_bukva.py" }
+      ]
+    },
+    "2026-07-17": {
+      "level": 1,
+      "tasks": 2,
+      "note": "9.5 — символы в диапазоне, простой шифр",
+      "items": [
+        { "name": "Символы в диапазоне", "kind": "пройдено", "file": "study_python/practice/09/09_05/09_05_simvoly_v_diapazone.py" },
+        { "name": "Простой шифр", "kind": "пройдено", "file": "study_python/practice/09/09_05/09_05_prostoy_shifr.py" }
+      ]
+    },
+    "2026-07-18": {
+      "level": 2,
+      "tasks": 4,
+      "note": "9.5 — «Самое тяжёлое слово» (с трудом) + стоимость ответа/накрутка + сбой в системе",
+      "items": [
+        { "name": "Самое тяжёлое слово", "kind": "пройдено", "file": "study_python/practice/09/09_05/09_05_samoe_tyazheloe_slovo.py" },
+        { "name": "Стоимость ответа", "kind": "пройдено", "file": "study_python/practice/09/09_05/09_05_stoimost_otveta.py" },
+        { "name": "Накручиваем стоимость ответа", "kind": "пройдено", "file": "study_python/practice/09/09_05/09_05_nakruchivaem_stoimost_otveta.py" },
+        { "name": "Сбой в системе", "kind": "пройдено", "file": "study_python/practice/09/09_05/09_05_sboy_v_sisteme.py" }
+      ]
+    },
+    "2026-07-20": {
+      "level": 2,
+      "tasks": 2,
+      "note": "9.5 — разбор «Шифра Цезаря» + закрепление ord/chr (контрольная буква)",
+      "items": [
+        { "name": "Шифр Цезаря", "kind": "пройдено", "file": "study_python/practice/09/09_05/09_05_shifr_cezarya.py" },
+        { "name": "Контрольная буква (закрепление ord/chr)", "kind": "повторено", "file": "study_python/practice/coach_tasks/control_letter.py" }
+      ]
+    }
   }
 }

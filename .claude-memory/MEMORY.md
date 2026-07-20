@@ -1,3 +1,7 @@
 - [No code autocomplete](feedback_no_code_autocomplete.md) — user disabled VS Code inline suggestions/Copilot & Pylance linting while learning Python
 - [GitHub sync](project_github_sync.md) — папка claude/ = git-репо, приватный remote hyperstoke/claude; pull/push по просьбе; gh в ~/.local/bin
 - [Mac node/firecrawl](project_mac_node_firecrawl.md) — на Mac нет Homebrew; node в ~/.local/nodejs, firecrawl CLI + ключ настроены; PATH/ключ в ~/.zshrc
+- [ChatGPT export processed](chatgpt-export-processed.md) — 2026-07-13 разобран экспорт чатов ChatGPT; обновлены навыки и роадмап
+- [Firecrawl usage policy](firecrawl-usage-policy.md) — Firecrawl CLI на ПК с 2026-07-15; только нестабильные факты, через research-skill с кэшем
+- [Python interpreter path](python-interpreter-path.md) — рабочий Python на ПК лежит в uv, системный `python` не работает
+- [Review style: soft nudge](review-style-soft-nudge.md) — «мягко подталкивать» для тем, что видел, но не закрепил

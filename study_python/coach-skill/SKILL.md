@@ -174,9 +174,10 @@ description: >
 попадает в SM-2. После закрытия задачи (оптимально/осознанно оставлено)
 перевести запись очереди в `status` = `done`.
 
-**Синхронизация сайта.** После любой правки `practice_queue.json` продублировать
-данные в константу `PRACTICE_QUEUE` внутри `roadmap_artifact.html` и
-передеплоить на тот же URL (favicon 🐍 не менять).
+**Синхронизация сайта.** После любой правки `practice_queue.json` прогнать
+`scripts/build_site.py` (он регенерирует константу `PRACTICE_QUEUE` в
+`roadmap_artifact.html` из JSON — вручную её не править) и передеплоить на
+тот же URL (favicon 🐍 не менять).
 
 ## Roadmap
 

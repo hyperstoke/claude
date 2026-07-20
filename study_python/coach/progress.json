@@ -14,6 +14,16 @@
       "ease": 1.7999999999999998,
       "last_seen": "2026-07-14",
       "next_review": "2026-07-21"
+    },
+    "таблица Unicode (ord/chr)": {
+      "attempts": 1,
+      "grades": [
+        4
+      ],
+      "interval_days": 1,
+      "ease": 2.5,
+      "last_seen": "2026-07-20",
+      "next_review": "2026-07-21"
     }
   }
 }

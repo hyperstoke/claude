@@ -9,7 +9,7 @@ Claude Code для проекта `claude/`. На каждом устройст�
 ## Статус настройки
 
 - [x] Mac — настроено 2026-07-16 (`~/.claude/projects/-Users-folder-Documents-claude/memory` → симлинк)
-- [ ] ПК — не настроено
+- [x] ПК — настроено 2026-07-20 (`C:\Users\Admin\.claude\projects\c--Users-Admin-Documents-claude\memory` → junction на `.claude-memory`; старый каталог сохранён как `memory.bak`)
 
 ## Как настроить на новом устройстве
 

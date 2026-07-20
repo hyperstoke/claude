@@ -5,9 +5,9 @@
       "topic": "таблица Unicode: ord/chr, замена буквы по позиции",
       "reason": "Задача «Накручиваем стоимость» — несколько неудачных попыток, много подсказок (индексация строки символом вместо позиции, метод .index, направление замены eng→ru).",
       "difficulty": 2,
-      "status": "pending",
+      "status": "done",
       "created": "2026-07-20",
-      "file": null
+      "file": "study_python/practice/coach_tasks/control_letter.py"
     },
     {
       "id": "string-parse-index-chr",
