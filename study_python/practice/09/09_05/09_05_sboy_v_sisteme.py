@@ -26,4 +26,3 @@ while i < len(text):
         i += 8
 
 print(correct_text)
-
