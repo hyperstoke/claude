@@ -572,6 +572,7 @@
       <button class="nav-btn active" data-view="overview"><span class="idx">01</span>Обзор</button>
       <button class="nav-btn" data-view="calendar"><span class="idx">02</span>Календарь</button>
       <button class="nav-btn" data-view="roadmap"><span class="idx">03</span>Дорожная карта</button>
+      <button class="nav-btn" data-view="practice"><span class="idx">04</span>Закрепление</button>
     </nav>
 
     <div class="side-streak">
@@ -848,7 +849,32 @@
         </div>
 
       </div>
-      <footer class="note" style="border: none; text-align: left; margin-top: 1.5rem;">обновлено 2026-07-16 · пет-проект стартует после этапа 1</footer>
+      <footer class="note" style="border: none; text-align: left; margin-top: 1.5rem;">обновлено 2026-07-18 · пет-проект стартует после этапа 1</footer>
+    </section>
+
+    <!-- ── Закрепление ─────────────────────────────── -->
+    <section class="view" id="view-practice" hidden>
+      <div class="eyebrow">слабые места</div>
+      <h1 class="view-title">Закрепление</h1>
+      <p class="view-sub">Темы, на которых было тяжело. Наставник сам находит их по ходу занятий и подбирает задачи, чтобы закрепить материал.</p>
+
+      <div class="stat-grid">
+        <div class="tile accent">
+          <div class="t-num" id="pq-active">—</div>
+          <div class="t-cap">активных тем</div>
+        </div>
+        <div class="tile">
+          <div class="t-num" id="pq-queued">—</div>
+          <div class="t-cap">задач в очереди</div>
+        </div>
+        <div class="tile">
+          <div class="t-num" id="pq-done">—</div>
+          <div class="t-cap">закрыто</div>
+        </div>
+      </div>
+
+      <div id="pq-list"></div>
+      <footer class="note" style="border: none; text-align: left; margin-top: 1.5rem;">список ведётся автоматически — темы добавляются, когда даются тяжело, и закрываются после решённой задачи</footer>
     </section>
 
   </main>
@@ -1018,13 +1044,32 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
     "2026-07-13": { level: 2, tasks: 3,  note: "9.3 — 3 задачи" },
     "2026-07-14": { level: 2, tasks: 3,  note: "9.3 — 3 задачи, coach" },
     "2026-07-15": { level: 2, tasks: 4,  note: "9.3 — 4 задачи (Mac и ПК), тема 9.4" },
-    "2026-07-16": { level: 2, tasks: 2,  note: "9.4 — задача, тема 9.5: ord/chr, соотнести символы, следующая буква" }
+    "2026-07-16": { level: 2, tasks: 2,  note: "9.4 — задача, тема 9.5: ord/chr, соотнести символы, следующая буква" },
+    "2026-07-17": { level: 1, tasks: 2,  note: "9.5 — символы в диапазоне, простой шифр" },
+    "2026-07-18": { level: 2, tasks: 1,  note: "9.5 — самое тяжёлое слово (бегущий максимум, дался не сразу)" }
   };
   const DEADLINE = {
     goal: "раздел 9 «Строки»",
     date: "2026-07-27",
     note: "оценка по темпу 11–16 июля (~0,7 темы в день, осталось ~7 тем); пересчитывается при каждом обновлении"
   };
+
+  /* ── Очередь закрепления ────────────────────────────────
+     Дублируется из study_python/coach/practice_queue.json. */
+  const PRACTICE_QUEUE = [
+    {
+      topic: "таблица Unicode: ord/chr, замена буквы по позиции",
+      reason: "Задача «Накручиваем стоимость» — несколько неудачных попыток, много подсказок (индексация строки символом вместо позиции, метод .index, направление замены eng→ru).",
+      difficulty: 2,
+      status: "pending"
+    },
+    {
+      topic: "разбор строки вручную: обход с индексом, вырезание подстроки, chr",
+      reason: "Задача «Сбой в системе» ([u-код] → буква) — в начале не было идей с чего начать, решено с подсказками (цикл while с индексом, срез кода, неравномерный сдвиг i, chr).",
+      difficulty: 2,
+      status: "pending"
+    }
+  ];
   const GRID_START = "2026-05-04";
   const LEVEL_LABEL = { 1: "лёгкий день", 2: "обычная сессия", 3: "плотная сессия", 4: "большой день" };
   const MONTHS_RU = ["янв", "фев", "мар", "апр", "май", "июн", "июл", "авг", "сен", "окт", "ноя", "дек"];
@@ -1180,10 +1225,56 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
   if (daysLeft < 0) { dlPill.textContent = "дедлайн прошёл"; dlPill.className = "status-pill active"; }
   else if (daysLeft <= 3) { dlPill.textContent = "финишная прямая"; dlPill.className = "status-pill active"; }
 
+  /* ── Очередь закрепления ────────────────────────────────── */
+  const PQ_STATUS = {
+    pending:     { pill: "todo",   label: "ждёт",    active: true  },
+    in_progress: { pill: "active", label: "в работе", active: true  },
+    done:        { pill: "done",   label: "сделано",  active: false }
+  };
+  const DIFF_LABEL = { 1: "просто", 2: "средне", 3: "сложнее" };
+  (function renderPractice() {
+    const activeCount = PRACTICE_QUEUE.filter(e => PQ_STATUS[e.status]?.active).length;
+    const doneCount = PRACTICE_QUEUE.filter(e => e.status === "done").length;
+    document.getElementById("pq-active").textContent = activeCount;
+    document.getElementById("pq-queued").textContent = PRACTICE_QUEUE.length;
+    document.getElementById("pq-done").textContent = doneCount;
+
+    const list = document.getElementById("pq-list");
+    if (!PRACTICE_QUEUE.length) {
+      list.innerHTML = '<div class="card"><div class="card-head"><span class="card-title">Пока пусто</span></div><p style="color: var(--ink-dim); margin: 0;">Слабых тем не отмечено — так держать!</p></div>';
+      return;
+    }
+    list.innerHTML = "";
+    PRACTICE_QUEUE.forEach(e => {
+      const st = PQ_STATUS[e.status] || PQ_STATUS.pending;
+      const card = document.createElement("div");
+      card.className = "card";
+      const head = document.createElement("div");
+      head.className = "card-head";
+      const title = document.createElement("span");
+      title.className = "card-title";
+      title.textContent = e.topic;
+      const pill = document.createElement("span");
+      pill.className = "status-pill " + st.pill;
+      pill.textContent = st.label;
+      head.append(title, pill);
+      const reason = document.createElement("p");
+      reason.style.cssText = "color: var(--ink-dim); margin: 0 0 .6rem;";
+      reason.textContent = e.reason;
+      const meta = document.createElement("div");
+      meta.className = "note";
+      meta.style.cssText = "border: none; text-align: left; margin: 0; padding: 0;";
+      meta.textContent = "сложность: " + (DIFF_LABEL[e.difficulty] || e.difficulty);
+      card.append(head, reason, meta);
+      list.appendChild(card);
+    });
+  })();
+
   /* ── Переключение видов ─────────────────────────────────── */
   const views = { overview: document.getElementById("view-overview"),
                   calendar: document.getElementById("view-calendar"),
-                  roadmap: document.getElementById("view-roadmap") };
+                  roadmap: document.getElementById("view-roadmap"),
+                  practice: document.getElementById("view-practice") };
   const navBtns = document.querySelectorAll(".nav-btn");
   function showView(name) {
     Object.entries(views).forEach(([k, el]) => { el.hidden = (k !== name); });
