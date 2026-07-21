@@ -45,6 +45,23 @@ def load_json(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def embed_file(entry: dict, rel: str, where: str, warnings: list[str]) -> bool:
+    """Вшить в entry поля file/code/github по пути rel (от корня репо).
+
+    Возвращает True, если файл найден и код вшит. Пустой code=None + warning,
+    если файла нет — страница покажет «код не сохранён».
+    """
+    entry["file"] = rel
+    fpath = REPO_ROOT / rel
+    if fpath.exists():
+        entry["code"] = fpath.read_text(encoding="utf-8")
+        entry["github"] = GITHUB_BASE + rel
+        return True
+    warnings.append(f"{where}: файл не найден — {rel}")
+    entry["code"] = None
+    return False
+
+
 def enrich_items(activity: dict) -> tuple[dict, int, list[str]]:
     """Вернуть {дата: день} с вшитым кодом, число вшитых файлов и предупреждения."""
     days = {}
@@ -55,16 +72,8 @@ def enrich_items(activity: dict) -> tuple[dict, int, list[str]]:
         for it in day.get("items", []):
             entry = {"name": it["name"], "kind": it.get("kind", "пройдено")}
             rel = it.get("file")
-            if rel:
-                entry["file"] = rel
-                fpath = REPO_ROOT / rel
-                if fpath.exists():
-                    entry["code"] = fpath.read_text(encoding="utf-8")
-                    entry["github"] = GITHUB_BASE + rel
-                    embedded += 1
-                else:
-                    warnings.append(f"{date}: файл не найден — {rel}")
-                    entry["code"] = None
+            if rel and embed_file(entry, rel, date, warnings):
+                embedded += 1
             items.append(entry)
         days[date] = {
             "level": day["level"],
@@ -85,26 +94,33 @@ def js_const(name: str, value) -> str:
 
 def build_block(activity: dict, queue: dict) -> str:
     days, embedded, warnings = enrich_items(activity)
-    pq = [
-        {
+    pq = []
+    for e in queue.get("queue", []):
+        entry = {
             "topic": e["topic"],
             "reason": e["reason"],
             "difficulty": e["difficulty"],
             "status": e["status"],
         }
-        for e in queue.get("queue", [])
-    ]
+        rel = e.get("file")
+        if rel and embed_file(entry, rel, f"queue/{e.get('id', '?')}", warnings):
+            embedded += 1
+        pq.append(entry)
     dl = activity["deadline"]
     deadline = {
         "goal": dl["goal"],
         "date": dl["date"],
         "note": dl.get("note") or dl.get("basis", ""),
     }
+    progress = activity.get("progress")
+    if isinstance(progress, dict):
+        progress = {k: v for k, v in progress.items() if not k.startswith("_")}
     block = (
         f"  {START} — генерируется scripts/build_site.py из coach/*.json, вручную не править */\n"
         + js_const("TRACKING_SINCE", activity["tracking_since"])
         + js_const("ACTIVITY", days)
         + js_const("DEADLINE", deadline)
+        + js_const("PROGRESS", progress)
         + js_const("PRACTICE_QUEUE", pq)
         + f"  {END}"
     )

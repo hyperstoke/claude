@@ -4,7 +4,7 @@
       "id": "unicode-ord-chr",
       "topic": "таблица Unicode: ord/chr, замена буквы по позиции",
       "reason": "Задача «Накручиваем стоимость» — несколько неудачных попыток, много подсказок (индексация строки символом вместо позиции, метод .index, направление замены eng→ru).",
-      "difficulty": 2,
+      "difficulty": 5,
       "status": "done",
       "created": "2026-07-20",
       "file": "study_python/practice/coach_tasks/control_letter.py"
@@ -13,7 +13,7 @@
       "id": "string-parse-index-chr",
       "topic": "разбор строки вручную: обход с индексом, вырезание подстроки, chr",
       "reason": "Задача «Сбой в системе» ([u-код] → буква) — в начале не было идей с чего начать, решено с подсказками (цикл while с индексом, срез кода, неравномерный сдвиг i, chr).",
-      "difficulty": 2,
+      "difficulty": 6,
       "status": "done",
       "created": "2026-07-20",
       "file": "study_python/practice/coach_tasks/csv_unescape.py"

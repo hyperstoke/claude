@@ -6,6 +6,22 @@
     "date": "2026-07-27",
     "basis": "пересчёт от 2026-07-20: разделы 9.1–9.4 пройдены, 9.5 (ord/chr) в процессе; темп ~0.7 темы/день держится"
   },
+  "progress": {
+    "_comment": "Общий прогресс к backend-разработчику. Общий % = сумма weight завершённых этапов + weight текущего * sub_pct/100. Веса (сумма 100) — трудозатраты junior-пути. sub_pct текущего этапа 0 оценён по Stepik: разделы 1-4,6,7 пройдены, 5 частично, 8 засчитан, 9 в процессе; ~15 разделов -> ~55%. Обновлять статусы/sub_pct по мере продвижения и прогонять build_site.py.",
+    "updated": "2026-07-21",
+    "stages": [
+      { "name": "Синтаксис Python", "weight": 20, "status": "current", "sub_pct": 55 },
+      { "name": "ООП и продвинутый Python", "weight": 14, "status": "todo" },
+      { "name": "Git и контроль версий", "weight": 5, "status": "todo" },
+      { "name": "SQL и базы данных", "weight": 13, "status": "todo" },
+      { "name": "Тестирование", "weight": 7, "status": "todo" },
+      { "name": "Backend-фреймворк", "weight": 16, "status": "todo" },
+      { "name": "REST API и аутентификация", "weight": 10, "status": "todo" },
+      { "name": "Docker", "weight": 5, "status": "todo" },
+      { "name": "Кэширование и фоновые задачи", "weight": 5, "status": "todo" },
+      { "name": "Деплой и CI/CD", "weight": 5, "status": "todo" }
+    ]
+  },
   "days": {
     "2026-07-11": {
       "level": 3,

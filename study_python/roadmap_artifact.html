@@ -18,13 +18,16 @@
     --now: #E0A93F;
     --now-soft: #241C10;
     --today: #CBBBFF;
-    --shadow: 0 1px 2px rgba(0,0,0,0.4);
+    --shadow: none;
     --shadow-lg: 0 16px 48px rgba(0,0,0,0.55);
     --heat-0: #1A1622;
     --heat-1: #3A2E5C;
     --heat-2: #5B44A0;
     --heat-3: #7C5CE6;
     --heat-4: #A78BFF;
+    --font-sans: -apple-system, "SF Pro Text", "Segoe UI", Helvetica, Arial, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    --hairline: 1px solid var(--border);
   }
 
   * { box-sizing: border-box; }
@@ -35,15 +38,19 @@
     margin: 0;
     background: var(--bg);
     color: var(--ink);
-    font-family: -apple-system, "SF Pro Text", "Segoe UI", Helvetica, Arial, sans-serif;
+    font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     line-height: 1.5;
   }
 
-  .mono {
-    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-    font-variant-numeric: tabular-nums;
-  }
+  /* Тонкий полупрозрачный ползунок в цвет интерфейса, без стрелок */
+  * { scrollbar-width: thin; scrollbar-color: color-mix(in srgb, var(--border-strong) 90%, transparent) transparent; }
+  ::-webkit-scrollbar { width: 9px; height: 9px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--border-strong) 85%, transparent); border-radius: 999px; border: 2px solid transparent; background-clip: padding-box; }
+  ::-webkit-scrollbar-thumb:hover { background: color-mix(in srgb, var(--accent) 55%, transparent); background-clip: padding-box; }
+  ::-webkit-scrollbar-button { display: none; width: 0; height: 0; }
+  ::-webkit-scrollbar-corner { background: transparent; }
 
   /* ── App shell ─────────────────────────────────────────── */
   .app {
@@ -72,7 +79,6 @@
   }
 
   .brand .glyph {
-    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
     font-size: 0.7rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
@@ -113,7 +119,6 @@
   }
 
   .nav-btn .idx {
-    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
     font-size: 0.68rem;
     color: var(--ink-faint);
     width: 1.1em;
@@ -170,7 +175,6 @@
   }
 
   .side-streak .num {
-    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
     font-size: 1.5rem;
     font-weight: 650;
     line-height: 1;
@@ -186,8 +190,8 @@
 
   /* ── Main ──────────────────────────────────────────────── */
   .main {
-    padding: 2.4rem 2.4rem 4rem;
-    max-width: 920px;
+    padding: 2.4rem 2.8rem 4rem;
+    max-width: 1120px;
   }
 
   .view { animation: fade 0.22s ease; }
@@ -197,7 +201,6 @@
   }
 
   .eyebrow {
-    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
     font-size: 0.7rem;
     letter-spacing: 0.11em;
     text-transform: uppercase;
@@ -220,27 +223,21 @@
     max-width: 60ch;
   }
 
-  /* ── Stat tiles ────────────────────────────────────────── */
+  /* ── Показатели ────────────────────────────────────────── */
   .stat-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 0.8rem;
-    margin-bottom: 1.6rem;
+    gap: 1.8rem;
+    margin-bottom: 1.9rem;
   }
 
-  .tile {
-    background: var(--raised);
-    border: 1px solid var(--border);
-    border-radius: 11px;
-    padding: 0.95rem 1rem 1rem;
-    box-shadow: var(--shadow);
-  }
+  .tile { padding: 0; }
 
   .tile .t-num {
-    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-    font-size: 1.55rem;
-    font-weight: 650;
+    font-size: 1.75rem;
+    font-weight: 600;
     line-height: 1.1;
+    letter-spacing: -0.015em;
     font-variant-numeric: tabular-nums;
   }
 
@@ -249,6 +246,7 @@
     font-weight: 500;
     color: var(--ink-faint);
     margin-left: 0.2rem;
+    letter-spacing: 0;
   }
 
   .tile .t-cap {
@@ -256,11 +254,22 @@
     letter-spacing: 0.04em;
     text-transform: uppercase;
     color: var(--ink-faint);
-    margin-top: 0.35rem;
+    margin-top: 0.4rem;
   }
 
-  .tile.accent { border-color: var(--accent); background: var(--accent-soft); }
   .tile.accent .t-num { color: var(--accent); }
+
+  /* ── Обзор: журнальные секции вместо коробок ───────────── */
+  .ov-block { margin-top: 1.5rem; padding-top: 1.4rem; border-top: var(--hairline); }
+  .ov-block .card-head { margin-bottom: 0.7rem; }
+  .ov-cols {
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 2.2rem; margin-top: 1.5rem; padding-top: 1.4rem; border-top: var(--hairline);
+  }
+  .ov-cols > .ov-block { margin-top: 0; padding-top: 0; border-top: none; }
+  .ov-mini { cursor: pointer; }
+  .ov-mini:hover .card-title { color: var(--accent); }
+  .ov-mini:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 4px; }
 
   /* ── Cards ─────────────────────────────────────────────── */
   .card {
@@ -284,7 +293,6 @@
   .card-title { font-size: 1.02rem; font-weight: 620; letter-spacing: -0.005em; }
 
   .status-pill {
-    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
     font-size: 0.66rem;
     letter-spacing: 0.04em;
     text-transform: uppercase;
@@ -298,21 +306,10 @@
   .status-pill.progress { background: var(--accent-soft); color: var(--accent); }
   .status-pill.todo { color: var(--ink-faint); background: transparent; border: 1px solid var(--border-strong); }
 
-  /* ── Deadline card ─────────────────────────────────────── */
-  .dl-line { display: flex; align-items: baseline; gap: 0.55rem; flex-wrap: wrap; }
-  .dl-big {
-    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-    font-size: 1.15rem; font-weight: 650; color: var(--ink); font-variant-numeric: tabular-nums;
-  }
-  .dl-track { height: 6px; background: var(--inset); border-radius: 3px; overflow: hidden; margin-top: 0.85rem; }
-  .dl-fill { height: 100%; background: var(--accent); border-radius: 3px; }
-  .dl-note { font-size: 0.74rem; color: var(--ink-faint); margin-top: 0.6rem; }
-
   /* ── Heatmap ───────────────────────────────────────────── */
   .hm-flex { display: flex; gap: 0.5rem; align-items: flex-start; }
   .hm-days {
     display: grid; grid-template-rows: repeat(7, 13px); gap: 3px;
-    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
     font-size: 0.6rem; color: var(--ink-faint); flex-shrink: 0; padding-top: 17px;
   }
   .hm-days span:nth-child(1) { grid-row: 1; }
@@ -324,7 +321,6 @@
   .cal-grid .hm-wrap { flex: 1 1 auto; min-width: 0; }
   .hm-months {
     position: relative; height: 15px;
-    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
     font-size: 0.62rem; color: var(--ink-faint);
   }
   .hm-months span { position: absolute; top: 0; white-space: nowrap; }
@@ -358,20 +354,18 @@
   .mini .hm-cell { width: 11px; height: 11px; }
 
   /* ── Calendar layout with detail ───────────────────────── */
-  .cal-grid { display: grid; grid-template-columns: 1fr 260px; gap: 1.2rem; align-items: start; }
+  .cal-grid { display: grid; grid-template-columns: 1fr; gap: 1.2rem; align-items: start; }
 
   .day-detail {
     background: var(--raised); border: 1px solid var(--border); border-radius: 11px;
-    padding: 1.05rem 1.1rem 1.15rem; box-shadow: var(--shadow); position: sticky; top: 1.5rem;
+    padding: 1.05rem 1.1rem 1.15rem;
   }
   .dd-date {
-    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
     font-size: 0.72rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-faint);
   }
   .dd-head { font-size: 1.25rem; font-weight: 660; margin: 0.15rem 0 0.9rem; letter-spacing: -0.01em; }
   .dd-metrics { display: flex; gap: 1.4rem; margin-bottom: 0.9rem; }
   .dd-metric .m-num {
-    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
     font-size: 1.2rem; font-weight: 650; font-variant-numeric: tabular-nums;
   }
   .dd-metric .m-cap { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-faint); }
@@ -383,8 +377,8 @@
   }
   .level-chip i { width: 11px; height: 11px; border-radius: 3px; display: block; }
 
-  /* задачи дня */
-  .dd-items { display: flex; flex-direction: column; gap: 0.4rem; margin-top: 0.9rem; }
+  /* задачи дня — сетка, чтобы много задач не тянулись длинной колонкой */
+  .dd-items { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 0.5rem; margin-top: 0.9rem; }
   .dd-item {
     display: flex; align-items: center; gap: 0.5rem; width: 100%; text-align: left;
     background: var(--inset); border: 1px solid var(--border); border-radius: 8px;
@@ -395,13 +389,11 @@
   .dd-item:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
   .dd-item.static { cursor: default; }
   .dd-item.static:hover { border-color: var(--border); background: var(--inset); }
-  .dd-item-name { flex: 1; font-size: 0.84rem; }
+  .dd-item-name { flex: 1; min-width: 0; overflow-wrap: anywhere; font-size: 0.84rem; }
   .dd-item-go {
-    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
     font-size: 0.7rem; color: var(--ink-faint); flex-shrink: 0;
   }
   .kind {
-    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
     font-size: 0.58rem; letter-spacing: 0.03em; text-transform: uppercase;
     padding: 0.14rem 0.4rem; border-radius: 999px; flex-shrink: 0; white-space: nowrap;
   }
@@ -422,7 +414,6 @@
   .feed-day { display: grid; grid-template-columns: 132px 1fr; gap: 0.85rem; align-items: start; }
   .feed-day + .feed-day { border-top: 1px dashed var(--border); padding-top: 0.95rem; }
   .feed-date {
-    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
     font-size: 0.76rem; color: var(--ink-faint); padding-top: 0.2rem; font-variant-numeric: tabular-nums;
   }
   .feed-items { display: flex; flex-wrap: wrap; gap: 0.35rem; }
@@ -451,7 +442,6 @@
   .overview-track { flex: 1; height: 6px; background: var(--inset); border-radius: 3px; overflow: hidden; }
   .overview-fill { height: 100%; background: var(--accent); border-radius: 3px; width: var(--pct, 9%); }
   .overview-label {
-    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
     font-size: 0.8rem; color: var(--ink-dim); white-space: nowrap; font-variant-numeric: tabular-nums;
   }
 
@@ -463,7 +453,7 @@
   .stage-node {
     position: absolute; left: 0; top: 0.15rem; width: 40px; height: 40px; border-radius: 50%;
     background: var(--raised); border: 2px solid var(--border-strong); display: flex; align-items: center;
-    justify-content: center; font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    justify-content: center;
     font-size: 0.85rem; font-weight: 600; color: var(--ink-faint); z-index: 1;
   }
   .stage.done .stage-node { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
@@ -509,7 +499,7 @@
   }
   .overlay.open { opacity: 1; pointer-events: auto; }
   .panel {
-    background: var(--raised); border: 1px solid var(--border); border-radius: 12px; max-width: 620px;
+    background: var(--raised); border: 1px solid var(--border); border-radius: 12px; max-width: 780px;
     width: 100%; padding: 1.5rem 1.6rem 1.7rem; box-shadow: var(--shadow-lg);
     transform: translateY(-8px); transition: transform 0.15s ease;
   }
@@ -525,11 +515,11 @@
   .panel-body h3:first-child { margin-top: 0; }
   .panel-body p { font-size: 0.92rem; color: var(--ink-dim); margin: 0 0 0.5rem; }
   .panel-body pre { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 0.7rem 0.85rem; overflow-x: auto; margin: 0 0 0.5rem; }
-  .panel-body code { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 0.82rem; color: var(--ink); }
+  .panel-body code { font-family: var(--font-mono); font-size: 0.82rem; color: var(--ink); }
   .panel-body pre code { display: block; line-height: 1.55; }
   .panel-body ul { margin: 0 0 0.5rem; padding-left: 1.2rem; font-size: 0.88rem; color: var(--ink-dim); }
   .panel-body li + li { margin-top: 0.2rem; }
-  .panel-body .file-tag { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 0.72rem; color: var(--ink-faint); margin: 0 0 0.3rem; }
+  .panel-body .file-tag { font-family: var(--font-mono); font-size: 0.72rem; color: var(--ink-faint); margin: 0 0 0.3rem; }
   .panel-foot { margin-top: 1.1rem; padding-top: 0.7rem; border-top: 1px dashed var(--border); font-size: 0.78rem; color: var(--ink-faint); }
 
   .hm-tip {
@@ -537,7 +527,67 @@
     border-radius: 8px; box-shadow: var(--shadow-lg); padding: 0.4rem 0.6rem; font-size: 0.76rem;
     color: var(--ink); pointer-events: none; max-width: 240px;
   }
-  .hm-tip .tip-date { color: var(--ink-faint); font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 0.68rem; }
+  .hm-tip .tip-date { color: var(--ink-faint); font-size: 0.68rem; letter-spacing: 0.02em; }
+
+  /* ── Общий прогресс (Обзор) ────────────────────────────── */
+  .prog-top { display: flex; align-items: baseline; gap: 0.7rem; margin-bottom: 0.55rem; }
+  .prog-pct { font-size: 2.4rem; font-weight: 640; color: var(--accent); font-variant-numeric: tabular-nums; line-height: 1; letter-spacing: -0.02em; }
+  .prog-headings { display: flex; flex-direction: column; gap: 0.12rem; }
+  .prog-goal-title { font-size: 0.9rem; color: var(--ink); }
+  .prog-stage { font-size: 0.76rem; color: var(--ink-dim); }
+  .prog-bar { display: flex; gap: 3px; height: 10px; margin: 0.2rem 0 0.65rem; }
+  .prog-seg { flex-grow: 1; flex-basis: 0; background: var(--inset); border-radius: 3px; overflow: hidden; }
+  .prog-seg > i { display: block; height: 100%; width: 0; background: var(--accent); }
+  .prog-seg.done > i { width: 100%; }
+  .prog-seg.current > i { background: linear-gradient(90deg, var(--accent), var(--heat-3)); }
+  .prog-note { font-size: 0.74rem; color: var(--ink-faint); }
+  .prog-goal { display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.8rem; padding-top: 0.7rem; border-top: 1px solid var(--border); font-size: 0.88rem; color: var(--ink-dim); }
+  .prog-goal-cap { font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-faint); background: var(--inset); border-radius: 4px; padding: 0.14rem 0.42rem; }
+
+  /* ── Сводка у мини-heatmap (Обзор) ─────────────────────── */
+  .mini .hm-flex { flex-wrap: wrap; }
+  .mini .hm-wrap { flex: 0 0 auto; }
+  .hm-stats { flex: 1 1 135px; min-width: 120px; display: flex; flex-direction: column; gap: 0.5rem; padding-left: 0.15rem; }
+  .hm-stats-title { font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-faint); }
+  .hm-stat-row { display: flex; align-items: baseline; gap: 0.4rem; }
+  .hm-stat-num { font-size: 1.2rem; font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; line-height: 1; }
+  .hm-stat-cap { font-size: 0.78rem; color: var(--ink-dim); }
+  .hm-kinds { display: flex; flex-direction: column; gap: 0.25rem; margin-top: 0.05rem; }
+  .hm-kind { display: flex; align-items: center; gap: 0.4rem; font-size: 0.78rem; color: var(--ink-dim); }
+  .hm-kind .kind-dot { width: 8px; height: 8px; }
+  .hm-kind b { color: var(--ink); font-variant-numeric: tabular-nums; min-width: 1.1em; text-align: right; }
+
+  /* ── Подсветка кода задач (модалка) ────────────────────── */
+  .codeblock {
+    display: flex; align-items: stretch; background: var(--bg); border: 1px solid var(--border);
+    border-radius: 8px; overflow: auto; max-height: 62vh; margin: 0 0 0.5rem;
+    font-family: var(--font-mono); font-size: 0.82rem; line-height: 1.55;
+  }
+  .code-gutter {
+    flex: 0 0 auto; text-align: right; padding: 0.7rem 0.55rem 0.7rem 0.7rem;
+    color: var(--ink-faint); background: var(--panel); border-right: 1px solid var(--border);
+    user-select: none; -webkit-user-select: none; white-space: pre; font-variant-numeric: tabular-nums;
+  }
+  /* один скролл-контейнер — сам .codeblock; pre внутри не прокручивается */
+  .code-src { margin: 0; padding: 0.7rem 0.9rem; border: 0; border-radius: 0; background: transparent; white-space: pre; color: var(--ink); overflow: visible; max-height: none; }
+  .tok-kw  { color: #B79CFF; }
+  .tok-str { color: #8BE0C9; }
+  .tok-com { color: var(--ink-faint); font-style: italic; }
+  .tok-num { color: #E0A93F; }
+  .tok-fn  { color: #CBBBFF; }
+  .tok-bi  { color: #7FB2FF; }
+  .tok-dec { color: #E0A93F; }
+
+  /* ── Значки стрика (Обзор) ─────────────────────────────── */
+  .streak-bolts { display: flex; gap: 3px; margin-top: 0.4rem; min-height: 14px; }
+  .streak-bolts svg { width: 11px; height: 14px; display: block; }
+  .streak-bolts svg path { fill: var(--accent); }
+  .streak-bolts.hot svg path { fill: var(--now); }
+  .streak-bolts.blaze svg { filter: drop-shadow(0 0 3px color-mix(in srgb, var(--now) 70%, transparent)); }
+  .streak-badge { display: inline-block; margin-top: 0.35rem; font-size: 0.58rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); background: var(--accent-soft); border-radius: 5px; padding: 0.1rem 0.36rem; }
+
+  /* ── Кнопка «код ›» в закреплении ──────────────────────── */
+  .pq-code { margin-top: 0.7rem; }
 
   /* ── Responsive ────────────────────────────────────────── */
   @media (max-width: 780px) {
@@ -590,11 +640,11 @@
     <section class="view" id="view-overview">
       <div class="eyebrow">сводка</div>
       <h1 class="view-title">Обзор</h1>
-      <p class="view-sub">Раздел 9 курса Stepik «Python для начинающих» — строки. Дальше самостоятельные этапы до backend-разработчика.</p>
 
       <div class="stat-grid">
         <div class="tile accent">
           <div class="t-num" id="ov-streak">—</div>
+          <div class="streak-bolts" id="ov-bolts" aria-hidden="true"></div>
           <div class="t-cap">стрик, дней</div>
         </div>
         <div class="tile">
@@ -607,40 +657,51 @@
         </div>
         <div class="tile">
           <div class="t-num" id="ov-dl">—<span class="unit">дн.</span></div>
-          <div class="t-cap">до дедлайна</div>
+          <div class="t-cap">до цели раздела</div>
         </div>
       </div>
 
-      <div class="card">
+      <section class="ov-block">
         <div class="card-head">
-          <span class="card-title">Дедлайн раздела</span>
-          <span class="status-pill progress" id="ov-dl-pill">в графике</span>
+          <span class="card-title">Общий прогресс</span>
+          <span class="status-pill progress" id="ov-prog-pill">этап — / 9</span>
         </div>
-        <div class="dl-line">
-          <span>Цель: <strong id="ov-dl-goal">раздел 9 «Строки»</strong> до <span class="dl-big" id="ov-dl-date">—</span></span>
-        </div>
-        <div class="dl-track"><div class="dl-fill" id="ov-dl-fill"></div></div>
-        <div class="dl-note" id="ov-dl-note"></div>
-      </div>
-
-      <div class="card mini" id="ov-mini-card" role="button" tabindex="0" aria-label="Открыть календарь занятий">
-        <div class="card-head">
-          <span class="card-title">Последние недели</span>
-          <span class="status-pill todo">весь календарь →</span>
-        </div>
-        <div class="hm-flex">
-          <div class="hm-wrap">
-            <div class="heatmap" id="mini-heatmap" aria-hidden="true"></div>
+        <div class="prog-top">
+          <span class="prog-pct" id="ov-prog-pct">—</span>
+          <div class="prog-headings">
+            <span class="prog-goal-title">путь к backend-разработчику</span>
+            <span class="prog-stage" id="ov-prog-stage">—</span>
           </div>
         </div>
-      </div>
-
-      <div class="card">
-        <div class="card-head">
-          <span class="card-title">Последняя активность</span>
-          <span class="status-pill todo" id="feed-total">—</span>
+        <div class="prog-bar" id="ov-prog-bar" role="img" aria-label="Прогресс по этапам дорожной карты"></div>
+        <div class="prog-note" id="ov-prog-note"></div>
+        <div class="prog-goal">
+          <span class="prog-goal-cap">ближняя цель</span>
+          <span>Цель: <strong id="ov-dl-goal">—</strong> до <span id="ov-dl-date">—</span></span>
         </div>
-        <div class="feed" id="ov-feed"></div>
+      </section>
+
+      <div class="ov-cols">
+        <section class="ov-block ov-mini" id="ov-mini-card" role="button" tabindex="0" aria-label="Открыть календарь занятий">
+          <div class="card-head">
+            <span class="card-title">Последние недели</span>
+            <span class="status-pill todo">весь календарь →</span>
+          </div>
+          <div class="hm-flex">
+            <div class="hm-wrap">
+              <div class="heatmap" id="mini-heatmap" aria-hidden="true"></div>
+            </div>
+            <div class="hm-stats" id="ov-hm-stats"></div>
+          </div>
+        </section>
+
+        <section class="ov-block ov-feed-block">
+          <div class="card-head">
+            <span class="card-title">Последняя активность</span>
+            <span class="status-pill todo" id="feed-total">—</span>
+          </div>
+          <div class="feed" id="ov-feed"></div>
+        </section>
       </div>
     </section>
 
@@ -682,9 +743,9 @@
       <p class="view-sub">Stepik закрывает синтаксис (этап 0). Дальше — самостоятельные этапы. Нажми на тему с ▾, чтобы открыть конспект.</p>
 
       <div class="overview-mini-track">
-        <span class="overview-label">Этап 0 из 9</span>
-        <div class="overview-track"><div class="overview-fill" style="--pct: 9%"></div></div>
-        <span class="overview-label">~9%</span>
+        <span class="overview-label" id="rm-track-stage">Этап 0 из 9</span>
+        <div class="overview-track"><div class="overview-fill" id="rm-track-fill" style="--pct: 9%"></div></div>
+        <span class="overview-label" id="rm-track-pct">~9%</span>
       </div>
 
       <div class="legend">
@@ -1041,7 +1102,7 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
     }
   };
 
-            /* @gen:start — генерируется scripts/build_site.py из coach/*.json, вручную не править */
+                /* @gen:start — генерируется scripts/build_site.py из coach/*.json, вручную не править */
   const TRACKING_SINCE = "2026-07-11";
   const ACTIVITY = {
   "2026-07-11": {
@@ -1389,7 +1450,7 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
         "name": "Контрольная буква (закрепление ord/chr)",
         "kind": "повторено",
         "file": "study_python/practice/coach_tasks/control_letter.py",
-        "code": "\"\"\"\nЗадача: control_letter (контрольная буква для кода товара)\nТема: таблица Unicode ord/chr — буква ↔ позиция в алфавите  |  Сложность: 2\n\nЛегенда: в бэкенде склада каждому товару присваивают короткий буквенный\nартикул. Чтобы ловить опечатки при ручном вводе, к артикулу добавляют одну\nконтрольную букву — она вычисляется из самого артикула. Если оператор\nошибётся в букве, контрольная не сойдётся, и система отклонит код. Такой же\nприём (контрольный символ) используют в номерах банковских карт и ISBN.\n\nКак считается контрольная буква:\n  1. Позиция буквы в алфавите: a → 0, b → 1, ..., z → 25.\n  2. Сложить позиции всех букв артикула.\n  3. Взять остаток суммы от деления на 26.\n  4. Перевести этот остаток обратно в букву (0 → a, 1 → b, ..., 25 → z) —\n     это и есть контрольная буква.\n\nВход:  одна строка — артикул из строчных латинских букв (без пробелов).\nВыход: одна строчная латинская буква — контрольная.\n\nПримеры:\n    \"abc\" -> \"d\"    # позиции 0+1+2 = 3;  3 % 26 = 3  -> 'd'\n    \"a\"   -> \"a\"    # позиция 0;          0 % 26 = 0  -> 'a'\n    \"zzz\" -> \"x\"    # позиции 25*3 = 75;  75 % 26 = 23 -> 'x'\n    \"abz\" -> \"a\"    # 0+1+25 = 26;        26 % 26 = 0  -> 'a'\n\"\"\"\n\n# твой код здесь\n\ntext = input()\npos_letter = 0\n\nfor letter in text:\n    pos_letter += ord(letter) - ord(\"a\")\n\noutput_letter = pos_letter % 26\n\nprint(chr(ord(\"a\") + output_letter))\n",
+        "code": "\"\"\"\nЗадача: control_letter (контрольная буква для кода товара)\nТема: таблица Unicode ord/chr — буква ↔ позиция в алфавите  |  Сложность: 5 (средняя)\n\nЛегенда: в бэкенде склада каждому товару присваивают короткий буквенный\nартикул. Чтобы ловить опечатки при ручном вводе, к артикулу добавляют одну\nконтрольную букву — она вычисляется из самого артикула. Если оператор\nошибётся в букве, контрольная не сойдётся, и система отклонит код. Такой же\nприём (контрольный символ) используют в номерах банковских карт и ISBN.\n\nКак считается контрольная буква:\n  1. Позиция буквы в алфавите: a → 0, b → 1, ..., z → 25.\n  2. Сложить позиции всех букв артикула.\n  3. Взять остаток суммы от деления на 26.\n  4. Перевести этот остаток обратно в букву (0 → a, 1 → b, ..., 25 → z) —\n     это и есть контрольная буква.\n\nВход:  одна строка — артикул из строчных латинских букв (без пробелов).\nВыход: одна строчная латинская буква — контрольная.\n\nПримеры:\n    \"abc\" -> \"d\"    # позиции 0+1+2 = 3;  3 % 26 = 3  -> 'd'\n    \"a\"   -> \"a\"    # позиция 0;          0 % 26 = 0  -> 'a'\n    \"zzz\" -> \"x\"    # позиции 25*3 = 75;  75 % 26 = 23 -> 'x'\n    \"abz\" -> \"a\"    # 0+1+25 = 26;        26 % 26 = 0  -> 'a'\n\"\"\"\n\n# твой код здесь\n\ntext = input()\npos_letter = 0\n\nfor letter in text:\n    pos_letter += ord(letter) - ord(\"a\")\n\noutput_letter = pos_letter % 26\n\nprint(chr(ord(\"a\") + output_letter))\n",
         "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/coach_tasks/control_letter.py"
       }
     ]
@@ -1403,7 +1464,7 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
         "name": "Разэкранирование CSV-поля (закрепление разбора строки)",
         "kind": "повторено",
         "file": "study_python/practice/coach_tasks/csv_unescape.py",
-        "code": "\"\"\"\nЗадача: «Разэкранирование CSV-поля»\nТема: разбор строки вручную — обход с индексом, срез подстроки, chr  |  Сложность: 2\n\nЛегенда: сервис выгружает данные в CSV. Внутри одного поля не могут\nвстречаться служебные символы (запятая, пробел, перенос строки) — иначе\nони разорвут строку файла. Поэтому при экспорте такие символы ЭКРАНИРУЮТ:\nзаменяют на конструкцию {NNN}, где NNN — трёхзначный десятичный код\nсимвола в таблице Unicode. Твоя задача на импорте — восстановить\nисходный текст поля обратно.\n\nКак устроено экранирование:\n  - служебный символ заменён на ровно 5 символов: '{', три цифры, '}';\n  - три цифры — код символа с ведущими нулями:\n    пробел (код 32) -> {032}, запятая (код 44) -> {044};\n  - обычные символы (буквы, цифры) остаются как есть.\n\nВход:  одна строка — экранированное значение поля.\nВыход: одна строка — восстановленный текст поля. Если экранировать нечего,\n       строка выводится как есть (никаких доп. сообщений печатать не нужно).\n\nПримеры (в кавычках — вход и ожидаемый вывод; после # — пояснение):\n    \"abc\"                  -> \"abc\"           # экранировать нечего: вывод = ввод\n    \"Ivanov{044}{032}Ivan\" -> \"Ivanov, Ivan\"  # 044 = ',', 032 = ' '\n    \"a{033}b\"              -> \"a!b\"           # 033 = '!'\n    \"{036}100\"             -> \"$100\"          # 036 = '$'\n    \"\"                     -> \"\"              # пустой вход -> пустой вывод\n\"\"\"\n\n# твой код здесь\n\ntext = input()\ni = 0\ncorrect_output = \"\"\n\nwhile i < len(text):\n    if text[i] == \"{\":\n        correct_output += chr(int(text[i+1:i+4]))\n        i += 5\n    else:\n        correct_output += text[i]\n        i += 1\n\nprint(correct_output)",
+        "code": "\"\"\"\nЗадача: «Разэкранирование CSV-поля»\nТема: разбор строки вручную — обход с индексом, срез подстроки, chr  |  Сложность: 6 (сложная)\n\nЛегенда: сервис выгружает данные в CSV. Внутри одного поля не могут\nвстречаться служебные символы (запятая, пробел, перенос строки) — иначе\nони разорвут строку файла. Поэтому при экспорте такие символы ЭКРАНИРУЮТ:\nзаменяют на конструкцию {NNN}, где NNN — трёхзначный десятичный код\nсимвола в таблице Unicode. Твоя задача на импорте — восстановить\nисходный текст поля обратно.\n\nКак устроено экранирование:\n  - служебный символ заменён на ровно 5 символов: '{', три цифры, '}';\n  - три цифры — код символа с ведущими нулями:\n    пробел (код 32) -> {032}, запятая (код 44) -> {044};\n  - обычные символы (буквы, цифры) остаются как есть.\n\nВход:  одна строка — экранированное значение поля.\nВыход: одна строка — восстановленный текст поля. Если экранировать нечего,\n       строка выводится как есть (никаких доп. сообщений печатать не нужно).\n\nПримеры (в кавычках — вход и ожидаемый вывод; после # — пояснение):\n    \"abc\"                  -> \"abc\"           # экранировать нечего: вывод = ввод\n    \"Ivanov{044}{032}Ivan\" -> \"Ivanov, Ivan\"  # 044 = ',', 032 = ' '\n    \"a{033}b\"              -> \"a!b\"           # 033 = '!'\n    \"{036}100\"             -> \"$100\"          # 036 = '$'\n    \"\"                     -> \"\"              # пустой вход -> пустой вывод\n\"\"\"\n\n# твой код здесь\n\ntext = input()\ni = 0\ncorrect_output = \"\"\n\nwhile i < len(text):\n    if text[i] == \"{\":\n        correct_output += chr(int(text[i+1:i+4]))\n        i += 5\n    else:\n        correct_output += text[i]\n        i += 1\n\nprint(correct_output)",
         "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/coach_tasks/csv_unescape.py"
       }
     ]
@@ -1414,18 +1475,80 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
   "date": "2026-07-27",
   "note": "пересчёт от 2026-07-20: разделы 9.1–9.4 пройдены, 9.5 (ord/chr) в процессе; темп ~0.7 темы/день держится"
 };
+  const PROGRESS = {
+  "updated": "2026-07-21",
+  "stages": [
+    {
+      "name": "Синтаксис Python",
+      "weight": 20,
+      "status": "current",
+      "sub_pct": 55
+    },
+    {
+      "name": "ООП и продвинутый Python",
+      "weight": 14,
+      "status": "todo"
+    },
+    {
+      "name": "Git и контроль версий",
+      "weight": 5,
+      "status": "todo"
+    },
+    {
+      "name": "SQL и базы данных",
+      "weight": 13,
+      "status": "todo"
+    },
+    {
+      "name": "Тестирование",
+      "weight": 7,
+      "status": "todo"
+    },
+    {
+      "name": "Backend-фреймворк",
+      "weight": 16,
+      "status": "todo"
+    },
+    {
+      "name": "REST API и аутентификация",
+      "weight": 10,
+      "status": "todo"
+    },
+    {
+      "name": "Docker",
+      "weight": 5,
+      "status": "todo"
+    },
+    {
+      "name": "Кэширование и фоновые задачи",
+      "weight": 5,
+      "status": "todo"
+    },
+    {
+      "name": "Деплой и CI/CD",
+      "weight": 5,
+      "status": "todo"
+    }
+  ]
+};
   const PRACTICE_QUEUE = [
   {
     "topic": "таблица Unicode: ord/chr, замена буквы по позиции",
     "reason": "Задача «Накручиваем стоимость» — несколько неудачных попыток, много подсказок (индексация строки символом вместо позиции, метод .index, направление замены eng→ru).",
-    "difficulty": 2,
-    "status": "done"
+    "difficulty": 5,
+    "status": "done",
+    "file": "study_python/practice/coach_tasks/control_letter.py",
+    "code": "\"\"\"\nЗадача: control_letter (контрольная буква для кода товара)\nТема: таблица Unicode ord/chr — буква ↔ позиция в алфавите  |  Сложность: 5 (средняя)\n\nЛегенда: в бэкенде склада каждому товару присваивают короткий буквенный\nартикул. Чтобы ловить опечатки при ручном вводе, к артикулу добавляют одну\nконтрольную букву — она вычисляется из самого артикула. Если оператор\nошибётся в букве, контрольная не сойдётся, и система отклонит код. Такой же\nприём (контрольный символ) используют в номерах банковских карт и ISBN.\n\nКак считается контрольная буква:\n  1. Позиция буквы в алфавите: a → 0, b → 1, ..., z → 25.\n  2. Сложить позиции всех букв артикула.\n  3. Взять остаток суммы от деления на 26.\n  4. Перевести этот остаток обратно в букву (0 → a, 1 → b, ..., 25 → z) —\n     это и есть контрольная буква.\n\nВход:  одна строка — артикул из строчных латинских букв (без пробелов).\nВыход: одна строчная латинская буква — контрольная.\n\nПримеры:\n    \"abc\" -> \"d\"    # позиции 0+1+2 = 3;  3 % 26 = 3  -> 'd'\n    \"a\"   -> \"a\"    # позиция 0;          0 % 26 = 0  -> 'a'\n    \"zzz\" -> \"x\"    # позиции 25*3 = 75;  75 % 26 = 23 -> 'x'\n    \"abz\" -> \"a\"    # 0+1+25 = 26;        26 % 26 = 0  -> 'a'\n\"\"\"\n\n# твой код здесь\n\ntext = input()\npos_letter = 0\n\nfor letter in text:\n    pos_letter += ord(letter) - ord(\"a\")\n\noutput_letter = pos_letter % 26\n\nprint(chr(ord(\"a\") + output_letter))\n",
+    "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/coach_tasks/control_letter.py"
   },
   {
     "topic": "разбор строки вручную: обход с индексом, вырезание подстроки, chr",
     "reason": "Задача «Сбой в системе» ([u-код] → буква) — в начале не было идей с чего начать, решено с подсказками (цикл while с индексом, срез кода, неравномерный сдвиг i, chr).",
-    "difficulty": 2,
-    "status": "done"
+    "difficulty": 6,
+    "status": "done",
+    "file": "study_python/practice/coach_tasks/csv_unescape.py",
+    "code": "\"\"\"\nЗадача: «Разэкранирование CSV-поля»\nТема: разбор строки вручную — обход с индексом, срез подстроки, chr  |  Сложность: 6 (сложная)\n\nЛегенда: сервис выгружает данные в CSV. Внутри одного поля не могут\nвстречаться служебные символы (запятая, пробел, перенос строки) — иначе\nони разорвут строку файла. Поэтому при экспорте такие символы ЭКРАНИРУЮТ:\nзаменяют на конструкцию {NNN}, где NNN — трёхзначный десятичный код\nсимвола в таблице Unicode. Твоя задача на импорте — восстановить\nисходный текст поля обратно.\n\nКак устроено экранирование:\n  - служебный символ заменён на ровно 5 символов: '{', три цифры, '}';\n  - три цифры — код символа с ведущими нулями:\n    пробел (код 32) -> {032}, запятая (код 44) -> {044};\n  - обычные символы (буквы, цифры) остаются как есть.\n\nВход:  одна строка — экранированное значение поля.\nВыход: одна строка — восстановленный текст поля. Если экранировать нечего,\n       строка выводится как есть (никаких доп. сообщений печатать не нужно).\n\nПримеры (в кавычках — вход и ожидаемый вывод; после # — пояснение):\n    \"abc\"                  -> \"abc\"           # экранировать нечего: вывод = ввод\n    \"Ivanov{044}{032}Ivan\" -> \"Ivanov, Ivan\"  # 044 = ',', 032 = ' '\n    \"a{033}b\"              -> \"a!b\"           # 033 = '!'\n    \"{036}100\"             -> \"$100\"          # 036 = '$'\n    \"\"                     -> \"\"              # пустой вход -> пустой вывод\n\"\"\"\n\n# твой код здесь\n\ntext = input()\ni = 0\ncorrect_output = \"\"\n\nwhile i < len(text):\n    if text[i] == \"{\":\n        correct_output += chr(int(text[i+1:i+4]))\n        i += 5\n    else:\n        correct_output += text[i]\n        i += 1\n\nprint(correct_output)",
+    "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/coach_tasks/csv_unescape.py"
   }
 ];
   /* @gen:end */
@@ -1500,18 +1623,23 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
     if (key < TRACKING_SINCE) return "до начала учёта";
     return "занятий не было";
   }
-  calGrid.addEventListener("mouseover", e => {
-    const cell = e.target.closest(".hm-cell");
-    if (!cell || cell.classList.contains("future")) return;
-    const key = cell.dataset.date;
-    tip.innerHTML = `<span class="tip-date">${fmtRu(parseYmd(key))}</span><br>${cellText(key)}`;
-    tip.hidden = false;
-    const r = cell.getBoundingClientRect();
-    const tw = tip.offsetWidth;
-    tip.style.left = Math.min(Math.max(r.left + r.width / 2 - tw / 2, 8), window.innerWidth - tw - 8) + "px";
-    tip.style.top = (r.top - tip.offsetHeight - 8) + "px";
-  });
-  calGrid.addEventListener("mouseleave", () => { tip.hidden = true; });
+  function attachTip(grid) {
+    grid.addEventListener("mouseover", e => {
+      const cell = e.target.closest(".hm-cell");
+      if (!cell || cell.classList.contains("future")) return;
+      const key = cell.dataset.date;
+      tip.innerHTML = `<span class="tip-date">${fmtRu(parseYmd(key))}</span><br>${cellText(key)}`;
+      tip.hidden = false;
+      const r = cell.getBoundingClientRect();
+      const tw = tip.offsetWidth;
+      tip.style.left = Math.min(Math.max(r.left + r.width / 2 - tw / 2, 8), window.innerWidth - tw - 8) + "px";
+      tip.style.top = (r.top - tip.offsetHeight - 8) + "px";
+    });
+    grid.addEventListener("mouseleave", () => { tip.hidden = true; });
+  }
+  attachTip(calGrid);
+  const miniHeat = document.getElementById("mini-heatmap");
+  if (miniHeat) attachTip(miniHeat);
 
   /* ── Деталь дня ─────────────────────────────────────────── */
   const KIND_CLASS = { "изучено": "learn", "пройдено": "done", "повторено": "repeat", "пример": "example" };
@@ -1520,6 +1648,44 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
       { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]
     ));
   }
+
+  /* ── Сводка за 5 недель (у мини-heatmap на Обзоре) ──────── */
+  (function renderMiniStats() {
+    const box = document.getElementById("ov-hm-stats");
+    if (!box) return;
+    const from = ymd(addDays(today, -34));
+    let days = 0, tasks = 0;
+    const kinds = { done: 0, learn: 0, repeat: 0, example: 0 };
+    Object.keys(ACTIVITY).forEach(key => {
+      if (key < from || key > todayKey) return;
+      const day = ACTIVITY[key];
+      days += 1;
+      tasks += day.tasks || 0;
+      (day.items || []).forEach(it => {
+        const kc = KIND_CLASS[it.kind] || "done";
+        if (kinds[kc] != null) kinds[kc] += 1;
+      });
+    });
+    const plural = (n, one, few, many) => {
+      const a = n % 10, b = n % 100;
+      if (a === 1 && b !== 11) return one;
+      if (a >= 2 && a <= 4 && (b < 12 || b > 14)) return few;
+      return many;
+    };
+    const kindRow = (cls, label, n) => n
+      ? `<div class="hm-kind"><span class="kind-dot kdot-${cls}"></span><b>${n}</b>${label}</div>`
+      : "";
+    box.innerHTML = `
+      <div class="hm-stats-title">за 5 недель</div>
+      <div class="hm-stat-row"><span class="hm-stat-num">${days}</span><span class="hm-stat-cap">${plural(days, "день", "дня", "дней")} занятий</span></div>
+      <div class="hm-stat-row"><span class="hm-stat-num">${tasks}</span><span class="hm-stat-cap">${plural(tasks, "задача", "задачи", "задач")}</span></div>
+      <div class="hm-kinds">
+        ${kindRow("done", "пройдено", kinds.done)}
+        ${kindRow("learn", "изучено", kinds.learn)}
+        ${kindRow("repeat", "повторено", kinds.repeat)}
+        ${kindRow("example", "примеры", kinds.example)}
+      </div>`;
+  })();
   const detail = document.getElementById("day-detail");
   let selectedKey = null;
   function selectDay(key) {
@@ -1605,22 +1771,64 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
   document.getElementById("ov-tasks").textContent = totalTasks;
   if (current > 0) document.getElementById("side-flame").classList.add("live");
 
-  /* ── Дедлайн ────────────────────────────────────────────── */
+  /* ── Ближняя цель раздела (плитка + строка в карточке) ──── */
   const dlDate = parseYmd(DEADLINE.date);
   const daysLeft = Math.round((dlDate - parseYmd(todayKey)) / 86400000);
-  const startedKey = activeDays[0];
-  const totalSpan = Math.max(1, Math.round((dlDate - parseYmd(startedKey)) / 86400000));
-  const elapsed = Math.round((parseYmd(todayKey) - parseYmd(startedKey)) / 86400000);
-  const pct = Math.max(0, Math.min(100, Math.round(elapsed / totalSpan * 100)));
-
   document.getElementById("ov-dl").innerHTML = (daysLeft >= 0 ? daysLeft : 0) + '<span class="unit">дн.</span>';
   document.getElementById("ov-dl-goal").textContent = DEADLINE.goal;
   document.getElementById("ov-dl-date").textContent = fmtRu(dlDate);
-  document.getElementById("ov-dl-fill").style.width = pct + "%";
-  document.getElementById("ov-dl-note").textContent = DEADLINE.note;
-  const dlPill = document.getElementById("ov-dl-pill");
-  if (daysLeft < 0) { dlPill.textContent = "дедлайн прошёл"; dlPill.className = "status-pill active"; }
-  else if (daysLeft <= 3) { dlPill.textContent = "финишная прямая"; dlPill.className = "status-pill active"; }
+
+  /* ── Общий прогресс к backend-разработчику ──────────────── */
+  (function renderProgress() {
+    const bar = document.getElementById("ov-prog-bar");
+    if (!bar || !PROGRESS || !PROGRESS.stages) return;
+    const stages = PROGRESS.stages;
+    const lastIdx = stages.length - 1;
+    let pct = 0, curIdx = -1;
+    stages.forEach((s, i) => {
+      if (s.status === "done") pct += s.weight;
+      else if (s.status === "current") { pct += s.weight * (s.sub_pct || 0) / 100; curIdx = i; }
+    });
+    pct = Math.round(pct);
+    bar.innerHTML = stages.map(s => {
+      const cls = s.status === "done" ? "done" : s.status === "current" ? "current" : "";
+      const w = s.status === "current" ? ` style="width:${Math.max(8, Math.round(s.sub_pct || 0))}%"` : "";
+      return `<div class="prog-seg ${cls}" style="flex-grow:${s.weight}" title="${escapeHtml(s.name)}"><i${w}></i></div>`;
+    }).join("");
+    const idx = curIdx >= 0 ? curIdx : 0;
+    const cur = stages[idx];
+    document.getElementById("ov-prog-pct").textContent = pct + "%";
+    document.getElementById("ov-prog-stage").textContent = `этап ${idx} · ${cur.name}`;
+    document.getElementById("ov-prog-pill").textContent = `этап ${idx} / ${lastIdx}`;
+    document.getElementById("ov-prog-note").textContent = `освоено ~${pct}% пути · взвешено по этапам дорожной карты`;
+    const rf = document.getElementById("rm-track-fill");
+    if (rf) rf.style.setProperty("--pct", pct + "%");
+    const rp = document.getElementById("rm-track-pct");
+    if (rp) rp.textContent = "~" + pct + "%";
+    const rs = document.getElementById("rm-track-stage");
+    if (rs) rs.textContent = `Этап ${idx} из ${lastIdx}`;
+  })();
+
+  /* ── Значки стрика (Обзор) ──────────────────────────────── */
+  (function renderBolts() {
+    const box = document.getElementById("ov-bolts");
+    if (!box) return;
+    let n = 0, cls = "";
+    if (current >= 1) n = 1;
+    if (current >= 3) n = 2;
+    if (current >= 7) n = 3;
+    if (current >= 14) { n = 3; cls = "hot"; }
+    if (current >= 30) { n = 3; cls = "blaze hot"; }
+    const bolt = '<svg viewBox="0 0 11 14"><path d="M7 0L1 8h4l-2 6 8-9h-4z"/></svg>';
+    box.className = "streak-bolts" + (cls ? " " + cls : "");
+    box.innerHTML = n > 0 ? bolt.repeat(n) : "";
+    if (record > 0 && current >= record && current >= 2) {
+      const badge = document.createElement("div");
+      badge.className = "streak-badge";
+      badge.textContent = "новый рекорд!";
+      box.after(badge);
+    }
+  })();
 
   /* ── Очередь закрепления ────────────────────────────────── */
   const PQ_STATUS = {
@@ -1628,7 +1836,13 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
     in_progress: { pill: "active", label: "в работе", active: true  },
     done:        { pill: "done",   label: "сделано",  active: false }
   };
-  const DIFF_LABEL = { 1: "просто", 2: "средне", 3: "сложнее" };
+  /* Прилагательное сложности по шкале 0–10 (см. task-design.md) */
+  function diffAdj(n) {
+    if (n <= 2) return "лёгкая";
+    if (n <= 5) return "средняя";
+    if (n <= 7) return "сложная";
+    return "очень сложная";
+  }
   (function renderPractice() {
     const activeCount = PRACTICE_QUEUE.filter(e => PQ_STATUS[e.status]?.active).length;
     const doneCount = PRACTICE_QUEUE.filter(e => e.status === "done").length;
@@ -1661,8 +1875,17 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
       const meta = document.createElement("div");
       meta.className = "note";
       meta.style.cssText = "border: none; text-align: left; margin: 0; padding: 0;";
-      meta.textContent = "сложность: " + (DIFF_LABEL[e.difficulty] || e.difficulty);
+      meta.textContent = typeof e.difficulty === "number"
+        ? `Сложность: ${diffAdj(e.difficulty)} · ${e.difficulty}/10`
+        : "Сложность: " + e.difficulty;
       card.append(head, reason, meta);
+      if (e.code != null || e.file) {
+        const btn = document.createElement("button");
+        btn.className = "dd-item pq-code";
+        btn.innerHTML = '<span class="dd-item-name">Моё решение</span><span class="dd-item-go">код ›</span>';
+        btn.addEventListener("click", () => openCode({ name: e.topic, file: e.file, code: e.code, github: e.github }));
+        card.append(btn);
+      }
       list.appendChild(card);
     });
   })();
@@ -1735,13 +1958,42 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
     overlay.classList.remove("open");
     if (lastFocused) lastFocused.focus();
   }
+  /* Лёгкая подсветка Python (инлайн — CSP артефакта запрещает внешние скрипты) */
+  const PY_KW = new Set("def return if elif else for while in not and or is None True False break continue pass import from as with class try except finally raise lambda yield global nonlocal del assert async await".split(" "));
+  const PY_BI = new Set("print input int str float bool len range list dict set tuple sum min max abs round sorted reversed enumerate zip map filter ord chr open type isinstance repr format all any bin hex oct divmod".split(" "));
+  function highlightPython(src) {
+    const re = /("""[\s\S]*?"""|'''[\s\S]*?'''|"(?:\\.|[^"\\\n])*"|'(?:\\.|[^'\\\n])*')|(#[^\n]*)|(@[A-Za-z_][\w.]*)|(\b\d[\d_]*(?:\.\d+)?\b)|([A-Za-z_]\w*)/g;
+    let out = "", last = 0, m;
+    while ((m = re.exec(src)) !== null) {
+      out += escapeHtml(src.slice(last, m.index));
+      last = re.lastIndex;
+      if (m[1]) out += `<span class="tok-str">${escapeHtml(m[1])}</span>`;
+      else if (m[2]) out += `<span class="tok-com">${escapeHtml(m[2])}</span>`;
+      else if (m[3]) out += `<span class="tok-dec">${escapeHtml(m[3])}</span>`;
+      else if (m[4]) out += `<span class="tok-num">${escapeHtml(m[4])}</span>`;
+      else if (m[5]) {
+        const w = m[5];
+        if (PY_KW.has(w)) out += `<span class="tok-kw">${w}</span>`;
+        else if (PY_BI.has(w)) out += `<span class="tok-bi">${w}</span>`;
+        else if (src[re.lastIndex] === "(") out += `<span class="tok-fn">${w}</span>`;
+        else out += escapeHtml(w);
+      }
+    }
+    out += escapeHtml(src.slice(last));
+    return out;
+  }
+  function buildCodeBlock(code) {
+    const src = code.replace(/\n+$/, "");
+    const gutter = src.split("\n").map((_, i) => i + 1).join("\n");
+    return `<div class="codeblock"><div class="code-gutter">${gutter}</div><pre class="code-src">${highlightPython(src)}</pre></div>`;
+  }
   /* Код решённой задачи в той же модалке (вшит при сборке build_site.py) */
   function openCode(item) {
     panelTitle.textContent = item.name;
     let body = "";
     if (item.file) body += `<div class="file-tag">${escapeHtml(item.file)}</div>`;
     body += item.code != null
-      ? `<pre><code>${escapeHtml(item.code)}</code></pre>`
+      ? buildCodeBlock(item.code)
       : `<p>Код этой задачи не сохранён отдельным файлом.</p>`;
     if (item.github) {
       body += `<a class="gh-link" href="${item.github}" target="_blank" rel="noopener">открыть на GitHub ↗</a>`;
