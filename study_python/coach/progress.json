@@ -34,6 +34,17 @@
       "ease": 2.6,
       "last_seen": "2026-07-21",
       "next_review": "2026-07-22"
+    },
+    "индексация строк: границы цикла (off-by-one)": {
+      "attempts": 2,
+      "grades": [
+        1,
+        4
+      ],
+      "interval_days": 3,
+      "ease": 2.3,
+      "last_seen": "2026-07-22",
+      "next_review": "2026-07-25"
     }
   }
 }

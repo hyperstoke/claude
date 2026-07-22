@@ -134,6 +134,17 @@
       "items": [
         { "name": "Разэкранирование CSV-поля (закрепление разбора строки)", "kind": "повторено", "file": "study_python/practice/coach_tasks/csv_unescape.py" }
       ]
+    },
+    "2026-07-22": {
+      "level": 2,
+      "tasks": 4,
+      "note": "9.5 — «Волшебное число» и «Строковые минимум и максимум» решены чисто; закрепление границ while-цикла (common_prefix_length); «Необычное сравнение» — с трудом (несколько итераций: пропущенные скобки у .lower(), путаница с while/else, разделение проверки длины и посимвольного сравнения)",
+      "items": [
+        { "name": "Волшебное число", "kind": "пройдено", "file": "study_python/practice/09/09_05/09_05_volshebnoe_chislo.py" },
+        { "name": "Строковые минимум и максимум", "kind": "пройдено", "file": "study_python/practice/09/09_05/09_05_strokovye_minimum_i_maksimum.py" },
+        { "name": "Границы while-цикла, общий префикс (закрепление)", "kind": "повторено", "file": "study_python/practice/coach_tasks/common_prefix_length.py" },
+        { "name": "Необычное сравнение", "kind": "пройдено", "file": "study_python/practice/09/09_05/09_05_neobychnoe_sravnenie.py" }
+      ]
     }
   }
 }

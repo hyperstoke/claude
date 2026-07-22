@@ -43,7 +43,9 @@
 - Генераторные выражения и списковые включения:
   `sum(x for x in nums if x > 0)`, `[i for i in range(n)]`.
 - Встроенные с итерируемыми: sum(), all(), sorted(), min/max с `key=len`.
-- map(), filter() + lambda, split() (join — ещё нет).
+- map(), filter() + lambda, split(), join() с генераторным выражением
+  (`"".join(ch for ch in s if ch.isalpha())`) — введено и разобрано
+  2026-07-22 на задаче «Необычное сравнение», один раз применено успешно.
 - Модуль math: import, `math.factorial`, `math.pow`, `math.log`,
   `math.sqrt`, `math.floor`; `import math` vs `from math import *`.
 - `float('inf')` / `-float('inf')` как стартовое значение для min/max.
@@ -51,7 +53,7 @@
 ## 3. Не трогал — предлагать рано
 
 - Функции (`def`, return, аргументы) — в чатах ни одной, тема впереди.
-- join, enumerate, zip.
+- enumerate, zip.
 - Исключения (try/except).
 - Работа с файлами.
 - ООП (классы), декораторы, генераторы (yield), context managers.
