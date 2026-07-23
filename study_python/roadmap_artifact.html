@@ -1206,7 +1206,7 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
     }
   };
 
-                                /* @gen:start — генерируется scripts/build_site.py из coach/*.json, вручную не править */
+                                  /* @gen:start — генерируется scripts/build_site.py из coach/*.json, вручную не править */
   const TRACKING_SINCE = "2026-07-11";
   const ACTIVITY = {
   "2026-07-11": {
@@ -1633,6 +1633,41 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
         "file": "study_python/practice/09/09_05/09_05_poryadok_knig.py",
         "code": "\"\"\"\nЗадача: «Порядок книг»\n\nВсе книги в домашней библиотеке должны быть отсортированы по возрастанию:\nсначала по фамилиям авторов, а при совпадении фамилий — по названиям\nкниг. Напишите программу, которая проверяет, верно ли отсортированы\nкниги.\n\nКаждая книга задаётся строкой в формате:\n    <фамилия автора> <инициалы автора>, «<название книги>»\n\nПрограмма должна вывести \"YES\", если книги отсортированы по правилам,\nиначе \"NO\".\n\nФормат входных данных:\n    Число n, затем n строк — описания книг в указанном формате.\n\nФормат выходных данных:\n    \"YES\" или \"NO\" в соответствии с условием задачи.\n\nПримечание 1. Инициалы автора при сортировке не учитываются.\nПримечание 2. Книги в наборе не повторяются.\nПримечание 3. Фамилия автора состоит из одного слова.\n\nПримечание. Пример теста:\n    2\n    \"During A.B., «Заводной апельсин»\"\n    \"Orwell G., «1984»\"\n    -> \"YES\"\n\"\"\"\n\n\ncount_books = int(input())\nbooks = []\nflag = True\n\nfor _ in range(count_books):\n    books.append(input())\n\nfor i in range(len(books) - 1):\n    start_surname_one = books[i].find(\" \")\n    surname_one = books[i][:start_surname_one]\n\n    start_surname_two = books[i + 1].find(\" \")\n    surname_two = books[i + 1][:start_surname_two]\n\n    if surname_one < surname_two:\n        i += 1\n    elif surname_one == surname_two:\n        start_title_one = books[i].find(\"«\")\n        title_one = books[i][start_title_one +1: -1]\n\n        start_title_two = books[i + 1].find(\"«\")\n        title_two = books[i + 1][start_title_two +1: -1]\n\n        if title_one > title_two:\n            flag = False\n            break\n    else:\n        flag = False\n        break\n\nif flag:\n    print(\"YES\")\nelse:\n    print(\"NO\")",
         "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09/09_05/09_05_poryadok_knig.py"
+      }
+    ]
+  },
+  "2026-07-24": {
+    "level": 2,
+    "tasks": 4,
+    "note": "9.5 — «Каждый третий», «Замени меня полностью», «Удали меня полностью» и «Второе вхождение» решены чисто (методы строк: replace, find со start-позицией)",
+    "items": [
+      {
+        "name": "Каждый третий",
+        "kind": "пройдено",
+        "file": "study_python/practice/09/09_05/09_05_kazhdyy_tretiy.py",
+        "code": "\"\"\"\nЗадача: «Каждый третий»\n\nНа вход программе подаётся строка текста. Нужно удалить из неё все\nсимволы с индексами, кратными 3 (индексы 0, 3, 6, 9, ...), и вывести\nполучившуюся строку.\n\nФормат входных данных:\n    Строка текста.\n\nФормат выходных данных:\n    Строка текста без символов с индексами, кратными 3.\n\nПримечание. Пример теста:\n    \"Python rocks!\"\n    -> \"ytonroks\"\n\"\"\"\n\ntext = input()\nresult = \"\"\n\nfor i in range(len(text)):\n    if i % 3 != 0:\n        result += text[i]\n\nprint(result)",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09/09_05/09_05_kazhdyy_tretiy.py"
+      },
+      {
+        "name": "Замени меня полностью",
+        "kind": "пройдено",
+        "file": "study_python/practice/09/09_05/09_05_zameni_menya_polnostyu.py",
+        "code": "\"\"\"\nЗадача: «Замени меня полностью»\n\nНа вход программе подаётся строка текста. Нужно заменить в ней все\nвхождения цифры 1 на слово \"one\" и вывести результат.\n\nФормат входных данных:\n    Строка текста.\n\nФормат выходных данных:\n    Текст с заменёнными на \"one\" цифрами 1.\n\nПримечание. Пример теста:\n    \"У меня 1 кот и 10 рыбок, а не 11\"\n    -> \"У меня one кот и one0 рыбок, а не oneone\"\n\"\"\"\n\ntext = input()\n\nprint(text.replace(\"1\", \"one\"))\n",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09/09_05/09_05_zameni_menya_polnostyu.py"
+      },
+      {
+        "name": "Удали меня полностью",
+        "kind": "пройдено",
+        "file": "study_python/practice/09/09_05/09_05_udali_menya_polnostyu.py",
+        "code": "\"\"\"\nЗадача: «Удали меня полностью» ❌\n\nНа вход программе подаётся строка текста. Нужно удалить из неё все\nвхождения символа «@» и вывести результат.\n\nФормат входных данных:\n    Строка текста.\n\nФормат выходных данных:\n    Текст без символов «@».\n\nПримечание. Пример теста:\n    \"user@example.com пиши мне @ в любое время\"\n    -> \"userexample.com пиши мне  в любое время\"\n\"\"\"\n\ntext = input()\n\nprint(text.replace(\"@\", \"\"))",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09/09_05/09_05_udali_menya_polnostyu.py"
+      },
+      {
+        "name": "Второе вхождение",
+        "kind": "пройдено",
+        "file": "study_python/practice/09/09_05/09_05_vtoroe_vhozhdenie.py",
+        "code": "\"\"\"\nЗадача: «Второе вхождение» 2️⃣\n\nНа вход программе подаётся строка текста. Нужно вывести индекс второго\nвхождения буквы \"f\". Если буква \"f\" встречается только один раз —\nвывести \"-1\". Если не встречается ни разу — вывести \"-2\".\n\nФормат входных данных:\n    Строка текста.\n\nФормат выходных данных:\n    Индекс второго вхождения буквы \"f\", либо \"-1\", либо \"-2\" — по\n    условию задачи.\n\nПримечание. Пример теста:\n    \"offer\"\n    -> \"2\"\n\"\"\"\n\ntext = input()\nfirst = text.find(\"f\")\n\nif first == -1:\n    print(\"-2\")\nelse:\n    second = text.find(\"f\", first + 1)\n    if second != -1:\n        print(second)\n    else:\n        print(\"-1\")",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09/09_05/09_05_vtoroe_vhozhdenie.py"
       }
     ]
   }
