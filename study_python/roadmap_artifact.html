@@ -368,6 +368,13 @@
   .dd-metric .m-num {
     font-size: 1.2rem; font-weight: 650; font-variant-numeric: tabular-nums;
   }
+  .dd-metric .m-word {
+    font-size: 1rem; font-weight: 620; color: var(--accent);
+    display: inline-flex; align-items: center; gap: 0.4rem;
+  }
+  .dd-metric .m-word::before {
+    content: ""; width: 11px; height: 11px; border-radius: 3px; background: var(--lvl, var(--accent)); flex-shrink: 0;
+  }
   .dd-metric .m-cap { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-faint); }
   .dd-note { font-size: 0.88rem; color: var(--ink-dim); border-top: 1px dashed var(--border); padding-top: 0.75rem; }
   .dd-empty { font-size: 0.88rem; color: var(--ink-faint); }
@@ -407,7 +414,7 @@
     text-decoration: none; border-bottom: 1px solid transparent;
   }
   .gh-link:hover { border-bottom-color: var(--accent); }
-  .panel-body pre { max-height: 55vh; overflow: auto; }
+  .panel-body pre:not(.code-src) { max-height: 55vh; overflow: auto; }
 
   /* лента «Последняя активность» на Обзоре */
   .feed { display: flex; flex-direction: column; gap: 0.95rem; }
@@ -514,7 +521,7 @@
   .panel-body h3 { font-size: 0.72rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--accent); margin: 1.1rem 0 0.4rem; }
   .panel-body h3:first-child { margin-top: 0; }
   .panel-body p { font-size: 0.92rem; color: var(--ink-dim); margin: 0 0 0.5rem; }
-  .panel-body pre { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 0.7rem 0.85rem; overflow-x: auto; margin: 0 0 0.5rem; }
+  .panel-body pre:not(.code-src) { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 0.7rem 0.85rem; overflow-x: auto; margin: 0 0 0.5rem; }
   .panel-body code { font-family: var(--font-mono); font-size: 0.82rem; color: var(--ink); }
   .panel-body pre code { display: block; line-height: 1.55; }
   .panel-body ul { margin: 0 0 0.5rem; padding-left: 1.2rem; font-size: 0.88rem; color: var(--ink-dim); }
@@ -588,6 +595,88 @@
 
   /* ── Кнопка «код ›» в закреплении ──────────────────────── */
   .pq-code { margin-top: 0.7rem; }
+
+  /* ── Плитка-кнопка (переход к «ждут решения») ──────────── */
+  .tile-btn { font: inherit; text-align: left; cursor: pointer; display: block; width: 100%; appearance: none; -webkit-appearance: none; background: var(--accent-soft); }
+  .tile-btn:hover { border-color: var(--accent); }
+  .tile-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .tile-btn .t-cap { color: var(--accent); }
+
+  /* ── Крупный календарь на Обзоре ───────────────────────── */
+  .hm-flex-big { gap: 2rem; align-items: center; flex-wrap: wrap; }
+  .hm-flex-big #mini-heatmap { grid-auto-columns: 17px; grid-template-rows: repeat(7, 17px); gap: 4px; }
+  .hm-flex-big #mini-heatmap .hm-cell { width: 17px; height: 17px; border-radius: 4px; }
+  .hm-flex-big .hm-stats { flex: 1 1 auto; }
+
+  /* ── Ссылка «весь список →» в шапке ленты ──────────────── */
+  .feed-more {
+    font: inherit; font-size: 0.76rem; color: var(--accent); background: none; border: none;
+    cursor: pointer; padding: 0; border-bottom: 1px solid transparent; white-space: nowrap;
+  }
+  .feed-more:hover { border-bottom-color: var(--accent); }
+  .feed-more:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+  .feed-level { display: block; margin-top: 0.15rem; font-size: 0.7rem; color: var(--ink-faint); }
+
+  /* ── Карточка «Далось труднее всего» (Обзор) ───────────── */
+  .hardest {
+    display: block; width: 100%; text-align: left; font: inherit; cursor: pointer;
+    background: var(--raised); border: 1px solid var(--border-strong); border-left: 3px solid var(--now);
+    border-radius: 11px; padding: 1rem 1.15rem 1.05rem; box-shadow: var(--shadow);
+    transition: border-color 0.15s ease;
+  }
+  .hardest:hover { border-color: var(--now); }
+  .hardest:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .hardest .h-topic { font-size: 0.98rem; font-weight: 620; color: var(--ink); }
+  .hardest .h-reason { font-size: 0.86rem; color: var(--ink-dim); margin: 0.35rem 0 0; }
+  .hardest .h-foot {
+    display: flex; align-items: center; gap: 0.7rem; margin-top: 0.6rem;
+    font-size: 0.74rem; color: var(--ink-faint);
+  }
+  .hardest .h-diff { color: var(--now); font-weight: 600; font-variant-numeric: tabular-nums; }
+  .hardest .h-code { margin-left: auto; color: var(--accent); }
+
+  /* ── Закрепление: «ждут решения» + группы по темам ─────── */
+  .pq-section-title {
+    font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-faint);
+    margin: 1.6rem 0 0.7rem;
+  }
+  .pq-section-title.pending { color: var(--now); }
+  .pq-row {
+    display: flex; align-items: center; gap: 0.8rem; width: 100%; text-align: left; font: inherit;
+    background: var(--raised); border: 1px solid var(--border); border-radius: 9px;
+    padding: 0.65rem 0.9rem; margin-bottom: 0.45rem;
+  }
+  .pq-row.pending { border-left: 3px solid var(--now); }
+  button.pq-row { cursor: pointer; transition: border-color 0.15s ease; }
+  button.pq-row:hover { border-color: var(--accent); }
+  button.pq-row:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .pq-row-main { flex: 1; min-width: 0; }
+  .pq-row-topic { font-size: 0.88rem; color: var(--ink); overflow-wrap: anywhere; }
+  .pq-row-reason {
+    font-size: 0.78rem; color: var(--ink-faint); margin-top: 0.15rem;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .pq-row-diff {
+    font-size: 0.72rem; color: var(--ink-faint); font-variant-numeric: tabular-nums; white-space: nowrap; flex-shrink: 0;
+  }
+  .pq-row-go { font-size: 0.76rem; color: var(--accent); white-space: nowrap; flex-shrink: 0; }
+  .pq-group { border: none; margin-bottom: 0.5rem; }
+  .pq-group > summary {
+    cursor: pointer; list-style: none; display: flex; align-items: center; gap: 0.5rem;
+    padding: 0.5rem 0.2rem; font-size: 0.9rem; font-weight: 600; color: var(--ink);
+    border-bottom: 1px solid var(--border);
+  }
+  .pq-group > summary::-webkit-details-marker { display: none; }
+  .pq-group > summary::before {
+    content: "▸"; color: var(--ink-faint); font-size: 0.8rem; transition: transform 0.15s ease;
+  }
+  .pq-group[open] > summary::before { transform: rotate(90deg); }
+  .pq-group > summary .pq-group-count {
+    margin-left: auto; font-size: 0.72rem; color: var(--ink-faint); font-weight: 400;
+    background: var(--inset); border-radius: 999px; padding: 0.1rem 0.5rem;
+  }
+  .pq-group-body { padding-top: 0.55rem; }
+  .pq-empty { font-size: 0.86rem; color: var(--ink-faint); padding: 0.3rem 0 0.6rem; }
 
   /* ── Responsive ────────────────────────────────────────── */
   @media (max-width: 780px) {
@@ -681,28 +770,34 @@
         </div>
       </section>
 
-      <div class="ov-cols">
-        <section class="ov-block ov-mini" id="ov-mini-card" role="button" tabindex="0" aria-label="Открыть календарь занятий">
-          <div class="card-head">
-            <span class="card-title">Последние недели</span>
-            <span class="status-pill todo">весь календарь →</span>
-          </div>
-          <div class="hm-flex">
-            <div class="hm-wrap">
-              <div class="heatmap" id="mini-heatmap" aria-hidden="true"></div>
-            </div>
-            <div class="hm-stats" id="ov-hm-stats"></div>
-          </div>
-        </section>
+      <section class="ov-block" id="ov-hardest-block" hidden>
+        <div class="card-head">
+          <span class="card-title">Далось труднее всего</span>
+          <span class="status-pill" id="ov-hardest-pill">—</span>
+        </div>
+        <button class="hardest" id="ov-hardest" type="button"></button>
+      </section>
 
-        <section class="ov-block ov-feed-block">
-          <div class="card-head">
-            <span class="card-title">Последняя активность</span>
-            <span class="status-pill todo" id="feed-total">—</span>
+      <section class="ov-block ov-mini" id="ov-mini-card" role="button" tabindex="0" aria-label="Открыть календарь занятий">
+        <div class="card-head">
+          <span class="card-title">Последние недели</span>
+          <span class="status-pill todo">весь календарь →</span>
+        </div>
+        <div class="hm-flex hm-flex-big">
+          <div class="hm-wrap">
+            <div class="heatmap" id="mini-heatmap" aria-hidden="true"></div>
           </div>
-          <div class="feed" id="ov-feed"></div>
-        </section>
-      </div>
+          <div class="hm-stats" id="ov-hm-stats"></div>
+        </div>
+      </section>
+
+      <section class="ov-block ov-feed-block">
+        <div class="card-head">
+          <span class="card-title">Последняя активность</span>
+          <button class="feed-more" data-goto="calendar" type="button">весь список → Календарь</button>
+        </div>
+        <div class="feed" id="ov-feed"></div>
+      </section>
     </section>
 
     <!-- ── Календарь ───────────────────────────────── -->
@@ -734,6 +829,14 @@
 
         <aside class="day-detail" id="day-detail" aria-live="polite"></aside>
       </div>
+
+      <section class="ov-block" style="margin-top: 1.8rem;">
+        <div class="card-head">
+          <span class="card-title">Последние решённые задачи</span>
+          <span class="status-pill todo" id="cal-feed-total">—</span>
+        </div>
+        <div class="feed" id="cal-feed"></div>
+      </section>
     </section>
 
     <!-- ── Дорожная карта ──────────────────────────── -->
@@ -923,16 +1026,16 @@
     <section class="view" id="view-practice" hidden>
       <div class="eyebrow">слабые места</div>
       <h1 class="view-title">Закрепление</h1>
-      <p class="view-sub">Темы, на которых было тяжело. Наставник сам находит их по ходу занятий и подбирает задачи, чтобы закрепить материал.</p>
+      <p class="view-sub">Темы, на которых было тяжело. Наставник сам находит их по ходу занятий и подбирает задачи. Сверху — что ждёт решения, ниже — закрытое по темам.</p>
 
       <div class="stat-grid">
-        <div class="tile accent">
+        <button class="tile accent tile-btn" id="pq-active-btn" type="button">
           <div class="t-num" id="pq-active">—</div>
-          <div class="t-cap">активных тем</div>
-        </div>
+          <div class="t-cap">ждут решения →</div>
+        </button>
         <div class="tile">
           <div class="t-num" id="pq-queued">—</div>
-          <div class="t-cap">задач в очереди</div>
+          <div class="t-cap">тем всего</div>
         </div>
         <div class="tile">
           <div class="t-num" id="pq-done">—</div>
@@ -940,6 +1043,7 @@
         </div>
       </div>
 
+      <div id="pq-pending"></div>
       <div id="pq-list"></div>
       <footer class="note" style="border: none; text-align: left; margin-top: 1.5rem;">список ведётся автоматически — темы добавляются, когда даются тяжело, и закрываются после решённой задачи</footer>
     </section>
@@ -1102,7 +1206,7 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
     }
   };
 
-                          /* @gen:start — генерируется scripts/build_site.py из coach/*.json, вручную не править */
+                                /* @gen:start — генерируется scripts/build_site.py из coach/*.json, вручную не править */
   const TRACKING_SINCE = "2026-07-11";
   const ACTIVITY = {
   "2026-07-11": {
@@ -1503,6 +1607,34 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
         "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09/09_05/09_05_neobychnoe_sravnenie.py"
       }
     ]
+  },
+  "2026-07-23": {
+    "level": 3,
+    "tasks": 3,
+    "note": "9.5 — «Сортируем слова» решена чисто (min/remove, потом оптимизация под join); «Название класса» — с трудом: несколько падений (int() на нечисловой букве, `is int` вместо isdigit(), ord() на срезе длиннее 1 символа); «Порядок книг» — с трудом: IndexError на границе, перезапись/инверсия флага, и главное — сравнивал сырые строки целиком вместо вытащенных фамилии/названия, из-за чего сравнение по названию оставалось недостижимым",
+    "items": [
+      {
+        "name": "Сортируем слова",
+        "kind": "пройдено",
+        "file": "study_python/practice/09/09_05/09_05_sortiruem_slova.py",
+        "code": "\"\"\"\nЗадача: «Сортируем слова»\n\nНа вход программе подаются 3 различных слова. Нужно отсортировать эти\nслова по возрастанию в лексикографическом порядке и вывести их на одной\nстроке, разделяя символом пробела.\n\nФормат входных данных:\n    3 слова, каждое на отдельной строке.\n\nФормат выходных данных:\n    3 слова на одной строке, разделённые пробелом.\n\nПримечание. Пример теста:\n    \"банан\"\n    \"яблоко\"\n    \"апельсин\"\n    -> \"апельсин банан яблоко\"\n\"\"\"\n\nwords = [input(), input(), input()]\nresult = []\n\nwhile len(words) > 0:\n    current_value = min(words)\n    result.append(current_value)\n    words.remove(current_value)\n\nprint(\" \".join(result))",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09/09_05/09_05_sortiruem_slova.py"
+      },
+      {
+        "name": "Название класса",
+        "kind": "пройдено",
+        "file": "study_python/practice/09/09_05/09_05_nazvanie_klassa.py",
+        "code": "\"\"\"\nЗадача: «Название класса» 👩‍🏫🌶️\n\nВ школе BEEGEEK названия учебных классов имеют формат:\n    <номер класса><буква класса>\n\nгде <номер класса> — цифра от 0 до 9 включительно, а <буква класса> —\nрусская буква верхнего регистра от «А» до «П» включительно (без «Ё» —\nсчитаем, что её нет в алфавите).\n\nНапишите программу, которая принимает натуральное число n, а далее n\nназваний классов (каждое на отдельной строке). Для каждого названия\nвыведите на отдельной строке \"YES\", если оно корректно, иначе \"NO\".\n\nФормат входных данных:\n    Число n, затем n строк — названия классов.\n\nФормат выходных данных:\n    Для каждого названия класса — \"YES\" или \"NO\" на отдельной строке.\n\nПримечание. Пример теста:\n    3\n    \"5Б\"\n    \"10Р\"\n    \"3Ё\"\n    -> \"YES\"\n    -> \"NO\"\n    -> \"NO\"\n\"\"\"\n\namount = int(input())\nclasses = []\n\nfor _ in range(amount):\n    classes.append(input())\n\nfor i in range(len(classes)):\n    value = classes[i]\n    if len(value) <= 2 and value[:1].isdigit() and 0 <= int(value[:1]) <= 9 \\\n        and value[1:].isalpha() and ord(\"А\") <= ord(value[1:]) <= ord(\"П\"):\n        print(\"YES\")\n    else:\n        print(\"NO\")\n",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09/09_05/09_05_nazvanie_klassa.py"
+      },
+      {
+        "name": "Порядок книг",
+        "kind": "пройдено",
+        "file": "study_python/practice/09/09_05/09_05_poryadok_knig.py",
+        "code": "\"\"\"\nЗадача: «Порядок книг»\n\nВсе книги в домашней библиотеке должны быть отсортированы по возрастанию:\nсначала по фамилиям авторов, а при совпадении фамилий — по названиям\nкниг. Напишите программу, которая проверяет, верно ли отсортированы\nкниги.\n\nКаждая книга задаётся строкой в формате:\n    <фамилия автора> <инициалы автора>, «<название книги>»\n\nПрограмма должна вывести \"YES\", если книги отсортированы по правилам,\nиначе \"NO\".\n\nФормат входных данных:\n    Число n, затем n строк — описания книг в указанном формате.\n\nФормат выходных данных:\n    \"YES\" или \"NO\" в соответствии с условием задачи.\n\nПримечание 1. Инициалы автора при сортировке не учитываются.\nПримечание 2. Книги в наборе не повторяются.\nПримечание 3. Фамилия автора состоит из одного слова.\n\nПримечание. Пример теста:\n    2\n    \"During A.B., «Заводной апельсин»\"\n    \"Orwell G., «1984»\"\n    -> \"YES\"\n\"\"\"\n\n\ncount_books = int(input())\nbooks = []\nflag = True\n\nfor _ in range(count_books):\n    books.append(input())\n\nfor i in range(len(books) - 1):\n    start_surname_one = books[i].find(\" \")\n    surname_one = books[i][:start_surname_one]\n\n    start_surname_two = books[i + 1].find(\" \")\n    surname_two = books[i + 1][:start_surname_two]\n\n    if surname_one < surname_two:\n        i += 1\n    elif surname_one == surname_two:\n        start_title_one = books[i].find(\"«\")\n        title_one = books[i][start_title_one +1: -1]\n\n        start_title_two = books[i + 1].find(\"«\")\n        title_two = books[i + 1][start_title_two +1: -1]\n\n        if title_one > title_two:\n            flag = False\n            break\n    else:\n        flag = False\n        break\n\nif flag:\n    print(\"YES\")\nelse:\n    print(\"NO\")",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09/09_05/09_05_poryadok_knig.py"
+      }
+    ]
   }
 };
   const DEADLINE = {
@@ -1568,6 +1700,7 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
 };
   const PRACTICE_QUEUE = [
   {
+    "theme": "Unicode и коды",
     "topic": "таблица Unicode: ord/chr, замена буквы по позиции",
     "reason": "Задача «Накручиваем стоимость» — несколько неудачных попыток, много подсказок (индексация строки символом вместо позиции, метод .index, направление замены eng→ru).",
     "difficulty": 5,
@@ -1577,6 +1710,7 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
     "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/coach_tasks/control_letter.py"
   },
   {
+    "theme": "разбор строки",
     "topic": "разбор строки вручную: обход с индексом, вырезание подстроки, chr",
     "reason": "Задача «Сбой в системе» ([u-код] → буква) — в начале не было идей с чего начать, решено с подсказками (цикл while с индексом, срез кода, неравномерный сдвиг i, chr).",
     "difficulty": 6,
@@ -1586,6 +1720,7 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
     "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/coach_tasks/csv_unescape.py"
   },
   {
+    "theme": "индексация и границы",
     "topic": "индексация строк вручную: границы while-цикла при обходе строк разной длины (off-by-one)",
     "reason": "Задача «Необычное сравнение» — дважды упёрся в IndexError на границе (сначала без проверки длины вообще, потом `i <= min(...)` вместо `<`), прямо попросил отдельную задачу на индексы.",
     "difficulty": 4,
@@ -1595,10 +1730,31 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
     "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/coach_tasks/common_prefix_length.py"
   },
   {
+    "theme": "циклы и флаги",
     "topic": "флаг-паттерн при нескольких независимых условиях; путаница с while...else",
     "reason": "Задача «Необычное сравнение» — много итераций: сравнил только до границы короткой строки без проверки длины, `flag == True` вместо `=`, добавил `while...else`, ожидая, что он отличит «дошли до конца успешно» от «вышли без break вообще» — на деле else срабатывает в обоих случаях одинаково. Решил только разделив посимвольное сравнение (flag) и проверку длины в финальном if.",
     "difficulty": 5,
     "status": "pending"
+  },
+  {
+    "theme": "защитные проверки",
+    "topic": "защитная проверка формата строки: избегание падений int()/ord() на некорректных срезах, порядок условий в and (short-circuit)",
+    "reason": "Задача «Название класса» — несколько неудачных попыток, программа падала (ValueError на int() от нечисловой буквы, `is int` вместо isdigit(), TypeError на ord() от среза длиннее 1 символа); исправлено только переносом проверки длины первым условием в and.",
+    "difficulty": 5,
+    "status": "pending",
+    "file": "study_python/practice/09/09_05/09_05_nazvanie_klassa.py",
+    "code": "\"\"\"\nЗадача: «Название класса» 👩‍🏫🌶️\n\nВ школе BEEGEEK названия учебных классов имеют формат:\n    <номер класса><буква класса>\n\nгде <номер класса> — цифра от 0 до 9 включительно, а <буква класса> —\nрусская буква верхнего регистра от «А» до «П» включительно (без «Ё» —\nсчитаем, что её нет в алфавите).\n\nНапишите программу, которая принимает натуральное число n, а далее n\nназваний классов (каждое на отдельной строке). Для каждого названия\nвыведите на отдельной строке \"YES\", если оно корректно, иначе \"NO\".\n\nФормат входных данных:\n    Число n, затем n строк — названия классов.\n\nФормат выходных данных:\n    Для каждого названия класса — \"YES\" или \"NO\" на отдельной строке.\n\nПримечание. Пример теста:\n    3\n    \"5Б\"\n    \"10Р\"\n    \"3Ё\"\n    -> \"YES\"\n    -> \"NO\"\n    -> \"NO\"\n\"\"\"\n\namount = int(input())\nclasses = []\n\nfor _ in range(amount):\n    classes.append(input())\n\nfor i in range(len(classes)):\n    value = classes[i]\n    if len(value) <= 2 and value[:1].isdigit() and 0 <= int(value[:1]) <= 9 \\\n        and value[1:].isalpha() and ord(\"А\") <= ord(value[1:]) <= ord(\"П\"):\n        print(\"YES\")\n    else:\n        print(\"NO\")\n",
+    "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09/09_05/09_05_nazvanie_klassa.py"
+  },
+  {
+    "theme": "сравнение по составному ключу",
+    "topic": "сравнение по составному ключу (фамилия, потом название): сравнивать нужно вытащенные поля, а не всю сырую строку целиком",
+    "reason": "Задача «Порядок книг» — несколько неудачных попыток подряд: сравнивал books[i] целиком вместо фамилии/названия по отдельности, из-за чего ветка сравнения названий при равных фамилиях оставалась недостижимой (полные строки почти никогда не равны). Понадобился конкретный контрпример (одинаковый автор, разные инициалы, названия не по порядку), чтобы стало понятно, что не так; плюс отдельно правил IndexError на границе списка и перезапись/инверсию флага.",
+    "difficulty": 6,
+    "status": "pending",
+    "file": "study_python/practice/09/09_05/09_05_poryadok_knig.py",
+    "code": "\"\"\"\nЗадача: «Порядок книг»\n\nВсе книги в домашней библиотеке должны быть отсортированы по возрастанию:\nсначала по фамилиям авторов, а при совпадении фамилий — по названиям\nкниг. Напишите программу, которая проверяет, верно ли отсортированы\nкниги.\n\nКаждая книга задаётся строкой в формате:\n    <фамилия автора> <инициалы автора>, «<название книги>»\n\nПрограмма должна вывести \"YES\", если книги отсортированы по правилам,\nиначе \"NO\".\n\nФормат входных данных:\n    Число n, затем n строк — описания книг в указанном формате.\n\nФормат выходных данных:\n    \"YES\" или \"NO\" в соответствии с условием задачи.\n\nПримечание 1. Инициалы автора при сортировке не учитываются.\nПримечание 2. Книги в наборе не повторяются.\nПримечание 3. Фамилия автора состоит из одного слова.\n\nПримечание. Пример теста:\n    2\n    \"During A.B., «Заводной апельсин»\"\n    \"Orwell G., «1984»\"\n    -> \"YES\"\n\"\"\"\n\n\ncount_books = int(input())\nbooks = []\nflag = True\n\nfor _ in range(count_books):\n    books.append(input())\n\nfor i in range(len(books) - 1):\n    start_surname_one = books[i].find(\" \")\n    surname_one = books[i][:start_surname_one]\n\n    start_surname_two = books[i + 1].find(\" \")\n    surname_two = books[i + 1][:start_surname_two]\n\n    if surname_one < surname_two:\n        i += 1\n    elif surname_one == surname_two:\n        start_title_one = books[i].find(\"«\")\n        title_one = books[i][start_title_one +1: -1]\n\n        start_title_two = books[i + 1].find(\"«\")\n        title_two = books[i + 1][start_title_two +1: -1]\n\n        if title_one > title_two:\n            flag = False\n            break\n    else:\n        flag = False\n        break\n\nif flag:\n    print(\"YES\")\nelse:\n    print(\"NO\")",
+    "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09/09_05/09_05_poryadok_knig.py"
   }
 ];
   /* @gen:end */
@@ -1762,11 +1918,10 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
         <div class="dd-head">${dateStr}</div>
         <div class="dd-metrics">
           <div class="dd-metric"><div class="m-num">${day.tasks}</div><div class="m-cap">задач</div></div>
-          <div class="dd-metric"><div class="m-num">L${day.level}</div><div class="m-cap">интенсивность</div></div>
+          <div class="dd-metric"><div class="m-word" style="--lvl: var(--heat-${day.level})">${LEVEL_LABEL[day.level]}</div><div class="m-cap">интенсивность</div></div>
         </div>
         <div class="dd-note">${day.note}</div>
-        ${itemsBlock}
-        <div class="level-chip"><i style="background: var(--heat-${day.level})"></i>${LEVEL_LABEL[day.level]}</div>`;
+        ${itemsBlock}`;
     } else {
       const reason = key < TRACKING_SINCE
         ? "До 11 июля занятия шли прямо на Stepik — этих данных у панели нет."
@@ -1894,58 +2049,101 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
     return "очень сложная";
   }
   (function renderPractice() {
-    const activeCount = PRACTICE_QUEUE.filter(e => PQ_STATUS[e.status]?.active).length;
-    const doneCount = PRACTICE_QUEUE.filter(e => e.status === "done").length;
-    document.getElementById("pq-active").textContent = activeCount;
-    document.getElementById("pq-queued").textContent = PRACTICE_QUEUE.length;
-    document.getElementById("pq-done").textContent = doneCount;
+    const pending = PRACTICE_QUEUE.filter(e => PQ_STATUS[e.status]?.active);
+    const done = PRACTICE_QUEUE.filter(e => !PQ_STATUS[e.status]?.active);
+    const themeSet = new Set(PRACTICE_QUEUE.map(e => e.theme || "прочее"));
+    document.getElementById("pq-active").textContent = pending.length;
+    document.getElementById("pq-queued").textContent = themeSet.size;
+    document.getElementById("pq-done").textContent = done.length;
 
-    const list = document.getElementById("pq-list");
-    if (!PRACTICE_QUEUE.length) {
-      list.innerHTML = '<div class="card"><div class="card-head"><span class="card-title">Пока пусто</span></div><p style="color: var(--ink-dim); margin: 0;">Слабых тем не отмечено — так держать!</p></div>';
-      return;
-    }
-    list.innerHTML = "";
-    PRACTICE_QUEUE.forEach(e => {
-      const st = PQ_STATUS[e.status] || PQ_STATUS.pending;
-      const card = document.createElement("div");
-      card.className = "card";
-      const head = document.createElement("div");
-      head.className = "card-head";
-      const title = document.createElement("span");
-      title.className = "card-title";
-      title.textContent = e.topic;
-      const pill = document.createElement("span");
-      pill.className = "status-pill " + st.pill;
-      pill.textContent = st.label;
-      head.append(title, pill);
-      const reason = document.createElement("p");
-      reason.style.cssText = "color: var(--ink-dim); margin: 0 0 .6rem;";
-      reason.textContent = e.reason;
-      const meta = document.createElement("div");
-      meta.className = "note";
-      meta.style.cssText = "border: none; text-align: left; margin: 0; padding: 0;";
-      meta.textContent = typeof e.difficulty === "number"
-        ? `Сложность: ${diffAdj(e.difficulty)} · ${e.difficulty}/10`
-        : "Сложность: " + e.difficulty;
-      card.append(head, reason, meta);
-      if (e.code != null || e.file) {
-        const btn = document.createElement("button");
-        btn.className = "dd-item pq-code";
-        btn.innerHTML = '<span class="dd-item-name">Моё решение</span><span class="dd-item-go">код ›</span>';
-        btn.addEventListener("click", () => openCode({ name: e.topic, file: e.file, code: e.code, github: e.github }));
-        card.append(btn);
+    const diffText = d => typeof d === "number" ? `${diffAdj(d)} · ${d}/10` : String(d);
+    function row(e) {
+      const clickable = e.code != null || e.file;
+      const el = document.createElement(clickable ? "button" : "div");
+      el.className = "pq-row" + (PQ_STATUS[e.status]?.active ? " pending" : "");
+      if (clickable) el.type = "button";
+      const main = document.createElement("div");
+      main.className = "pq-row-main";
+      const t = document.createElement("div");
+      t.className = "pq-row-topic";
+      t.textContent = e.topic;
+      const r = document.createElement("div");
+      r.className = "pq-row-reason";
+      r.textContent = e.reason;
+      main.append(t, r);
+      const diff = document.createElement("div");
+      diff.className = "pq-row-diff";
+      diff.textContent = diffText(e.difficulty);
+      el.append(main, diff);
+      if (clickable) {
+        const go = document.createElement("div");
+        go.className = "pq-row-go";
+        go.textContent = "код ›";
+        el.append(go);
+        el.addEventListener("click", () => openCode({ name: e.topic, file: e.file, code: e.code, github: e.github }));
       }
-      list.appendChild(card);
+      return el;
+    }
+
+    /* «Ждут решения» — приоритет наверх */
+    const pendWrap = document.getElementById("pq-pending");
+    pendWrap.innerHTML = "";
+    const pt = document.createElement("div");
+    pt.className = "pq-section-title pending";
+    pt.textContent = `Ждут решения · ${pending.length}`;
+    pendWrap.append(pt);
+    if (pending.length) {
+      pending.forEach(e => pendWrap.append(row(e)));
+    } else {
+      const empty = document.createElement("div");
+      empty.className = "pq-empty";
+      empty.textContent = "Всё закрыто — новых слабых тем нет.";
+      pendWrap.append(empty);
+    }
+
+    /* Решённое — свёрнуто по темам */
+    const list = document.getElementById("pq-list");
+    list.innerHTML = "";
+    const dt = document.createElement("div");
+    dt.className = "pq-section-title";
+    dt.textContent = "Закрыто по темам";
+    list.append(dt);
+    const byTheme = {};
+    done.forEach(e => { (byTheme[e.theme || "прочее"] = byTheme[e.theme || "прочее"] || []).push(e); });
+    const themes = Object.keys(byTheme).sort((a, b) => byTheme[b].length - byTheme[a].length);
+    if (!themes.length) {
+      const empty = document.createElement("div");
+      empty.className = "pq-empty";
+      empty.textContent = "Пока ничего не закрыто.";
+      list.append(empty);
+    }
+    themes.forEach((theme, gi) => {
+      const g = document.createElement("details");
+      g.className = "pq-group";
+      if (gi === 0) g.open = true;
+      const sm = document.createElement("summary");
+      sm.innerHTML = `${escapeHtml(theme)}<span class="pq-group-count">${byTheme[theme].length}</span>`;
+      g.append(sm);
+      const body = document.createElement("div");
+      body.className = "pq-group-body";
+      byTheme[theme].forEach(e => body.append(row(e)));
+      g.append(body);
+      list.append(g);
+    });
+
+    /* Плитка «ждут решения» → скролл к блоку pending */
+    const activeBtn = document.getElementById("pq-active-btn");
+    if (activeBtn) activeBtn.addEventListener("click", () => {
+      pendWrap.scrollIntoView({ behavior: "smooth", block: "start" });
     });
   })();
 
-  /* ── Лента «Последняя активность» (Обзор) ───────────────── */
-  (function renderFeed() {
-    const feed = document.getElementById("ov-feed");
+  /* ── Лента «Последняя активность» (Обзор + Календарь) ───── */
+  function renderFeed(feed, limit, totalEl) {
     if (!feed) return;
-    const recent = activeDays.slice(-5).reverse();
-    feed.innerHTML = recent.map(key => {
+    let keys = activeDays.slice().reverse();
+    if (limit) keys = keys.slice(0, limit);
+    feed.innerHTML = keys.map(key => {
       const day = ACTIVITY[key];
       const d = parseYmd(key).toLocaleDateString("ru-RU", { weekday: "short", day: "numeric", month: "long" });
       const tasks = (day.items || []).map((it, i) => {
@@ -1956,7 +2154,7 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
           : `<span class="feed-task static">${dot}${escapeHtml(it.name)}</span>`;
       }).join("");
       const inner = tasks || `<span style="color: var(--ink-faint); font-size: 0.8rem;">—</span>`;
-      return `<div class="feed-day"><div class="feed-date">${d} · L${day.level}</div><div class="feed-items">${inner}</div></div>`;
+      return `<div class="feed-day"><div class="feed-date">${d}<span class="feed-level">${LEVEL_LABEL[day.level]}</span></div><div class="feed-items">${inner}</div></div>`;
     }).join("");
     feed.addEventListener("click", e => {
       const btn = e.target.closest(".feed-task");
@@ -1965,8 +2163,40 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
       const item = day && day.items && day.items[+btn.dataset.idx];
       if (item) openCode(item);
     });
-    const totalEl = document.getElementById("feed-total");
     if (totalEl) totalEl.textContent = activeDays.length + " дней";
+  }
+  renderFeed(document.getElementById("ov-feed"), 3, null);
+  renderFeed(document.getElementById("cal-feed"), null, document.getElementById("cal-feed-total"));
+
+  /* ── Карточка «Далось труднее всего» (Обзор) ────────────── */
+  (function renderHardest() {
+    const block = document.getElementById("ov-hardest-block");
+    const box = document.getElementById("ov-hardest");
+    if (!block || !box || !PRACTICE_QUEUE.length) return;
+    const ranked = PRACTICE_QUEUE
+      .map((e, i) => ({ e, i }))
+      .filter(x => typeof x.e.difficulty === "number")
+      .sort((a, b) => (b.e.difficulty - a.e.difficulty) || (b.i - a.i));
+    if (!ranked.length) return;
+    const h = ranked[0].e;
+    block.hidden = false;
+    const solved = !PQ_STATUS[h.status]?.active;
+    const pill = document.getElementById("ov-hardest-pill");
+    pill.className = "status-pill " + (solved ? "done" : "active");
+    pill.textContent = solved ? "решено" : "ждёт";
+    const hasCode = h.code != null || h.file;
+    box.innerHTML = `
+      <div class="h-topic">${escapeHtml(h.topic)}</div>
+      <p class="h-reason">${escapeHtml(h.reason)}</p>
+      <div class="h-foot">
+        <span>сложность <span class="h-diff">${h.difficulty}/10</span> · ${diffAdj(h.difficulty)}</span>
+        ${hasCode ? '<span class="h-code">код ›</span>' : ''}
+      </div>`;
+    if (hasCode) {
+      box.addEventListener("click", () => openCode({ name: h.topic, file: h.file, code: h.code, github: h.github }));
+    } else {
+      box.style.cursor = "default";
+    }
   })();
 
   /* ── Переключение видов ─────────────────────────────────── */
@@ -1987,6 +2217,7 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
   const miniCard = document.getElementById("ov-mini-card");
   miniCard.addEventListener("click", () => showView("calendar"));
   miniCard.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); showView("calendar"); } });
+  document.querySelectorAll("[data-goto]").forEach(b => b.addEventListener("click", e => { e.stopPropagation(); showView(b.dataset.goto); }));
   const initial = location.hash.slice(1);
   showView(views[initial] ? initial : "overview");
 

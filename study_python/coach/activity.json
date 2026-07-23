@@ -145,6 +145,16 @@
         { "name": "Границы while-цикла, общий префикс (закрепление)", "kind": "повторено", "file": "study_python/practice/coach_tasks/common_prefix_length.py" },
         { "name": "Необычное сравнение", "kind": "пройдено", "file": "study_python/practice/09/09_05/09_05_neobychnoe_sravnenie.py" }
       ]
+    },
+    "2026-07-23": {
+      "level": 3,
+      "tasks": 3,
+      "note": "9.5 — «Сортируем слова» решена чисто (min/remove, потом оптимизация под join); «Название класса» — с трудом: несколько падений (int() на нечисловой букве, `is int` вместо isdigit(), ord() на срезе длиннее 1 символа); «Порядок книг» — с трудом: IndexError на границе, перезапись/инверсия флага, и главное — сравнивал сырые строки целиком вместо вытащенных фамилии/названия, из-за чего сравнение по названию оставалось недостижимым",
+      "items": [
+        { "name": "Сортируем слова", "kind": "пройдено", "file": "study_python/practice/09/09_05/09_05_sortiruem_slova.py" },
+        { "name": "Название класса", "kind": "пройдено", "file": "study_python/practice/09/09_05/09_05_nazvanie_klassa.py" },
+        { "name": "Порядок книг", "kind": "пройдено", "file": "study_python/practice/09/09_05/09_05_poryadok_knig.py" }
+      ]
     }
   }
 }

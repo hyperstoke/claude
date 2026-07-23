@@ -97,6 +97,7 @@ def build_block(activity: dict, queue: dict) -> str:
     pq = []
     for e in queue.get("queue", []):
         entry = {
+            "theme": e.get("theme", "прочее"),
             "topic": e["topic"],
             "reason": e["reason"],
             "difficulty": e["difficulty"],
