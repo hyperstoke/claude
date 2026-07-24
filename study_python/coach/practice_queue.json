@@ -48,7 +48,7 @@
       "difficulty": 5,
       "status": "pending",
       "created": "2026-07-23",
-      "file": "study_python/practice/09/09_05/09_05_nazvanie_klassa.py"
+      "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/nazvanie_klassa.py"
     },
     {
       "id": "composite-key-comparison",
@@ -58,7 +58,7 @@
       "difficulty": 6,
       "status": "pending",
       "created": "2026-07-23",
-      "file": "study_python/practice/09/09_05/09_05_poryadok_knig.py"
+      "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/poryadok_knig.py"
     }
   ]
 }
