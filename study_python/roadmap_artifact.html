@@ -704,7 +704,7 @@
     <div class="brand">
       <span class="glyph">py → backend</span>
       <span class="who">Панель ученика</span>
-      <span class="goal">путь к backend-разработчику</span>
+      <span class="goal">путь к стажировке — весна 2027</span>
     </div>
 
     <nav class="nav" aria-label="Разделы">
@@ -758,7 +758,7 @@
         <div class="prog-top">
           <span class="prog-pct" id="ov-prog-pct">—</span>
           <div class="prog-headings">
-            <span class="prog-goal-title">путь к backend-разработчику</span>
+            <span class="prog-goal-title">путь к стажировке Python-backend</span>
             <span class="prog-stage" id="ov-prog-stage">—</span>
           </div>
         </div>
@@ -908,7 +908,7 @@
               <span class="card-title">Git и контроль версий</span>
               <span class="status-pill todo">впереди</span>
             </div>
-            <p class="card-desc">Сначала локально, GitHub — отдельным шагом позже.</p>
+            <p class="card-desc">Стартует сейчас, параллельно с разделом 10: история коммитов копится месяцами, к отбору должна быть за полгода.</p>
             <ul class="topics">
               <li><button class="topic-btn pending" disabled>коммиты</button></li>
               <li><button class="topic-btn pending" disabled>ветки</button></li>
@@ -950,6 +950,25 @@
           <div class="stage-node">5</div>
           <div class="card">
             <div class="card-head">
+              <span class="card-title">Алгоритмы и подготовка к отбору</span>
+              <span class="status-pill todo">впереди</span>
+            </div>
+            <p class="card-desc">Главный фильтр стажировки — алгоритмический онлайн-тест на время. Идёт параллельно с SQL и тестированием, старт — январь 2027.</p>
+            <ul class="topics">
+              <li><button class="topic-btn pending" disabled>сложность O(n)</button></li>
+              <li><button class="topic-btn pending" disabled>два указателя</button></li>
+              <li><button class="topic-btn pending" disabled>хеш-таблицы</button></li>
+              <li><button class="topic-btn pending" disabled>бинарный поиск</button></li>
+              <li><button class="topic-btn pending" disabled>рекурсия</button></li>
+              <li><button class="topic-btn pending" disabled>решение на время</button></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="stage">
+          <div class="stage-node">6</div>
+          <div class="card">
+            <div class="card-head">
               <span class="card-title">Backend-фреймворк</span>
               <span class="status-pill todo">впереди</span>
             </div>
@@ -962,7 +981,7 @@
         </div>
 
         <div class="stage">
-          <div class="stage-node">6</div>
+          <div class="stage-node">7</div>
           <div class="card">
             <div class="card-head">
               <span class="card-title">REST API и аутентификация</span>
@@ -977,7 +996,7 @@
         </div>
 
         <div class="stage">
-          <div class="stage-node">7</div>
+          <div class="stage-node">8</div>
           <div class="card">
             <div class="card-head">
               <span class="card-title">Docker</span>
@@ -989,7 +1008,7 @@
         </div>
 
         <div class="stage">
-          <div class="stage-node">8</div>
+          <div class="stage-node">9</div>
           <div class="card">
             <div class="card-head">
               <span class="card-title">Кэширование и фоновые задачи</span>
@@ -1004,7 +1023,7 @@
         </div>
 
         <div class="stage">
-          <div class="stage-node">9</div>
+          <div class="stage-node">10</div>
           <div class="card">
             <div class="card-head">
               <span class="card-title">Деплой и CI/CD</span>
@@ -1206,7 +1225,7 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
     }
   };
 
-                                      /* @gen:start — генерируется scripts/build_site.py из coach/*.json, вручную не править */
+                                          /* @gen:start — генерируется scripts/build_site.py из coach/*.json, вручную не править */
   const TRACKING_SINCE = "2026-07-11";
   const ACTIVITY = {
   "2026-07-11": {
@@ -1680,9 +1699,9 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
   }
 };
   const DEADLINE = {
-  "goal": "раздел 9 «Строки»",
-  "date": "2026-07-27",
-  "note": "пересчёт от 2026-07-20: разделы 9.1–9.4 пройдены, 9.5 (ord/chr) в процессе; темп ~0.7 темы/день держится"
+  "goal": "раздел 10 «Списки»",
+  "date": "2026-08-03",
+  "note": "раздел 9 закрыт 2026-07-24, на 3 дня раньше срока. Пересчёт под новый темп (25+ ч/нед вместо 10–12): раздел 9 занял 2 недели, раздел 10 сопоставим по объёму → ~8-9 дней. Цель и календарь вех — PLAN_TO_OFFER.md"
 };
   const PROGRESS = {
   "updated": "2026-07-24",
@@ -1691,7 +1710,7 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
       "name": "Синтаксис Python",
       "weight": 20,
       "status": "current",
-      "sub_pct": 60
+      "sub_pct": 65
     },
     {
       "name": "ООП и продвинутый Python",
@@ -1710,7 +1729,12 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
     },
     {
       "name": "Тестирование",
-      "weight": 7,
+      "weight": 6,
+      "status": "todo"
+    },
+    {
+      "name": "Алгоритмы и подготовка к отбору",
+      "weight": 8,
       "status": "todo"
     },
     {
@@ -1725,17 +1749,17 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
     },
     {
       "name": "Docker",
-      "weight": 5,
+      "weight": 4,
       "status": "todo"
     },
     {
       "name": "Кэширование и фоновые задачи",
-      "weight": 5,
+      "weight": 2,
       "status": "todo"
     },
     {
       "name": "Деплой и CI/CD",
-      "weight": 5,
+      "weight": 2,
       "status": "todo"
     }
   ]
