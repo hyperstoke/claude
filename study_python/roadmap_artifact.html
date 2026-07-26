@@ -368,6 +368,13 @@
   .dd-metric .m-num {
     font-size: 1.2rem; font-weight: 650; font-variant-numeric: tabular-nums;
   }
+  .dd-metric .m-word {
+    font-size: 1rem; font-weight: 620; color: var(--accent);
+    display: inline-flex; align-items: center; gap: 0.4rem;
+  }
+  .dd-metric .m-word::before {
+    content: ""; width: 11px; height: 11px; border-radius: 3px; background: var(--lvl, var(--accent)); flex-shrink: 0;
+  }
   .dd-metric .m-cap { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-faint); }
   .dd-note { font-size: 0.88rem; color: var(--ink-dim); border-top: 1px dashed var(--border); padding-top: 0.75rem; }
   .dd-empty { font-size: 0.88rem; color: var(--ink-faint); }
@@ -407,7 +414,7 @@
     text-decoration: none; border-bottom: 1px solid transparent;
   }
   .gh-link:hover { border-bottom-color: var(--accent); }
-  .panel-body pre { max-height: 55vh; overflow: auto; }
+  .panel-body pre:not(.code-src) { max-height: 55vh; overflow: auto; }
 
   /* лента «Последняя активность» на Обзоре */
   .feed { display: flex; flex-direction: column; gap: 0.95rem; }
@@ -514,7 +521,7 @@
   .panel-body h3 { font-size: 0.72rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--accent); margin: 1.1rem 0 0.4rem; }
   .panel-body h3:first-child { margin-top: 0; }
   .panel-body p { font-size: 0.92rem; color: var(--ink-dim); margin: 0 0 0.5rem; }
-  .panel-body pre { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 0.7rem 0.85rem; overflow-x: auto; margin: 0 0 0.5rem; }
+  .panel-body pre:not(.code-src) { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 0.7rem 0.85rem; overflow-x: auto; margin: 0 0 0.5rem; }
   .panel-body code { font-family: var(--font-mono); font-size: 0.82rem; color: var(--ink); }
   .panel-body pre code { display: block; line-height: 1.55; }
   .panel-body ul { margin: 0 0 0.5rem; padding-left: 1.2rem; font-size: 0.88rem; color: var(--ink-dim); }
@@ -589,6 +596,88 @@
   /* ── Кнопка «код ›» в закреплении ──────────────────────── */
   .pq-code { margin-top: 0.7rem; }
 
+  /* ── Плитка-кнопка (переход к «ждут решения») ──────────── */
+  .tile-btn { font: inherit; text-align: left; cursor: pointer; display: block; width: 100%; appearance: none; -webkit-appearance: none; background: var(--accent-soft); }
+  .tile-btn:hover { border-color: var(--accent); }
+  .tile-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .tile-btn .t-cap { color: var(--accent); }
+
+  /* ── Крупный календарь на Обзоре ───────────────────────── */
+  .hm-flex-big { gap: 2rem; align-items: center; flex-wrap: wrap; }
+  .hm-flex-big #mini-heatmap { grid-auto-columns: 17px; grid-template-rows: repeat(7, 17px); gap: 4px; }
+  .hm-flex-big #mini-heatmap .hm-cell { width: 17px; height: 17px; border-radius: 4px; }
+  .hm-flex-big .hm-stats { flex: 1 1 auto; }
+
+  /* ── Ссылка «весь список →» в шапке ленты ──────────────── */
+  .feed-more {
+    font: inherit; font-size: 0.76rem; color: var(--accent); background: none; border: none;
+    cursor: pointer; padding: 0; border-bottom: 1px solid transparent; white-space: nowrap;
+  }
+  .feed-more:hover { border-bottom-color: var(--accent); }
+  .feed-more:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+  .feed-level { display: block; margin-top: 0.15rem; font-size: 0.7rem; color: var(--ink-faint); }
+
+  /* ── Карточка «Далось труднее всего» (Обзор) ───────────── */
+  .hardest {
+    display: block; width: 100%; text-align: left; font: inherit; cursor: pointer;
+    background: var(--raised); border: 1px solid var(--border-strong); border-left: 3px solid var(--now);
+    border-radius: 11px; padding: 1rem 1.15rem 1.05rem; box-shadow: var(--shadow);
+    transition: border-color 0.15s ease;
+  }
+  .hardest:hover { border-color: var(--now); }
+  .hardest:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .hardest .h-topic { font-size: 0.98rem; font-weight: 620; color: var(--ink); }
+  .hardest .h-reason { font-size: 0.86rem; color: var(--ink-dim); margin: 0.35rem 0 0; }
+  .hardest .h-foot {
+    display: flex; align-items: center; gap: 0.7rem; margin-top: 0.6rem;
+    font-size: 0.74rem; color: var(--ink-faint);
+  }
+  .hardest .h-diff { color: var(--now); font-weight: 600; font-variant-numeric: tabular-nums; }
+  .hardest .h-code { margin-left: auto; color: var(--accent); }
+
+  /* ── Закрепление: «ждут решения» + группы по темам ─────── */
+  .pq-section-title {
+    font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-faint);
+    margin: 1.6rem 0 0.7rem;
+  }
+  .pq-section-title.pending { color: var(--now); }
+  .pq-row {
+    display: flex; align-items: center; gap: 0.8rem; width: 100%; text-align: left; font: inherit;
+    background: var(--raised); border: 1px solid var(--border); border-radius: 9px;
+    padding: 0.65rem 0.9rem; margin-bottom: 0.45rem;
+  }
+  .pq-row.pending { border-left: 3px solid var(--now); }
+  button.pq-row { cursor: pointer; transition: border-color 0.15s ease; }
+  button.pq-row:hover { border-color: var(--accent); }
+  button.pq-row:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .pq-row-main { flex: 1; min-width: 0; }
+  .pq-row-topic { font-size: 0.88rem; color: var(--ink); overflow-wrap: anywhere; }
+  .pq-row-reason {
+    font-size: 0.78rem; color: var(--ink-faint); margin-top: 0.15rem;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .pq-row-diff {
+    font-size: 0.72rem; color: var(--ink-faint); font-variant-numeric: tabular-nums; white-space: nowrap; flex-shrink: 0;
+  }
+  .pq-row-go { font-size: 0.76rem; color: var(--accent); white-space: nowrap; flex-shrink: 0; }
+  .pq-group { border: none; margin-bottom: 0.5rem; }
+  .pq-group > summary {
+    cursor: pointer; list-style: none; display: flex; align-items: center; gap: 0.5rem;
+    padding: 0.5rem 0.2rem; font-size: 0.9rem; font-weight: 600; color: var(--ink);
+    border-bottom: 1px solid var(--border);
+  }
+  .pq-group > summary::-webkit-details-marker { display: none; }
+  .pq-group > summary::before {
+    content: "▸"; color: var(--ink-faint); font-size: 0.8rem; transition: transform 0.15s ease;
+  }
+  .pq-group[open] > summary::before { transform: rotate(90deg); }
+  .pq-group > summary .pq-group-count {
+    margin-left: auto; font-size: 0.72rem; color: var(--ink-faint); font-weight: 400;
+    background: var(--inset); border-radius: 999px; padding: 0.1rem 0.5rem;
+  }
+  .pq-group-body { padding-top: 0.55rem; }
+  .pq-empty { font-size: 0.86rem; color: var(--ink-faint); padding: 0.3rem 0 0.6rem; }
+
   /* ── Responsive ────────────────────────────────────────── */
   @media (max-width: 780px) {
     .app { grid-template-columns: 1fr; }
@@ -615,7 +704,7 @@
     <div class="brand">
       <span class="glyph">py → backend</span>
       <span class="who">Панель ученика</span>
-      <span class="goal">путь к backend-разработчику</span>
+      <span class="goal">путь к стажировке — весна 2027</span>
     </div>
 
     <nav class="nav" aria-label="Разделы">
@@ -669,7 +758,7 @@
         <div class="prog-top">
           <span class="prog-pct" id="ov-prog-pct">—</span>
           <div class="prog-headings">
-            <span class="prog-goal-title">путь к backend-разработчику</span>
+            <span class="prog-goal-title">путь к стажировке Python-backend</span>
             <span class="prog-stage" id="ov-prog-stage">—</span>
           </div>
         </div>
@@ -681,28 +770,34 @@
         </div>
       </section>
 
-      <div class="ov-cols">
-        <section class="ov-block ov-mini" id="ov-mini-card" role="button" tabindex="0" aria-label="Открыть календарь занятий">
-          <div class="card-head">
-            <span class="card-title">Последние недели</span>
-            <span class="status-pill todo">весь календарь →</span>
-          </div>
-          <div class="hm-flex">
-            <div class="hm-wrap">
-              <div class="heatmap" id="mini-heatmap" aria-hidden="true"></div>
-            </div>
-            <div class="hm-stats" id="ov-hm-stats"></div>
-          </div>
-        </section>
+      <section class="ov-block" id="ov-hardest-block" hidden>
+        <div class="card-head">
+          <span class="card-title">Далось труднее всего</span>
+          <span class="status-pill" id="ov-hardest-pill">—</span>
+        </div>
+        <button class="hardest" id="ov-hardest" type="button"></button>
+      </section>
 
-        <section class="ov-block ov-feed-block">
-          <div class="card-head">
-            <span class="card-title">Последняя активность</span>
-            <span class="status-pill todo" id="feed-total">—</span>
+      <section class="ov-block ov-mini" id="ov-mini-card" role="button" tabindex="0" aria-label="Открыть календарь занятий">
+        <div class="card-head">
+          <span class="card-title">Последние недели</span>
+          <span class="status-pill todo">весь календарь →</span>
+        </div>
+        <div class="hm-flex hm-flex-big">
+          <div class="hm-wrap">
+            <div class="heatmap" id="mini-heatmap" aria-hidden="true"></div>
           </div>
-          <div class="feed" id="ov-feed"></div>
-        </section>
-      </div>
+          <div class="hm-stats" id="ov-hm-stats"></div>
+        </div>
+      </section>
+
+      <section class="ov-block ov-feed-block">
+        <div class="card-head">
+          <span class="card-title">Последняя активность</span>
+          <button class="feed-more" data-goto="calendar" type="button">весь список → Календарь</button>
+        </div>
+        <div class="feed" id="ov-feed"></div>
+      </section>
     </section>
 
     <!-- ── Календарь ───────────────────────────────── -->
@@ -734,6 +829,14 @@
 
         <aside class="day-detail" id="day-detail" aria-live="polite"></aside>
       </div>
+
+      <section class="ov-block" style="margin-top: 1.8rem;">
+        <div class="card-head">
+          <span class="card-title">Последние решённые задачи</span>
+          <span class="status-pill todo" id="cal-feed-total">—</span>
+        </div>
+        <div class="feed" id="cal-feed"></div>
+      </section>
     </section>
 
     <!-- ── Дорожная карта ──────────────────────────── -->
@@ -805,7 +908,7 @@
               <span class="card-title">Git и контроль версий</span>
               <span class="status-pill todo">впереди</span>
             </div>
-            <p class="card-desc">Сначала локально, GitHub — отдельным шагом позже.</p>
+            <p class="card-desc">Стартует сейчас, параллельно с разделом 10: история коммитов копится месяцами, к отбору должна быть за полгода.</p>
             <ul class="topics">
               <li><button class="topic-btn pending" disabled>коммиты</button></li>
               <li><button class="topic-btn pending" disabled>ветки</button></li>
@@ -847,10 +950,29 @@
           <div class="stage-node">5</div>
           <div class="card">
             <div class="card-head">
+              <span class="card-title">Алгоритмы и подготовка к отбору</span>
+              <span class="status-pill todo">впереди</span>
+            </div>
+            <p class="card-desc">Главный фильтр стажировки — алгоритмический онлайн-тест на время. Идёт параллельно с SQL и тестированием, старт — январь 2027.</p>
+            <ul class="topics">
+              <li><button class="topic-btn pending" disabled>сложность O(n)</button></li>
+              <li><button class="topic-btn pending" disabled>два указателя</button></li>
+              <li><button class="topic-btn pending" disabled>хеш-таблицы</button></li>
+              <li><button class="topic-btn pending" disabled>бинарный поиск</button></li>
+              <li><button class="topic-btn pending" disabled>рекурсия</button></li>
+              <li><button class="topic-btn pending" disabled>решение на время</button></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="stage">
+          <div class="stage-node">6</div>
+          <div class="card">
+            <div class="card-head">
               <span class="card-title">Backend-фреймворк</span>
               <span class="status-pill todo">впереди</span>
             </div>
-            <p class="card-desc">FastAPI сначала (типизация, async, чище объясняет REST), затем Django при необходимости.</p>
+            <p class="card-desc">FastAPI сначала (типизация, async/await, asyncio, чище объясняет REST), затем Django при необходимости.</p>
             <ul class="topics">
               <li><button class="topic-btn pending" disabled>FastAPI</button></li>
               <li><button class="topic-btn pending" disabled>Django</button></li>
@@ -859,7 +981,7 @@
         </div>
 
         <div class="stage">
-          <div class="stage-node">6</div>
+          <div class="stage-node">7</div>
           <div class="card">
             <div class="card-head">
               <span class="card-title">REST API и аутентификация</span>
@@ -874,7 +996,7 @@
         </div>
 
         <div class="stage">
-          <div class="stage-node">7</div>
+          <div class="stage-node">8</div>
           <div class="card">
             <div class="card-head">
               <span class="card-title">Docker</span>
@@ -886,7 +1008,7 @@
         </div>
 
         <div class="stage">
-          <div class="stage-node">8</div>
+          <div class="stage-node">9</div>
           <div class="card">
             <div class="card-head">
               <span class="card-title">Кэширование и фоновые задачи</span>
@@ -901,7 +1023,7 @@
         </div>
 
         <div class="stage">
-          <div class="stage-node">9</div>
+          <div class="stage-node">10</div>
           <div class="card">
             <div class="card-head">
               <span class="card-title">Деплой и CI/CD</span>
@@ -923,16 +1045,16 @@
     <section class="view" id="view-practice" hidden>
       <div class="eyebrow">слабые места</div>
       <h1 class="view-title">Закрепление</h1>
-      <p class="view-sub">Темы, на которых было тяжело. Наставник сам находит их по ходу занятий и подбирает задачи, чтобы закрепить материал.</p>
+      <p class="view-sub">Темы, на которых было тяжело. Наставник сам находит их по ходу занятий и подбирает задачи. Сверху — что ждёт решения, ниже — закрытое по темам.</p>
 
       <div class="stat-grid">
-        <div class="tile accent">
+        <button class="tile accent tile-btn" id="pq-active-btn" type="button">
           <div class="t-num" id="pq-active">—</div>
-          <div class="t-cap">активных тем</div>
-        </div>
+          <div class="t-cap">ждут решения →</div>
+        </button>
         <div class="tile">
           <div class="t-num" id="pq-queued">—</div>
-          <div class="t-cap">задач в очереди</div>
+          <div class="t-cap">тем всего</div>
         </div>
         <div class="tile">
           <div class="t-num" id="pq-done">—</div>
@@ -940,7 +1062,18 @@
         </div>
       </div>
 
+      <div id="pq-pending"></div>
       <div id="pq-list"></div>
+
+      <section class="ov-block" id="pq-reviews-block">
+        <div class="card-head">
+          <span class="card-title">Повторения по расписанию</span>
+          <span class="status-pill todo" id="pq-reviews-total">—</span>
+        </div>
+        <p class="view-sub" style="margin:0 0 0.9rem;">Отдельная система от очереди выше: плановое повторение уже пройденных тем (SM-2), а не темы, где было тяжело.</p>
+        <div class="feed" id="pq-reviews"></div>
+      </section>
+
       <footer class="note" style="border: none; text-align: left; margin-top: 1.5rem;">список ведётся автоматически — темы добавляются, когда даются тяжело, и закрываются после решённой задачи</footer>
     </section>
 
@@ -1102,7 +1235,7 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
     }
   };
 
-                            /* @gen:start — генерируется scripts/build_site.py из coach/*.json, вручную не править */
+                                                        /* @gen:start — генерируется scripts/build_site.py из coach/*.json, вручную не править */
   const TRACKING_SINCE = "2026-07-11";
   const ACTIVITY = {
   "2026-07-11": {
@@ -1113,51 +1246,51 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
       {
         "name": "Сумма цифр",
         "kind": "пройдено",
-        "file": "study_python/practice/09/09_01/09_01_summa_cifr.py",
+        "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_01_Indeksatsiya/summa_cifr.py",
         "code": "# Stepik 9.1 — \"Цифра 1\"\n# Дано: строка, состоящая из цифр.\n# Нужно: посчитать и вывести сумму цифр этой строки.\n\n\nnum = input()\nsum_num = 0\n\nfor digit in num:\n    sum_num += int(digit)\n\nprint(sum_num)",
-        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09/09_01/09_01_summa_cifr.py"
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_01_Indeksatsiya/summa_cifr.py"
       },
       {
         "name": "Цифра (вариант 2)",
         "kind": "пройдено",
-        "file": "study_python/practice/09/09_01/09_01_cifra_2.py",
+        "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_01_Indeksatsiya/cifra_2.py",
         "code": "# Stepik 9.2 — \"Цифра 2\"\n# Дано: строка.\n# Нужно: вывести \"Цифра\", если в строке есть хотя бы одна цифра, иначе \"Цифр нет\".\n\ntext = input()\n\nfor i in text:\n    if i.isdigit():\n        print(\"Цифра\")\n        break\nelse:\n    print(\"Цифр нет\")\n\n\n",
-        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09/09_01/09_01_cifra_2.py"
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_01_Indeksatsiya/cifra_2.py"
       },
       {
         "name": "Сложение в столбик",
         "kind": "пройдено",
-        "file": "study_python/practice/09/09_01/09_01_v_stolbik_2.py",
+        "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_01_Indeksatsiya/v_stolbik_2.py",
         "code": "# Stepik 9.1 Индексация — \"В столбик 2\"\n# Дано: одна строка на вход.\n# Нужно: вывести элементы строки в столбик, в обратном порядке.\n# Пример: \"abc\" -> c / b / a\n\ntext = input()\n\nfor char in text[::-1]:\n    print(char)\n",
-        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09/09_01/09_01_v_stolbik_2.py"
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_01_Indeksatsiya/v_stolbik_2.py"
       },
       {
         "name": "Перевод в двоичную систему",
         "kind": "пройдено",
-        "file": "study_python/practice/09/09_01/09_01_decimal_to_binary.py",
+        "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_01_Indeksatsiya/decimal_to_binary.py",
         "code": "# Stepik 9.1 — \"Decimal to Binary\"\n# Дано: натуральное число, записанное в десятичной системе счисления.\n# Нужно: перевести и вывести это число в двоичной системе счисления.\n\n\nnum = int(input())\nbinary_num = []\n\nwhile num > 0:\n    modulo = num % 2\n    binary_num.append(modulo)\n    num = num // 2\n\nif not binary_num:\n    print(0)\nelse:\n    print(*binary_num[::-1], sep=\"\")\n    print(*reversed(binary_num), sep=\"\")\n\n",
-        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09/09_01/09_01_decimal_to_binary.py"
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_01_Indeksatsiya/decimal_to_binary.py"
       },
       {
         "name": "Инициалы (ФИО)",
         "kind": "пройдено",
-        "file": "study_python/practice/09/09_01/09_01_fio.py",
+        "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_01_Indeksatsiya/fio.py",
         "code": "# Stepik 9.1 — \"ФИО\"\n# Дано: три строки на вход — имя, фамилия, отчество (в таком порядке).\n# Нужно: вывести инициалы человека.\n# Пример: Иван / Иванов / Иванович -> И.И.И.  (уточнить точный формат вывода)\n\nfio = []\nfor _ in range(3):\n    word = input()\n    fio.append(word[0])\n\nprint(fio[1], fio[0], fio[2], sep=\"\")\n",
-        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09/09_01/09_01_fio.py"
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_01_Indeksatsiya/fio.py"
       },
       {
         "name": "Гласные и согласные",
         "kind": "пройдено",
-        "file": "study_python/practice/09/09_01/09_01_glasnye_soglasnye.py",
+        "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_01_Indeksatsiya/glasnye_soglasnye.py",
         "code": "# На вход программе подаётся одна строка с буквами русского языка.\n# Нужно определить количество гласных и согласных букв и вывести:\n#\n# Количество гласных букв равно <кол-во гласных букв>\n# Количество согласных букв равно <кол-во согласных букв>\n#\n# Гласные буквы: ауоыиэяюе (9 штук)\n# Согласные буквы: бвгджзйклмнпрстфхцчшщ (21 штука)\n#\n# Примечание: игнорировать все небуквенные символы, а также букву ё.\n\ntext = input().lower()\n\na = \"ауоыиэяюе\"\nb = \"бвгджзйклмнпрстфхцчшщ\"\ncount_a = 0\ncount_b = 0\n\nfor symbol in text:\n    if symbol in a:\n        count_a += 1\n    elif symbol in b:\n        count_b += 1\n\nprint(f\"Количество гласных букв равно {count_a}\")\nprint(f\"Количество согласных букв равно {count_b}\")\n",
-        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09/09_01/09_01_glasnye_soglasnye.py"
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_01_Indeksatsiya/glasnye_soglasnye.py"
       },
       {
         "name": "Сколько раз встречается",
         "kind": "пройдено",
-        "file": "study_python/practice/09/09_01/09_01_skolko_raz.py",
+        "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_01_Indeksatsiya/skolko_raz.py",
         "code": "# На вход программе подаётся одна строка. Напишите программу, которая\n# определяет, сколько раз в строке встречаются символы + и *, и выводит\n# текст в следующем формате:\n#\n# Символ + встречается <n> раз\n# Символ * встречается <m> раз\n#\n# где <n>, <m> – количество вхождений символов + и * в строку соответственно.\n#\n# Формат входных данных: одна строка.\n# Формат выходных данных: текст в соответствии с условием задачи.\n\nline = input()\n\nn = 0\nm = 0\n\nfor i in line:\n    if i == \"+\":\n        n += 1\n    elif i == \"*\":\n        m += 1\n\nprint(f\"Символ + встречается {n} раз\")\nprint(f\"Символ * встречается {m} раз\")\n",
-        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09/09_01/09_01_skolko_raz.py"
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_01_Indeksatsiya/skolko_raz.py"
       }
     ]
   },
@@ -1169,93 +1302,93 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
       {
         "name": "Одинаковые соседи",
         "kind": "пройдено",
-        "file": "study_python/practice/09/09_01/09_01_odinakovye_sosedi.py",
+        "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_01_Indeksatsiya/odinakovye_sosedi.py",
         "code": "# Одинаковые соседи\n#\n# На вход программе подаётся одна строка. Напишите программу, которая\n# определяет, сколько в ней пар одинаковых соседних символов.\n#\n# Например, для строки \"aaaabbccd\" ответ 5 (пары: aa, aa, aa, bb, cc).\n#\n# Формат входных данных: одна строка.\n# Формат выходных данных: единственное число — количество пар\n\n\nline = input()\ncount = 0\n\nfor i in range(len(line) - 1):\n    if line[i] == line[i+1]:\n        count += 1\n\nprint(count)\n",
-        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09/09_01/09_01_odinakovye_sosedi.py"
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_01_Indeksatsiya/odinakovye_sosedi.py"
       },
       {
         "name": "По одному",
         "kind": "пройдено",
-        "file": "study_python/practice/09/09_01/09_01_po_odnomu.py",
+        "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_01_Indeksatsiya/po_odnomu.py",
         "code": "# Stepik 9.1 — \"По одному\"\n# Дано: строка из эмодзи-символов — очередь животных на борт самолёта.\n# Нужно: для каждого животного вывести его номер в очереди (с 1) и эмодзи\n# в формате \"<номер>) <эмодзи>\"\n# Пример: \"🦁🦓🐧🦒\" ->\n# 1) 🦁\n# 2) 🦓\n# 3) 🐧\n# 4) 🦒\n\nemoji = input()\n\nfor index, emoji in enumerate(emoji, start = 1):\n    print(f\"{index}) {emoji}\")\n\n# Задача на закрепление enumerate от Claude (не со Stepik) — \"Обратный отсчёт\"\n# Дано: строка. Нужно: вывести символы в обратном порядке с номерами с 1.\n# Пример: \"ABCD\" -> 1) D / 2) C / 3) B / 4) A\n\n#text = input()\n#\n#for index, char in enumerate(text[::-1], start=1):\n#    print(f\"{index}) {char}\")",
-        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09/09_01/09_01_po_odnomu.py"
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_01_Indeksatsiya/po_odnomu.py"
       },
       {
         "name": "Две половинки",
         "kind": "пройдено",
-        "file": "study_python/practice/09/09_02/09_02_dve_polovinki.py",
+        "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_02_Srezy/dve_polovinki.py",
         "code": "# Две половинки\n#\n# На вход программе подаётся строка текста. Напишите программу, которая\n# разрежет её на две равные части, переставит их местами и выведет на экран.\n#\n# Формат входных данных\n# На вход программе подаётся строка текста.\n#\n# Формат выходных данных\n# Программа должна вывести текст в соответствии с условием задачи.\n#\n# Примечание. Если длина строки нечётная, то длина первой части должна быть\n# на один символ больше.\n\ntext = input()\n\nn = len(text)\nmid = (n + 1) // 2\n\nfirst = text[:mid]\nsecond = text[mid:]\n\nprint(second + first)\n\n",
-        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09/09_02/09_02_dve_polovinki.py"
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_02_Srezy/dve_polovinki.py"
       },
       {
         "name": "Палиндром",
         "kind": "пройдено",
-        "file": "study_python/practice/09/09_02/09_02_palindrom.py",
+        "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_02_Srezy/palindrom.py",
         "code": "# Палиндром\n#\n# На вход программе подаётся одно слово, записанное в нижнем регистре.\n# Напишите программу, которая определяет, является ли оно палиндромом.\n#\n# Формат входных данных: одно слово в нижнем регистре.\n# Формат выходных данных: «YES», если слово палиндром, иначе «NO».\n#\n# Примечание: палиндром — слово, которое читается одинаково в обоих\n# направлениях (например, «потоп»).\n\nword = input()\n\nif word == word[::-1]:\n    print(\"YES\")\nelse:\n    print(\"NO\")",
-        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09/09_02/09_02_palindrom.py"
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_02_Srezy/palindrom.py"
       },
       {
         "name": "Срезы (1)",
         "kind": "пройдено",
-        "file": "study_python/practice/09/09_02/09_02_slices_1.py",
+        "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_02_Srezy/slices_1.py",
         "code": "# Делаем срезы 1\n#\n# На вход программе подаётся одна строка. Напишите программу, которая выводит:\n# - общее количество символов в строке;\n# - исходную строку, повторённую 3 раза;\n# - первый символ строки;\n# - первые три символа строки;\n# - последние три символа строки;\n# - строку в обратном порядке;\n# - строку с удалённым первым и последним символами.\n#\n# Формат входных данных: одна строка длиной больше 3 символов.\n# Формат выходных данных: каждое значение — на отдельной строке.\n\n\ntext = input()\n\nprint(len(text))\nprint(text * 3)\nprint(text[0])\nprint(text[:3:])\nprint(text[-3::])\nprint(text[::-1])\nprint(text[1:-1:])",
-        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09/09_02/09_02_slices_1.py"
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_02_Srezy/slices_1.py"
       },
       {
         "name": "Срезы (2)",
         "kind": "пройдено",
-        "file": "study_python/practice/09/09_02/09_02_slices_2.py",
+        "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_02_Srezy/slices_2.py",
         "code": "# Делаем срезы 2\n#\n# На вход программе подаётся одна строка. Напишите программу, которая выводит:\n# - третий символ этой строки;\n# - предпоследний символ этой строки;\n# - первые пять символов этой строки;\n# - всю строку, кроме последних двух символов;\n# - все символы с чётными индексами;\n# - все символы с нечётными индексами;\n# - все символы в обратном порядке;\n# - все символы строки через один в обратном порядке, начиная с последнего.\n#\n# Формат входных данных: одна строка.\n# Формат выходных данных: каждое значение — на отдельной строке.\n\n\ntext = input()\n\nprint(text[2])\nprint(text[-2])\nprint(text[:5:])\nprint(text[:-2:])\nprint(text[::2])\nprint(text[1::2])\nprint(text[::-1])\nprint(text[::-2])",
-        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09/09_02/09_02_slices_2.py"
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_02_Srezy/slices_2.py"
       },
       {
         "name": "com или ru",
         "kind": "пройдено",
-        "file": "study_python/practice/09/09_03/09_03_com_or_ru.py",
+        "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_03_Metody_strok/com_or_ru.py",
         "code": "# .com or .ru\n#\n# На вход программе подаётся строка текста. Напишите программу, которая\n# проверяет, что строка заканчивается подстрокой .com или .ru.\n#\n# Формат входных данных\n# На вход программе подаётся строка текста.\n#\n# Формат выходных данных\n# Программа должна вывести «YES» (без кавычек), если введённая строка\n# заканчивается подстрокой .com или .ru, или «NO» (без кавычек)\n# в противном случае.\n\n\nlink = input()\n\nending = (\".ru\", \".com\")\n\nif link.endswith(ending):\n    print(\"YES\")\nelse:\n    print(\"NO\")",
-        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09/09_03/09_03_com_or_ru.py"
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_03_Metody_strok/com_or_ru.py"
       },
       {
         "name": "Хороший оттенок",
         "kind": "пройдено",
-        "file": "study_python/practice/09/09_03/09_03_horoshiy_ottenok.py",
+        "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_03_Metody_strok/horoshiy_ottenok.py",
         "code": "\n\ntext = input().lower()\n\nif \"хорош\" in text:\n    print(\"YES\")\nelse:\n    print(\"NO\")",
-        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09/09_03/09_03_horoshiy_ottenok.py"
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_03_Metody_strok/horoshiy_ottenok.py"
       },
       {
         "name": "Количество слов",
         "kind": "пройдено",
-        "file": "study_python/practice/09/09_03/09_03_kolichestvo_slov.py",
+        "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_03_Metody_strok/kolichestvo_slov.py",
         "code": "# Количество слов\n#\n# На вход программе подаётся строка текста, состоящая из слов, разделённых\n# ровно одним пробелом. Напишите программу, которая подсчитывает количество\n# слов в ней.\n#\n# Формат входных данных\n# На вход программе подаётся строка текста.\n#\n# Формат выходных данных\n# Программа должна вывести количество слов.\n#\n# Примечание. Строка текста не содержит пробелов в начале и конце.\n\n\ntext = input()\n\nspace = text.count(\" \")\n\nprint(len(text.split()))",
-        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09/09_03/09_03_kolichestvo_slov.py"
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_03_Metody_strok/kolichestvo_slov.py"
       },
       {
         "name": "Количество цифр",
         "kind": "пройдено",
-        "file": "study_python/practice/09/09_03/09_03_kolichestvo_tsifr.py",
+        "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_03_Metody_strok/kolichestvo_tsifr.py",
         "code": "# Количество цифр\n#\n# На вход программе подаётся строка текста. Напишите программу, которая\n# подсчитывает количество цифр в данной строке.\n#\n# Формат входных данных\n# На вход программе подаётся строка текста.\n#\n# Формат выходных данных\n# Программа должна вывести количество цифр в данной строке.\n\n\ntext = input()\n\ncount = 0\n\nfor i in text:\n\n    if i.isdigit():\n        count += 1\n\nprint(count)\n",
-        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09/09_03/09_03_kolichestvo_tsifr.py"
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_03_Metody_strok/kolichestvo_tsifr.py"
       },
       {
         "name": "Нижний регистр",
         "kind": "пройдено",
-        "file": "study_python/practice/09/09_03/09_03_nizgniy_registr.py",
+        "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_03_Metody_strok/nizgniy_registr.py",
         "code": "# Нижний регистр\n# На вход подаётся строка. Нужно посчитать количество буквенных\n# символов в нижнем регистре и вывести это число.\n\ntext = input()\n\ncount = 0\n\nfor i in text:\n    if i.islower():\n        count += 1\nprint(count)\n\ncount = sum(1 for i in text if i.islower())\n\nprint(count)",
-        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09/09_03/09_03_nizgniy_registr.py"
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_03_Metody_strok/nizgniy_registr.py"
       },
       {
         "name": "Смена регистра (swapcase)",
         "kind": "пройдено",
-        "file": "study_python/practice/09/09_03/09_03_swap_case.py",
+        "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_03_Metody_strok/swap_case.py",
         "code": "# Swap Case\n#\n# На вход программе подаётся строка. Напишите программу, которая меняет\n# регистр символов — заменяет все строчные символы заглавными и наоборот.\n#\n# Формат входных данных\n# На вход программе подаётся строка.\n#\n# Формат выходных данных\n# Программа должна вывести строку в соответствии с условием задачи.\n\ntext = input()\n\nprint(text.swapcase())",
-        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09/09_03/09_03_swap_case.py"
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_03_Metody_strok/swap_case.py"
       },
       {
         "name": "Заглавные буквы",
         "kind": "пройдено",
-        "file": "study_python/practice/09/09_03/09_03_zaglavnye_bukvy.py",
+        "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_03_Metody_strok/zaglavnye_bukvy.py",
         "code": "# Заглавные буквы\n#\n# На вход программе подаётся строка, состоящая из имени и фамилии человека,\n# разделённых одним пробелом. Напишите программу, которая проверяет,\n# что имя и фамилия начинаются с заглавной буквы.\n#\n# Формат входных данных: строка (только буквы и пробел).\n# Формат выходных данных: \"YES\", если имя и фамилия начинаются с заглавной\n# буквы, иначе \"NO\".\n\n\nname, surname = input().split()\n\nif name[0].isupper() and surname[0].isupper():\n    print(\"YES\")\nelse:\n    print(\"NO\")\n",
-        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09/09_03/09_03_zaglavnye_bukvy.py"
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_03_Metody_strok/zaglavnye_bukvy.py"
       }
     ]
   },
@@ -1267,23 +1400,23 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
       {
         "name": "Первый и последний",
         "kind": "пройдено",
-        "file": "study_python/practice/09/09_03/09_03_pervii_i_poslednii.py",
+        "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_03_Metody_strok/pervii_i_poslednii.py",
         "code": "# Первое и последнее вхождение\n#\n# На вход программе подаётся строка текста. Если в этой строке буква «f»\n# встречается только один раз, выведите её индекс. Если она встречается\n# два и более раза, выведите индексы её первого и последнего вхождения\n# на одной строке, разделённые символом пробела. Если буква «f» в данной\n# строке не встречается, следует вывести «NO» (без кавычек).\n#\n# Формат входных данных: строка текста.\n# Формат выходных данных: индекс(ы) вхождения буквы «f» или «NO».\n\n#fist_second_index = []\n#start_index = 0\n#\n#for i in text:\n#    if i == \"f\":\n#        fist_second_index.append(start_index) # type: ignore\n#    start_index += 1\n#if len(fist_second_index) == 0: # type: ignore\n#    print(\"NO\")\n#elif len(fist_second_index) == 1: # type: ignore\n#    print(*fist_second_index) # type: ignore\n#else:\n#    print(fist_second_index[0], fist_second_index[-1]) # type: ignore\n\n\ntext = input()\n\ncount = text.count(\"f\")\n\nif count == 0:\n    print(\"NO\")\nelif count == 1:\n    print(text.find(\"f\"))\nelse:\n    print(text.find(\"f\"), text.rfind(\"f\"))",
-        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09/09_03/09_03_pervii_i_poslednii.py"
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_03_Metody_strok/pervii_i_poslednii.py"
       },
       {
         "name": "Самый частотный символ",
         "kind": "пройдено",
-        "file": "study_python/practice/09/09_03/09_03_samyy_chastotnyy_simvol.py",
+        "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_03_Metody_strok/samyy_chastotnyy_simvol.py",
         "code": "# Самый частотный символ\n#\n# На вход программе подаётся строка текста. Напишите программу, которая\n# выводит на экран символ, который появляется наиболее часто.\n#\n# Формат входных данных\n# На вход программе подаётся строка текста. Текст может содержать строчные\n# и заглавные буквы английского и русского алфавита, а также цифры.\n#\n# Формат выходных данных\n# Программа должна вывести символ, который появляется наиболее часто.\n#\n# Примечание 1. Если таких символов несколько, следует вывести последний\n# по порядку символ.\n#\n# Примечание 2. Следует различать заглавные и строчные буквы, а также буквы\n# русского и английского алфавита.\n\n\ntext = input()\n\nmax_count = 0\nmax_symb = None\n\nfor i in text:\n    curent_max = text.count(i)\n    if curent_max >= max_count:\n        max_count = curent_max\n        max_symb = i\n\nprint(max_symb)\n\n",
-        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09/09_03/09_03_samyy_chastotnyy_simvol.py"
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_03_Metody_strok/samyy_chastotnyy_simvol.py"
       },
       {
         "name": "Очень странные дела",
         "kind": "пройдено",
-        "file": "study_python/practice/09/09_03/09_03_ochen_strannye_dela.py",
+        "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_03_Metody_strok/ochen_strannye_dela.py",
         "code": "# Очень странные дела\n#\n# Джим Хоппер с помощью радиоприёмника пытается получить сообщение Оди.\n# На приёмник ему поступает n различных последовательностей кода Морзе.\n# Декодировав их, он получает последовательности из цифр и букв строчного\n# латинского алфавита. При этом только в сообщениях Оди содержится число 11,\n# причём минимум 3 раза. Помогите определить Джиму количество сообщений\n# от Оди.\n#\n# Формат входных данных\n# В первой строке подаётся число n – количество сообщений, в последующих\n# n строках вводятся сами сообщения.\n#\n# Формат выходных данных\n# Программа должна вывести количество сообщений от Оди.\n#\n# Примечание. Обратите внимание, что в сообщениях Оди вхождения числа 11\n# должны быть непересекающимися. Другими словами, если мы нашли вхождение\n# числа 11, то следующее вхождение должно начинаться строго после окончания\n# предыдущего. Например, в строке '111' содержится одна такая\n# последовательность, в то время как в '1111' их уже две.\n\nn = int(input())\ncount_message = 0\n\nfor i in range(n):\n    message = input()\n\n    if message.count(\"11\") >= 3:\n        count_message += 1\n\nprint(count_message)\n",
-        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09/09_03/09_03_ochen_strannye_dela.py"
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_03_Metody_strok/ochen_strannye_dela.py"
       }
     ]
   },
@@ -1295,16 +1428,16 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
       {
         "name": "Минутка генетики",
         "kind": "пройдено",
-        "file": "study_python/practice/09/09_03/09_03_minutka_genetiki.py",
+        "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_03_Metody_strok/minutka_genetiki.py",
         "code": "# Минутка генетики\n#\n# На вход программе подаётся строка генетического кода, состоящая из букв\n# А (аденин), Г (гуанин), Ц (цитозин) и Т (тимин). Напишите программу,\n# которая подсчитывает сколько аденина, гуанина, цитозина и тимина входит\n# в данную строку генетического кода.\n#\n# Формат входных данных\n# На вход программе подаётся строка генетического кода, состоящая из\n# символов А, Г, Ц, Т, а, г, ц, т.\n#\n# Формат выходных данных\n# Программа должна вывести, сколько гуанина, тимина, цитозина, аденина\n# входит в данную строку генетического кода.\n#\n# Примечание. Строка не содержит других символов, кроме А, Г, Ц, Т, а, г, ц, т.\ntext = input()\ntext = text.lower()\n\nprint(f\"Аденин: {text.count('а')}\")\nprint(f\"Гуанин: {text.count('г')}\")\nprint(f\"Цитозин: {text.count('ц')}\")\nprint(f\"Тимин: {text.count('т')}\")\n",
-        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09/09_03/09_03_minutka_genetiki.py"
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_03_Metody_strok/minutka_genetiki.py"
       },
       {
         "name": "Плохие комментарии",
         "kind": "пройдено",
-        "file": "study_python/practice/09/09_03/09_03_plohie_kommentarii.py",
+        "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_03_Metody_strok/plohie_kommentarii.py",
         "code": "# Плохие комментарии\n#\n# На платформе Stepik пользователи оставляют комментарии, но не все из них\n# соответствуют правилам. Так, например, модератор Сэм считает неуместными\n# комментариями те, которые представляют собой пустую строку или состоят\n# только из пробелов. Подобные комментарии он удаляет – нечего засорять\n# курс бесполезным материалом!\n#\n# Ваша задача – написать программу, которая поможет Сэму проверять\n# комментарии. Программа должна принимать на вход натуральное число n,\n# а затем n строк, представляющих тексты комментариев. Для каждого\n# комментария ваша программа должна выводить номер этого комментария\n# (начиная с 1), затем двоеточие (:), затем через пробел его текст\n# или сообщение «COMMENT SHOULD BE DELETED» (без кавычек), если\n# комментарий должен быть удалён Сэмом.\n#\n# Формат входных данных\n# На вход программе подаются натуральное число n, а затем – n строк.\n#\n# Формат выходных данных\n# Для каждого комментария программа должна вывести его текст или\n# сообщение «COMMENT SHOULD BE DELETED» (без кавычек), если комментарий\n# должен быть удалён.\n\ncount_input = int(input())\n\ncomments = []\n\nfor _ in range(count_input):\n    text = input()\n    comments.append(text)\n\nfor i, comment in enumerate(comments):\n\n    if comment.isspace() or comment == \"\":\n        print(f\"{i + 1}: COMMENT SHOULD BE DELETED\")\n    else:\n        print(f\"{i + 1}: {comment}\")",
-        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09/09_03/09_03_plohie_kommentarii.py"
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_03_Metody_strok/plohie_kommentarii.py"
       },
       {
         "name": "Нормализация slug (coach)",
@@ -1323,23 +1456,23 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
       {
         "name": "Автомобильный номер",
         "kind": "пройдено",
-        "file": "study_python/practice/09/09_03/09_03_avtomobilnyy_nomer.py",
+        "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_03_Metody_strok/avtomobilnyy_nomer.py",
         "code": "# Автомобильный номер\n#\n# В службе по дорожному движению решили оптимизировать процесс создания\n# автомобильных номеров: вместо человека генерацию автомобильных номеров\n# поручили некоторой GPT (модели машинного обучения). Как мы знаем,\n# искусственный интеллект ещё сыроват и делает много ошибок, поэтому его\n# результаты следует тщательно проверять.\n#\n# Напишите программу, которая принимает на вход строку и проверяет,\n# является ли эта строка корректным автомобильным номером. Программа\n# должна вывести «YES» (без кавычек), если искусственный интеллект\n# справился со своей задачей, или «NO» (без кавычек) в противном случае.\n#\n# В нашей задаче корректным автомобильным номером будем считать следующие\n# форматы:\n#\n#   <БУКВА><ЦИФРА><ЦИФРА><ЦИФРА><БУКВА><БУКВА>_<ЦИФРА><ЦИФРА>\n#   <БУКВА><ЦИФРА><ЦИФРА><ЦИФРА><БУКВА><БУКВА>_<ЦИФРА><ЦИФРА><ЦИФРА>\n#\n# где <ЦИФРА> – это любая цифра, а <БУКВА> – это одна из букв кириллицы\n# АВЕКМНОРСТУХ.\n\n\nnumber = input()\ncorrect_letter = \"АВЕКМНОРСТУХ\"\n\nif len(number) == 9:\n    digit_position = (1, 2, 3, 7, 8)\nelif len(number) == 10:\n    digit_position = (1, 2, 3, 7, 8, 9)\nelse:\n    digit_position = None\n\nif digit_position is not None and (\n    all(number[i] in correct_letter for i in (0, 4, 5))\n    and all(number[i].isdigit() for i in digit_position)\n    and number[6] == \"_\"\n):\n    print(\"YES\")\nelse:\n    print(\"NO\")\n\n\n\n",
-        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09/09_03/09_03_avtomobilnyy_nomer.py"
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_03_Metody_strok/avtomobilnyy_nomer.py"
       },
       {
         "name": "Проверка никнейма",
         "kind": "пройдено",
-        "file": "study_python/practice/09/09_03/09_03_proverka_nikneima.py",
+        "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_03_Metody_strok/proverka_nikneima.py",
         "code": "# Проверь никнейм\n#\n# Во время собеседования вам предложили решить задачу на валидацию имени\n# пользователя. Пользователь пытается создать никнейм для своего аккаунта\n# в соцсети Y. Правила для корректного никнейма в соцсети Y следующие:\n#\n# - никнейм должен начинаться с символа @\n# - никнейм должен содержать от 5 до 15 (включительно) символов (включая\n#   первый символ @)\n# - никнейм должен содержать только строчные буквы и (или) цифры (помимо\n#   первого символа @)\n#\n# Напишите программу, которая выводит «Correct» (без кавычек), если\n# никнейм соответствует всем вышеприведенным правилам, или «Incorrect»\n# (без кавычек) в противном случае.\n#\n# Формат входных данных\n# На вход программе подаётся одна строка – никнейм.\n#\n# Формат выходных данных\n# Программа должна вывести текст в соответствии с условием задачи.\n#\n# Примечание. Обратите внимание, что никнейму необязательно содержать\n# строчные буквы и цифры одновременно, никнейм может содержать только\n# строчные буквы или только цифры (помимо первого символа @).\n\n\nnickname = input()\nstart_symbol = False\ncorrect_symbol = False\nlen_correct = False\n\nif nickname.startswith(\"@\"):\n    start_symbol = True\n\nif nickname[1:].isalnum() and nickname[1:].islower() or nickname[1:].isdigit():\n    correct_symbol = True\n\nif 5 <= len(nickname) <= 15:\n    len_correct = True\n\nif start_symbol and correct_symbol and len_correct:\n    print(\"Correct\")\nelse:\n    print(\"Incorrect\")",
-        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09/09_03/09_03_proverka_nikneima.py"
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_03_Metody_strok/proverka_nikneima.py"
       },
       {
         "name": "Удаление фрагмента",
         "kind": "пройдено",
-        "file": "study_python/practice/09/09_03/09_03_udalenie_fragmenta.py",
+        "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_03_Metody_strok/udalenie_fragmenta.py",
         "code": "# Удаление фрагмента\n#\n# На вход программе подаётся строка текста, в которой буква «h» встречается\n# минимум два раза. Напишите программу, которая удаляет из этой строки\n# первое и последнее вхождение буквы «h», а также все символы, находящиеся\n# между ними.\n#\n# Формат входных данных\n# На вход программе подаётся строка текста.\n#\n# Формат выходных данных\n# Программа должна вывести текст в соответствии с условием задачи.\n\n\ntext = input()\n\nprint(text[:text.find(\"h\")], text[text.rfind(\"h\") + 1:], sep=\"\")",
-        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09/09_03/09_03_udalenie_fragmenta.py"
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_03_Metody_strok/udalenie_fragmenta.py"
       },
       {
         "name": "Палиндром-запрос, дедуп (coach)",
@@ -1358,23 +1491,23 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
       {
         "name": "Похудение",
         "kind": "пройдено",
-        "file": "study_python/practice/09/09_04/09_04_pohudenie.py",
+        "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_04_Formatirovanie_strok/pohudenie.py",
         "code": "# (Не) Активное похудение\n#\n# Осталось 60 дней до лета. Гвидо решил похудеть. Дни он пронумеровал\n# от 1 до 60 (включительно). Стартовый вес — 100 кг, цель — 88 кг (или\n# меньше). Худеть он решил на одну и ту же массу ежедневно.\n#\n# Программа принимает текущий день и текущий вес Гвидо и выводит фразу:\n#   - «Все идет по плану», если текущий вес НИЖЕ либо РАВЕН запланированному\n#     на этот день;\n#   - «Что-то пошло не так», если текущий вес ВЫШЕ запланированного.\n#\n# Также программа выводит строку в формате:\n#   #<номер дня> ДЕНЬ: ТЕКУЩИЙ ВЕС = <текущий вес> кг, ЦЕЛЬ по ВЕСУ = <цель> кг\n#\n# Формат входных данных\n#   - номер дня похудения (целое число) — на отдельной строке;\n#   - текущий вес Гвидо (действительное число) — на отдельной строке.\n#\n# Формат выходных данных\n#   - фраза о статусе + строка с информацией (см. выше).\n#\n# Примечание. В 1-й день Гвидо уже должен похудеть.\n# Подсказка. Ежедневная потеря веса: (100 - 88) / 60 = 0.2 кг.\n# Цель на день N: 100 - 0.2 * N.\n\nday = int(input())\ncurrent_weight = float(input())\nweight_goal = 100 - (day * 0.2)\n\nif current_weight <= weight_goal:\n    print(\"Все идет по плану\")\nelse:\n    print(\"Что-то пошло не так\")\n\nprint(f\"#{day} ДЕНЬ: ТЕКУЩИЙ ВЕС = {current_weight} кг, ЦЕЛЬ по ВЕСУ = {weight_goal:.1f} кг\")\n\n",
-        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09/09_04/09_04_pohudenie.py"
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_04_Formatirovanie_strok/pohudenie.py"
       },
       {
         "name": "Соотнести символы и коды",
         "kind": "изучено",
-        "file": "study_python/practice/09/09_05/09_05_sootnesti_simvoly_i_kody.py",
+        "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/sootnesti_simvoly_i_kody.py",
         "code": "# Задача: соотнести символы с их кодами в таблице Unicode (ASCII).\n# Символы: a, A, z, Z, 6, 7\n# Коды:    97, 90, 54, 55, 122, 65\n# Подсказка из условия: код символа можно узнать функцией ord().\n#\n# Шпаргалка по блокам ASCII (идут по порядку, запоминать все коды не надо):\n#   цифры '0'-'9'   -> 48-57\n#   заглавные A-Z   -> 65-90\n#   строчные a-z    -> 97-122\n# Разница между строчной и заглавной одной буквы всегда 32.\n\n# Проверь себя — выведи коды и сверь со своими ответами:\nfor symbol in \"aAzZ67\":\n    print(symbol, ord(symbol))\n",
-        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09/09_05/09_05_sootnesti_simvoly_i_kody.py"
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/sootnesti_simvoly_i_kody.py"
       },
       {
         "name": "Следующая буква",
         "kind": "пройдено",
-        "file": "study_python/practice/09/09_05/09_05_sleduyuschaya_bukva.py",
+        "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/sleduyuschaya_bukva.py",
         "code": "# Задача: «Какая следующая буква?»\n#\n# На вход подаётся одна буква русского алфавита в верхнем регистре.\n# Нужно найти следующую за ней букву и вывести её на экран.\n# Если введённая буква — последняя в алфавите, вывести:\n#   Дальше букв нет\n#\n# Формат входных данных: одна буква русского алфавита в верхнем регистре.\n# Формат выходных данных: одна буква в верхнем регистре или текст\n# «Дальше букв нет» (без кавычек).\n#\n# Примечание: буквы Ё в алфавите нет (значит, между Е и Ж кодов Ё быть не должно).\n\n\ncharacter = input()\ncharacter = ord(character) + 1\n\nif chr(character) <= \"Я\":\n    print(chr(character))\nelse:\n    print(\"Дальше букв нет\")",
-        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09/09_05/09_05_sleduyuschaya_bukva.py"
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/sleduyuschaya_bukva.py"
       }
     ]
   },
@@ -1386,16 +1519,16 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
       {
         "name": "Символы в диапазоне",
         "kind": "пройдено",
-        "file": "study_python/practice/09/09_05/09_05_simvoly_v_diapazone.py",
+        "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/simvoly_v_diapazone.py",
         "code": "# Задача: «Символы в диапазоне»\n#\n# На вход программе подаются два числа a и b (a < b). Напишите программу,\n# которая для каждого кодового значения в диапазоне от a до b (включительно)\n# выводит соответствующий ему символ из таблицы символов Unicode.\n#\n# Формат входных данных: два натуральных числа, каждое на отдельной строке.\n# Формат выходных данных: текст в соответствии с условием задачи.\n#\n# Примечание: проверяющая система примет решение, даже если в конце будет\n# лишний пробел.\n\na, b = int(input()), int(input())\n\nfor i in range(a, b + 1):\n    print(chr(i), end=\" \")",
-        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09/09_05/09_05_simvoly_v_diapazone.py"
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/simvoly_v_diapazone.py"
       },
       {
         "name": "Простой шифр",
         "kind": "пройдено",
-        "file": "study_python/practice/09/09_05/09_05_prostoy_shifr.py",
+        "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/prostoy_shifr.py",
         "code": "# Задача: «Простой шифр»\n#\n# На вход программе подаётся строка текста. Напишите программу, которая\n# переводит каждый её символ в соответствующий ему код из таблицы символов\n# Unicode.\n#\n# Формат входных данных: строка текста.\n# Формат выходных данных: кодовые значения символов строки, разделённые\n# одним символом пробела.\n#\n# Примечание: проверяющая система примет решение, даже если в конце будет\n# лишний пробел.\n\ntext = input()\n\nfor i in text:\n    print(ord(i), end=\" \")",
-        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09/09_05/09_05_prostoy_shifr.py"
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/prostoy_shifr.py"
       }
     ]
   },
@@ -1407,30 +1540,30 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
       {
         "name": "Самое тяжёлое слово",
         "kind": "пройдено",
-        "file": "study_python/practice/09/09_05/09_05_samoe_tyazheloe_slovo.py",
+        "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/samoe_tyazheloe_slovo.py",
         "code": "# Задача: «Самое тяжёлое слово»\n#\n# Под «тяжестью» слова будем понимать сумму кодов по таблице Unicode всех\n# символов этого слова. Напишите программу, которая принимает 4 слова и\n# находит среди них самое тяжёлое слово. Если самых тяжёлых слов будет\n# несколько, программа должна вывести первое из них.\n#\n# Формат входных данных: 4 слова, каждое на отдельной строке.\n# Формат выходных данных: самое тяжёлое слово.\n\nmax_weight_word = \"\"\nmax_weight_count = 0\n\nfor _ in range(4):\n    weight_count = 0\n    word = input()\n\n    for i in word:\n        weight_count += ord(i)\n\n    if weight_count > max_weight_count:\n        max_weight_count = weight_count\n        max_weight_word = word\n\nprint(max_weight_word)",
-        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09/09_05/09_05_samoe_tyazheloe_slovo.py"
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/samoe_tyazheloe_slovo.py"
       },
       {
         "name": "Стоимость ответа",
         "kind": "пройдено",
-        "file": "study_python/practice/09/09_05/09_05_stoimost_otveta.py",
+        "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/stoimost_otveta.py",
         "code": "# Задача: «Стоимость ответа»\n#\n# Модератору Сэму за каждый символ его сообщений в комментариях Тимур платит\n# в 🐝 (пчёлках-coin) по тарифу: <код символа в таблице Unicode> × 3 🐝.\n# Стоимость всего сообщения складывается из суммы стоимостей всех символов.\n#\n# На вход программе подаётся строка текста. Нужно найти стоимость сообщения\n# в 🐝 и вывести текст в формате:\n#   Текст сообщения: '<текст сообщения Сэма>'\n#   Стоимость сообщения: <стоимость сообщения Сэма>🐝\n#\n# Формат входных данных: строка текста — ответ Сэма в комментариях.\n# Формат выходных данных: текст в соответствии с условием задачи.\n\n\nmessage = input()\nprice_m = 0\n\nfor letter in message:\n    price_m += (ord(letter) * 3)\n\nprint(f\"Текст сообщения: '{message}'\")\nprint(f\"Стоимость сообщения: {price_m}{chr(128029)}\")\n\n",
-        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09/09_05/09_05_stoimost_otveta.py"
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/stoimost_otveta.py"
       },
       {
         "name": "Накручиваем стоимость ответа",
         "kind": "пройдено",
-        "file": "study_python/practice/09/09_05/09_05_nakruchivaem_stoimost_otveta.py",
+        "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/nakruchivaem_stoimost_otveta.py",
         "code": "# Задача: «Накручиваем стоимость ответа»\n#\n# Модератору Сэму за каждый символ его сообщений в комментариях Тимур платит\n# в 🐝 (пчёлках-coin) по тарифу: <код символа в таблице Unicode> × 3 🐝.\n# Стоимость всего сообщения складывается из суммы стоимостей всех символов.\n#\n# Сэм хочет схитрить: заменить некоторые английские буквы на похожие русские\n# (русские буквы в таблице Unicode находятся после английских — код больше,\n# стоимость выше). Буквы для замены:\n#   eyopaxcETOPAHXCBM  →  еуорахсЕТОРАНХСВМ\n#\n# На вход программе подаётся строка текста. Нужно найти стоимость старого и\n# нового сообщений в 🐝 и вывести текст в формате:\n#   Старая стоимость: <стоимость старого сообщения>🐝\n#   Новая стоимость: <стоимость нового сообщения>🐝\n#\n# Формат входных данных: строка текста — ответ Сэма в комментариях.\n# Формат выходных данных: текст в соответствии с условием задачи.\n#\n# Примечание: если в строке не удаётся заменить буквы, стоимость сообщения\n# не изменится.\n\nmessage = input()\n\nprice_m = 0\nprice_m_new = 0\n\nletter_eng = \"eyopaxcETOPAHXCBM\"\nletter_ru = \"еуорахсЕТОРАНХСВМ\"\n\nfor letter in message:\n    if letter in letter_eng:\n        trigger = letter_eng.index(letter)\n        price_m_new += (ord(letter_ru[trigger]) * 3)\n    else:\n        price_m_new += (ord(letter) * 3)\n    price_m += (ord(letter) * 3)\n\nprint(f\"Старая стоимость: {price_m}{chr(128029)}\")\nprint(f\"Новая стоимость: {price_m_new}{chr(128029)}\")",
-        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09/09_05/09_05_nakruchivaem_stoimost_otveta.py"
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/nakruchivaem_stoimost_otveta.py"
       },
       {
         "name": "Сбой в системе",
         "kind": "пройдено",
-        "file": "study_python/practice/09/09_05/09_05_sboy_v_sisteme.py",
+        "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/sboy_v_sisteme.py",
         "code": "# Задача: «Сбой в системе»\n#\n# После сбоя в операционной системе у Гвидо сбилась кодировка: все буквы\n# русского алфавита теперь отображаются в виде конструкции\n# [u-<номер символа в таблице Unicode>].\n#\n# Нужно расшифровать текст: заменить все такие конструкции на\n# соответствующие буквы русского алфавита, и вывести результат.\n#\n# Формат входных данных: строка текста, в которой могут быть зашифрованы\n# символы русского алфавита (в формате [u-<код>]).\n# Формат выходных данных: расшифрованная строка текста.\n#\n# Примечание: буквы Ё в русском алфавите нет.\n\ntext = input()\ncorrect_text = \"\"\ni = 0\n\nwhile i < len(text):\n    if text[i] != \"[\":\n        correct_text += text[i]\n        i += 1\n    else:\n        correct_text += chr(int(text[3 + i:7 + i]))\n        i += 8\n\nprint(correct_text)",
-        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09/09_05/09_05_sboy_v_sisteme.py"
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/sboy_v_sisteme.py"
       }
     ]
   },
@@ -1442,9 +1575,9 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
       {
         "name": "Шифр Цезаря",
         "kind": "пройдено",
-        "file": "study_python/practice/09/09_05/09_05_shifr_cezarya.py",
+        "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/shifr_cezarya.py",
         "code": "# Задача: «Шифр Цезаря»\n#\n# Шифр Цезаря — простой сдвиговый шифр. Нужно\n# написать программу, которая ДЕКОДИРУЕТ (расшифровывает) сообщение,\n# а не кодирует.\n#\n# Формат входных данных:\n#   - первая строка: число n — сдвиг;\n#   - вторая строка: закодированное сообщение из строчных латинских букв.\n#\n# Формат выходных данных:\n#   - одна строка — декодированное сообщение.\n\nshift = int(input())\nencoded_text = input()\n\noriginal_text = \"\"\nalphabet_eng = \"abcdefghijklmnopqrstuvwxyz\"\nflag = True\n\nfor letter in encoded_text:\n    if letter in alphabet_eng:\n        original_text += alphabet_eng[(alphabet_eng.index(letter) - shift) % 26]\n    elif letter == \" \":\n        original_text += \" \"\n    else:\n        flag = False\n        break\n\nif flag:\n    print(original_text)\nelse:\n    print(\"Таких букв нет в английском языке\")\n\n\n\n",
-        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09/09_05/09_05_shifr_cezarya.py"
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/shifr_cezarya.py"
       },
       {
         "name": "Контрольная буква (закрепление ord/chr)",
@@ -1477,16 +1610,16 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
       {
         "name": "Волшебное число",
         "kind": "пройдено",
-        "file": "study_python/practice/09/09_05/09_05_volshebnoe_chislo.py",
+        "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/volshebnoe_chislo.py",
         "code": "\"\"\"\nЗадача: «Волшебное число» ✨\n\nВ некотором наборе слов Сэм находит \"волшебное\" число по следующему\nалгоритму: берёт самую \"маленькую\" и самую \"большую\" строки (по\nлексикографическому порядку), перемножает Unicode-коды последних\nсимволов этих строк и возводит полученное число в квадрат. Результатом\nи является \"волшебное\" число.\n\nФормат входных данных:\n    4 слова, каждое на отдельной строке.\n\nФормат выходных данных:\n    одна строка — \"волшебное\" число.\n\"\"\"\n\nwords = input(), input(), input(), input()\n\nprint((ord(max(words)[-1]) * ord(min(words)[-1])) ** 2)\n",
-        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09/09_05/09_05_volshebnoe_chislo.py"
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/volshebnoe_chislo.py"
       },
       {
         "name": "Строковые минимум и максимум",
         "kind": "пройдено",
-        "file": "study_python/practice/09/09_05/09_05_strokovye_minimum_i_maksimum.py",
+        "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/strokovye_minimum_i_maksimum.py",
         "code": "\"\"\"\nЗадача: «Строковые минимум и максимум»\n\nНа вход подаётся последовательность строк, каждая на отдельной строке.\nКонцом последовательности является слово \"КОНЕЦ\" (без кавычек) — само оно\nв последовательность не входит, лишь сигнализирует об окончании. Нужно\nнайти в последовательности минимальную и максимальную строки (в\nлексикографическом порядке) и вывести их в заданном формате.\n\nФормат входных данных:\n    последовательность строк, каждая на отдельной строке; заканчивается\n    словом \"КОНЕЦ\".\n\nФормат выходных данных:\n    Минимальная строка ⬇️: <минимальная строка>\n    Максимальная строка ⬆️: <максимальная строка>\n\nПримечание: не только у чисел мы можем находить максимум и минимум.\n\"\"\"\n\nwords = []\n\nwhile True:\n    word = input()\n    if word == \"КОНЕЦ\":\n        break\n    words.append(word)\n\nprint(f\"Минимальная строка ⬇️: {min(words)}\")\nprint(f\"Максимальная строка ⬆️: {max(words)}\")",
-        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09/09_05/09_05_strokovye_minimum_i_maksimum.py"
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/strokovye_minimum_i_maksimum.py"
       },
       {
         "name": "Границы while-цикла, общий префикс (закрепление)",
@@ -1498,26 +1631,159 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
       {
         "name": "Необычное сравнение",
         "kind": "пройдено",
-        "file": "study_python/practice/09/09_05/09_05_neobychnoe_sravnenie.py",
+        "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/neobychnoe_sravnenie.py",
         "code": "\"\"\"\nЗадача: «Необычное сравнение»\n\nНа вход подаются 2 строки. Нужно сравнить их посимвольно, не учитывая\nрегистр и игнорируя все небуквенные символы. Вывести \"YES\", если строки\nокажутся равны при такой проверке, иначе \"NO\".\n\nФормат входных данных:\n    2 строки, каждая на отдельной строке.\n\nФормат выходных данных:\n    \"YES\" или \"NO\" в соответствии с условием задачи.\n\nПримечание. Пример теста:\n    \"Ab4c1$#ddd\"\n    \"a_b_c##DDD70\"\n    -> \"YES\"\n\"\"\"\n\nline_one = \"\".join(i for i in input() if i.isalpha()).lower()\nline_two = \"\".join(i for i in input() if i.isalpha()).lower()\ni = 0\nflag = True\n\nwhile i <= min(len(line_one), len(line_two)) - 1:\n    if line_one[i] == line_two[i]:\n        i += 1\n    else:\n        flag = False\n        break\n\nif flag and len(line_one) == len(line_two):\n    print(\"YES\")\nelse:\n    print(\"NO\")",
-        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09/09_05/09_05_neobychnoe_sravnenie.py"
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/neobychnoe_sravnenie.py"
+      }
+    ]
+  },
+  "2026-07-23": {
+    "level": 3,
+    "tasks": 3,
+    "note": "9.5 — «Сортируем слова» решена чисто (min/remove, потом оптимизация под join); «Название класса» — с трудом: несколько падений (int() на нечисловой букве, `is int` вместо isdigit(), ord() на срезе длиннее 1 символа); «Порядок книг» — с трудом: IndexError на границе, перезапись/инверсия флага, и главное — сравнивал сырые строки целиком вместо вытащенных фамилии/названия, из-за чего сравнение по названию оставалось недостижимым",
+    "items": [
+      {
+        "name": "Сортируем слова",
+        "kind": "пройдено",
+        "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/sortiruem_slova.py",
+        "code": "\"\"\"\nЗадача: «Сортируем слова»\n\nНа вход программе подаются 3 различных слова. Нужно отсортировать эти\nслова по возрастанию в лексикографическом порядке и вывести их на одной\nстроке, разделяя символом пробела.\n\nФормат входных данных:\n    3 слова, каждое на отдельной строке.\n\nФормат выходных данных:\n    3 слова на одной строке, разделённые пробелом.\n\nПримечание. Пример теста:\n    \"банан\"\n    \"яблоко\"\n    \"апельсин\"\n    -> \"апельсин банан яблоко\"\n\"\"\"\n\nwords = [input(), input(), input()]\nresult = []\n\nwhile len(words) > 0:\n    current_value = min(words)\n    result.append(current_value)\n    words.remove(current_value)\n\nprint(\" \".join(result))",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/sortiruem_slova.py"
+      },
+      {
+        "name": "Название класса",
+        "kind": "пройдено",
+        "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/nazvanie_klassa.py",
+        "code": "\"\"\"\nЗадача: «Название класса» 👩‍🏫🌶️\n\nВ школе BEEGEEK названия учебных классов имеют формат:\n    <номер класса><буква класса>\n\nгде <номер класса> — цифра от 0 до 9 включительно, а <буква класса> —\nрусская буква верхнего регистра от «А» до «П» включительно (без «Ё» —\nсчитаем, что её нет в алфавите).\n\nНапишите программу, которая принимает натуральное число n, а далее n\nназваний классов (каждое на отдельной строке). Для каждого названия\nвыведите на отдельной строке \"YES\", если оно корректно, иначе \"NO\".\n\nФормат входных данных:\n    Число n, затем n строк — названия классов.\n\nФормат выходных данных:\n    Для каждого названия класса — \"YES\" или \"NO\" на отдельной строке.\n\nПримечание. Пример теста:\n    3\n    \"5Б\"\n    \"10Р\"\n    \"3Ё\"\n    -> \"YES\"\n    -> \"NO\"\n    -> \"NO\"\n\"\"\"\n\namount = int(input())\nclasses = []\n\nfor _ in range(amount):\n    classes.append(input())\n\nfor i in range(len(classes)):\n    value = classes[i]\n    if len(value) <= 2 and value[:1].isdigit() and 0 <= int(value[:1]) <= 9 \\\n        and value[1:].isalpha() and ord(\"А\") <= ord(value[1:]) <= ord(\"П\"):\n        print(\"YES\")\n    else:\n        print(\"NO\")\n",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/nazvanie_klassa.py"
+      },
+      {
+        "name": "Порядок книг",
+        "kind": "пройдено",
+        "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/poryadok_knig.py",
+        "code": "\"\"\"\nЗадача: «Порядок книг»\n\nВсе книги в домашней библиотеке должны быть отсортированы по возрастанию:\nсначала по фамилиям авторов, а при совпадении фамилий — по названиям\nкниг. Напишите программу, которая проверяет, верно ли отсортированы\nкниги.\n\nКаждая книга задаётся строкой в формате:\n    <фамилия автора> <инициалы автора>, «<название книги>»\n\nПрограмма должна вывести \"YES\", если книги отсортированы по правилам,\nиначе \"NO\".\n\nФормат входных данных:\n    Число n, затем n строк — описания книг в указанном формате.\n\nФормат выходных данных:\n    \"YES\" или \"NO\" в соответствии с условием задачи.\n\nПримечание 1. Инициалы автора при сортировке не учитываются.\nПримечание 2. Книги в наборе не повторяются.\nПримечание 3. Фамилия автора состоит из одного слова.\n\nПримечание. Пример теста:\n    2\n    \"During A.B., «Заводной апельсин»\"\n    \"Orwell G., «1984»\"\n    -> \"YES\"\n\"\"\"\n\n\ncount_books = int(input())\nbooks = []\nflag = True\n\nfor _ in range(count_books):\n    books.append(input())\n\nfor i in range(len(books) - 1):\n    start_surname_one = books[i].find(\" \")\n    surname_one = books[i][:start_surname_one]\n\n    start_surname_two = books[i + 1].find(\" \")\n    surname_two = books[i + 1][:start_surname_two]\n\n    if surname_one < surname_two:\n        i += 1\n    elif surname_one == surname_two:\n        start_title_one = books[i].find(\"«\")\n        title_one = books[i][start_title_one +1: -1]\n\n        start_title_two = books[i + 1].find(\"«\")\n        title_two = books[i + 1][start_title_two +1: -1]\n\n        if title_one > title_two:\n            flag = False\n            break\n    else:\n        flag = False\n        break\n\nif flag:\n    print(\"YES\")\nelse:\n    print(\"NO\")",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/poryadok_knig.py"
+      }
+    ]
+  },
+  "2026-07-24": {
+    "level": 2,
+    "tasks": 5,
+    "note": "9.5 — «Каждый третий», «Замени меня полностью», «Удали меня полностью», «Второе вхождение» и «Переворот» решены чисто (методы строк: replace, find со start/rfind)",
+    "items": [
+      {
+        "name": "Каждый третий",
+        "kind": "пройдено",
+        "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/kazhdyy_tretiy.py",
+        "code": "\"\"\"\nЗадача: «Каждый третий»\n\nНа вход программе подаётся строка текста. Нужно удалить из неё все\nсимволы с индексами, кратными 3 (индексы 0, 3, 6, 9, ...), и вывести\nполучившуюся строку.\n\nФормат входных данных:\n    Строка текста.\n\nФормат выходных данных:\n    Строка текста без символов с индексами, кратными 3.\n\nПримечание. Пример теста:\n    \"Python rocks!\"\n    -> \"ytonroks\"\n\"\"\"\n\ntext = input()\nresult = \"\"\n\nfor i in range(len(text)):\n    if i % 3 != 0:\n        result += text[i]\n\nprint(result)",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/kazhdyy_tretiy.py"
+      },
+      {
+        "name": "Замени меня полностью",
+        "kind": "пройдено",
+        "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/zameni_menya_polnostyu.py",
+        "code": "\"\"\"\nЗадача: «Замени меня полностью»\n\nНа вход программе подаётся строка текста. Нужно заменить в ней все\nвхождения цифры 1 на слово \"one\" и вывести результат.\n\nФормат входных данных:\n    Строка текста.\n\nФормат выходных данных:\n    Текст с заменёнными на \"one\" цифрами 1.\n\nПримечание. Пример теста:\n    \"У меня 1 кот и 10 рыбок, а не 11\"\n    -> \"У меня one кот и one0 рыбок, а не oneone\"\n\"\"\"\n\ntext = input()\n\nprint(text.replace(\"1\", \"one\"))\n",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/zameni_menya_polnostyu.py"
+      },
+      {
+        "name": "Удали меня полностью",
+        "kind": "пройдено",
+        "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/udali_menya_polnostyu.py",
+        "code": "\"\"\"\nЗадача: «Удали меня полностью» ❌\n\nНа вход программе подаётся строка текста. Нужно удалить из неё все\nвхождения символа «@» и вывести результат.\n\nФормат входных данных:\n    Строка текста.\n\nФормат выходных данных:\n    Текст без символов «@».\n\nПримечание. Пример теста:\n    \"user@example.com пиши мне @ в любое время\"\n    -> \"userexample.com пиши мне  в любое время\"\n\"\"\"\n\ntext = input()\n\nprint(text.replace(\"@\", \"\"))",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/udali_menya_polnostyu.py"
+      },
+      {
+        "name": "Второе вхождение",
+        "kind": "пройдено",
+        "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/vtoroe_vhozhdenie.py",
+        "code": "\"\"\"\nЗадача: «Второе вхождение» 2️⃣\n\nНа вход программе подаётся строка текста. Нужно вывести индекс второго\nвхождения буквы \"f\". Если буква \"f\" встречается только один раз —\nвывести \"-1\". Если не встречается ни разу — вывести \"-2\".\n\nФормат входных данных:\n    Строка текста.\n\nФормат выходных данных:\n    Индекс второго вхождения буквы \"f\", либо \"-1\", либо \"-2\" — по\n    условию задачи.\n\nПримечание. Пример теста:\n    \"offer\"\n    -> \"2\"\n\"\"\"\n\ntext = input()\nfirst = text.find(\"f\")\n\nif first == -1:\n    print(\"-2\")\nelse:\n    second = text.find(\"f\", first + 1)\n    if second != -1:\n        print(second)\n    else:\n        print(\"-1\")",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/vtoroe_vhozhdenie.py"
+      },
+      {
+        "name": "Переворот",
+        "kind": "пройдено",
+        "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/perevorot.py",
+        "code": "\"\"\"\nЗадача: «Переворот» 🙃\n\nНа вход программе подаётся строка текста, в которой буква \"h\"\nвстречается как минимум два раза. Нужно вывести исходную строку,\nразвернув в ней последовательность символов, заключённую между первым\nи последним вхождением буквы \"h\" (сами буквы \"h\" тоже входят в\nразворачиваемый участок).\n\nФормат входных данных:\n    Строка текста, содержащая не менее двух букв \"h\".\n\nФормат выходных данных:\n    Строка текста с развёрнутым участком между первым и последним \"h\".\n\nПримечание. Пример теста:\n    \"haphazard\"\n    -> \"hpahazard\"\n\"\"\"\n\ntext = input()\n\nfirst = text.find(\"h\")\nlast = text.rfind(\"h\")\n\nmidle = text[first+1:last]\n\nprint(text[:first+1] + midle[::-1] + text[last:])\n\n",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/perevorot.py"
+      }
+    ]
+  },
+  "2026-07-26": {
+    "level": 1,
+    "tasks": 1,
+    "note": "закрепление методов строк (просроченное повторение) — валидация email, решено с замечанием по PEP8 (непоследовательные отступы)",
+    "items": [
+      {
+        "name": "Валидация email (закрепление методов строк)",
+        "kind": "повторено",
+        "file": "study_python/practice/coach_tasks/support_email_normalize.py",
+        "code": "\"\"\"\nЗадача: Валидация email в форме техподдержки\nТема: методы строк (strip, lower, count, endswith)  |  Сложность: 4 (средняя)\n\nЛегенда: бот техподдержки принимает email из формы обращения перед тем,\nкак сохранить его в базе. Пользователи вставляют email откуда попало —\nс лишними пробелами по краям, в разном регистре — и иногда ошибаются\nв формате. Нужно проверить и привести к единому виду перед сохранением.\n\nEmail считается валидным, если после удаления пробелов по краям:\n- в строке ровно один символ \"@\";\n- внутри строки (не по краям) нет пробелов;\n- строка оканчивается на один из разрешённых доменов:\n  \"@mail.ru\", \"@gmail.com\", \"@yandex.ru\".\n\nВход:  одна строка через input() — email, возможно с пробелами по краям\n       и в произвольном регистре.\nВыход: если email валиден — напечатать его в нормализованном виде\n       (без пробелов по краям, в нижнем регистре); иначе — напечатать\n       \"Неверный email\".\n\nПримеры:\n    \"  User@Mail.RU  \"\n    -> \"user@mail.ru\"\n\n    \"user@@mail.ru\"\n    -> \"Неверный email\"   # два \"@\"\n\n    \"user @mail.ru\"\n    -> \"Неверный email\"   # пробел внутри строки\n\n    \"user@ya.ru\"\n    -> \"Неверный email\"   # домен не из разрешённого списка\n\"\"\"\n\n# твой код здесь\n\n\nemail = input()\n\nemail = email.lower()\nemail = email.strip()\n\nif email.count(\" \") or email.count(\"@\") != 1:\n    print(\"Неверный email\")\nelse:\n       if email.endswith((\"@mail.ru\", \"@gmail.com\", \"@yandex.ru\")):\n              print(email)\n       else:\n              print(\"Неверный email\")\n       ",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/coach_tasks/support_email_normalize.py"
+      }
+    ]
+  },
+  "2026-07-27": {
+    "level": 3,
+    "tasks": 6,
+    "note": "10.1 — начат раздел «Списки»: «Алфавит», «Список строк», «Список кубов», «Все сразу 1», «Список делителей» и «Суммы двух» решены чисто (chr/ord, сбор списка вводом n элементов, len/индексация/срез/in/del, перебор делителей, суммы соседних элементов)",
+    "items": [
+      {
+        "name": "Алфавит",
+        "kind": "пройдено",
+        "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/alfavit.py",
+        "code": "\"\"\"\nЗадача: «Алфавит»\n\nНапишите программу, выводящую следующий список:\n['a', 'bb', 'ccc', 'dddd', 'eeeee', 'ffffff', ...]\n\nФормат входных данных:\n    На вход программе ничего не подаётся.\n\nФормат выходных данных:\n    Программа должна вывести указанный список.\n\nПримечание. Последний элемент списка должен состоять из 26 символов z.\n\"\"\"\n\nalfabet = []\ncount = 1\n\nfor i in range(ord(\"a\"), ord(\"z\") + 1):\n    alfabet.append(chr(i) * count)\n    count += 1\n    \nprint(alfabet)",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/alfavit.py"
+      },
+      {
+        "name": "Список строк",
+        "kind": "пройдено",
+        "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/spisok_strok.py",
+        "code": "\"\"\"\nЗадача: «Список строк»\n\nНа вход программе подаются натуральное число n, а затем n строк. Напишите\nпрограмму, которая создаёт из указанных строк список, а затем выводит его.\n\nФормат входных данных:\n    Натуральное число n, а затем n строк, каждая на отдельной строке.\n\nФормат выходных данных:\n    Программа должна вывести список, состоящий из указанных строк.\n\"\"\"\nn = int(input())\nlst = []\n\nfor i in range(1, n + 1):\n    lang = input()\n    lst.append(lang)\n\nprint(lst)",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/spisok_strok.py"
+      },
+      {
+        "name": "Список кубов",
+        "kind": "пройдено",
+        "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/spisok_kubov.py",
+        "code": "\"\"\"\nЗадача: «Список кубов»\n\nНа вход программе подаются натуральное число n, а затем n целых чисел.\nНапишите программу, которая создаёт из указанных чисел список их кубов,\nа затем выводит его.\n\nФормат входных данных:\n    Натуральное число n, а затем n целых чисел, каждое на отдельной строке.\n\nФормат выходных данных:\n    Программа должна вывести список, состоящий из кубов указанных чисел.\n\"\"\"\n\n\n\n\nnum_of_values = int(input())\nlst_num = []\n\nfor _ in range(1, num_of_values + 1):\n    lst_num.append(pow(int(input()), 3))\n\nprint(lst_num)\n\n",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/spisok_kubov.py"
+      },
+      {
+        "name": "Все сразу 1",
+        "kind": "пройдено",
+        "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/vse_srazu_1.py",
+        "code": "\"\"\"\nЗадача: «Все сразу 1»\n\nДополните приведённый ниже код, чтобы он:\n- вывел длину списка;\n- вывел последний элемент списка;\n- вывел список в обратном порядке (вспоминаем срезы);\n- вывел «YES» (без кавычек), если список содержит числа 5 и 17,\n  или «NO» (без кавычек) в противном случае;\n- вывел список с удалёнными первым и последним элементами.\n\nПримечание. Каждый вывод необходимо осуществлять на новой строке.\n\"\"\"\n\nnumbers = [2, 6, 3, 14, 10, 4, 11, 16, 12, 5, 4, 16, 1, 0, 8, 16, 10, 10, 8, 5, 1, 11, 10, 10, 12, 0, 0, 6, 14, 8, 2, 12, 14, 5, 6, 12, 1, 2, 10, 14, 9, 1, 15, 1, 2, 14, 16, 6, 7, 5]\n\nprint(len(numbers))\nprint(numbers[-1])\nprint(numbers[::-1])\nprint(\"YES\" if 5 in numbers and 17 in numbers else \"NO\")\ndel numbers[0]\ndel numbers[-1]\nprint(numbers)\n",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/vse_srazu_1.py"
+      },
+      {
+        "name": "Список делителей",
+        "kind": "пройдено",
+        "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/spisok_deliteley.py",
+        "code": "\"\"\"\nЗадача: «Список делителей»\n\nНа вход программе подаётся натуральное число n. Напишите программу,\nкоторая создаёт список, состоящий из делителей введённого числа в\nпорядке возрастания, а затем выводит этот список.\n\nФормат входных данных:\n    Натуральное число n.\n\nФормат выходных данных:\n    Программа должна вывести список в соответствии с условием задачи.\n\"\"\"\n\nn = int(input())\ndividers = []\n\nfor i in range(1, n + 1):\n    if n % i == 0:\n        dividers.append(i)\n\nprint(dividers)\n",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/spisok_deliteley.py"
+      },
+      {
+        "name": "Суммы двух",
+        "kind": "пройдено",
+        "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/summy_dvuh.py",
+        "code": "\"\"\"\nЗадача: «Суммы двух»\n\nНа вход программе подаётся натуральное число n (n >= 2). Затем поступают\nn целых чисел. Напишите программу, которая создаёт из указанных чисел\nсписок, состоящий из сумм соседних чисел.\n\nФормат входных данных:\n    Натуральное число n (n >= 2), а затем n целых чисел, каждое на\n    отдельной строке.\n\nФормат выходных данных:\n    Программа должна вывести список, состоящий из сумм соседних чисел.\n\"\"\"\n\ncount_num = int(input())\nnum_list = []\nnew_num_list = []\n\nfor _ in range(count_num):\n    num = int(input())\n    num_list.append(num)\n\nfor i in range(len(num_list) - 1):\n    sum_num = num_list[i] + num_list[i+1]\n    new_num_list.append(sum_num)\n\nprint(new_num_list)\n\n",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/summy_dvuh.py"
       }
     ]
   }
 };
   const DEADLINE = {
-  "goal": "этап 0 — добить синтаксис Python (функции, словари, исключения, файлы)",
-  "date": "2026-09-05",
-  "note": "интенсив-план 30 ч/нед от 2026-07-24 (BACKEND_PLAN.md): этап 0 до 2026-09-05; далее ООП до 20.10, Git до 31.10, SQL до 30.11, тесты до 20.12, FastAPI до 05.02, REST+Docker до 10.03, пет-проект до 05.05; job-ready ~май 2027, окно оффера июнь–сен 2027"
+  "goal": "раздел 10 «Списки»",
+  "date": "2026-08-03",
+  "note": "раздел 9 закрыт 2026-07-24, на 3 дня раньше срока. Пересчёт под новый темп (25+ ч/нед вместо 10–12): раздел 9 занял 2 недели, раздел 10 сопоставим по объёму → ~8-9 дней. Цель и календарь вех — PLAN_TO_OFFER.md"
 };
   const PROGRESS = {
-  "updated": "2026-07-21",
+  "updated": "2026-07-24",
   "stages": [
     {
       "name": "Синтаксис Python",
       "weight": 20,
       "status": "current",
-      "sub_pct": 55
+      "sub_pct": 65
     },
     {
       "name": "ООП и продвинутый Python",
@@ -1536,7 +1802,12 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
     },
     {
       "name": "Тестирование",
-      "weight": 7,
+      "weight": 6,
+      "status": "todo"
+    },
+    {
+      "name": "Алгоритмы и подготовка к отбору",
+      "weight": 8,
       "status": "todo"
     },
     {
@@ -1551,23 +1822,24 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
     },
     {
       "name": "Docker",
-      "weight": 5,
+      "weight": 4,
       "status": "todo"
     },
     {
       "name": "Кэширование и фоновые задачи",
-      "weight": 5,
+      "weight": 2,
       "status": "todo"
     },
     {
       "name": "Деплой и CI/CD",
-      "weight": 5,
+      "weight": 2,
       "status": "todo"
     }
   ]
 };
   const PRACTICE_QUEUE = [
   {
+    "theme": "Unicode и коды",
     "topic": "таблица Unicode: ord/chr, замена буквы по позиции",
     "reason": "Задача «Накручиваем стоимость» — несколько неудачных попыток, много подсказок (индексация строки символом вместо позиции, метод .index, направление замены eng→ru).",
     "difficulty": 5,
@@ -1577,6 +1849,7 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
     "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/coach_tasks/control_letter.py"
   },
   {
+    "theme": "разбор строки",
     "topic": "разбор строки вручную: обход с индексом, вырезание подстроки, chr",
     "reason": "Задача «Сбой в системе» ([u-код] → буква) — в начале не было идей с чего начать, решено с подсказками (цикл while с индексом, срез кода, неравномерный сдвиг i, chr).",
     "difficulty": 6,
@@ -1586,6 +1859,7 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
     "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/coach_tasks/csv_unescape.py"
   },
   {
+    "theme": "индексация и границы",
     "topic": "индексация строк вручную: границы while-цикла при обходе строк разной длины (off-by-one)",
     "reason": "Задача «Необычное сравнение» — дважды упёрся в IndexError на границе (сначала без проверки длины вообще, потом `i <= min(...)` вместо `<`), прямо попросил отдельную задачу на индексы.",
     "difficulty": 4,
@@ -1595,10 +1869,31 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
     "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/coach_tasks/common_prefix_length.py"
   },
   {
+    "theme": "циклы и флаги",
     "topic": "флаг-паттерн при нескольких независимых условиях; путаница с while...else",
     "reason": "Задача «Необычное сравнение» — много итераций: сравнил только до границы короткой строки без проверки длины, `flag == True` вместо `=`, добавил `while...else`, ожидая, что он отличит «дошли до конца успешно» от «вышли без break вообще» — на деле else срабатывает в обоих случаях одинаково. Решил только разделив посимвольное сравнение (flag) и проверку длины в финальном if.",
     "difficulty": 5,
     "status": "pending"
+  },
+  {
+    "theme": "защитные проверки",
+    "topic": "защитная проверка формата строки: избегание падений int()/ord() на некорректных срезах, порядок условий в and (short-circuit)",
+    "reason": "Задача «Название класса» — несколько неудачных попыток, программа падала (ValueError на int() от нечисловой буквы, `is int` вместо isdigit(), TypeError на ord() от среза длиннее 1 символа); исправлено только переносом проверки длины первым условием в and.",
+    "difficulty": 5,
+    "status": "pending",
+    "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/nazvanie_klassa.py",
+    "code": "\"\"\"\nЗадача: «Название класса» 👩‍🏫🌶️\n\nВ школе BEEGEEK названия учебных классов имеют формат:\n    <номер класса><буква класса>\n\nгде <номер класса> — цифра от 0 до 9 включительно, а <буква класса> —\nрусская буква верхнего регистра от «А» до «П» включительно (без «Ё» —\nсчитаем, что её нет в алфавите).\n\nНапишите программу, которая принимает натуральное число n, а далее n\nназваний классов (каждое на отдельной строке). Для каждого названия\nвыведите на отдельной строке \"YES\", если оно корректно, иначе \"NO\".\n\nФормат входных данных:\n    Число n, затем n строк — названия классов.\n\nФормат выходных данных:\n    Для каждого названия класса — \"YES\" или \"NO\" на отдельной строке.\n\nПримечание. Пример теста:\n    3\n    \"5Б\"\n    \"10Р\"\n    \"3Ё\"\n    -> \"YES\"\n    -> \"NO\"\n    -> \"NO\"\n\"\"\"\n\namount = int(input())\nclasses = []\n\nfor _ in range(amount):\n    classes.append(input())\n\nfor i in range(len(classes)):\n    value = classes[i]\n    if len(value) <= 2 and value[:1].isdigit() and 0 <= int(value[:1]) <= 9 \\\n        and value[1:].isalpha() and ord(\"А\") <= ord(value[1:]) <= ord(\"П\"):\n        print(\"YES\")\n    else:\n        print(\"NO\")\n",
+    "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/nazvanie_klassa.py"
+  },
+  {
+    "theme": "сравнение по составному ключу",
+    "topic": "сравнение по составному ключу (фамилия, потом название): сравнивать нужно вытащенные поля, а не всю сырую строку целиком",
+    "reason": "Задача «Порядок книг» — несколько неудачных попыток подряд: сравнивал books[i] целиком вместо фамилии/названия по отдельности, из-за чего ветка сравнения названий при равных фамилиях оставалась недостижимой (полные строки почти никогда не равны). Понадобился конкретный контрпример (одинаковый автор, разные инициалы, названия не по порядку), чтобы стало понятно, что не так; плюс отдельно правил IndexError на границе списка и перезапись/инверсию флага.",
+    "difficulty": 6,
+    "status": "pending",
+    "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/poryadok_knig.py",
+    "code": "\"\"\"\nЗадача: «Порядок книг»\n\nВсе книги в домашней библиотеке должны быть отсортированы по возрастанию:\nсначала по фамилиям авторов, а при совпадении фамилий — по названиям\nкниг. Напишите программу, которая проверяет, верно ли отсортированы\nкниги.\n\nКаждая книга задаётся строкой в формате:\n    <фамилия автора> <инициалы автора>, «<название книги>»\n\nПрограмма должна вывести \"YES\", если книги отсортированы по правилам,\nиначе \"NO\".\n\nФормат входных данных:\n    Число n, затем n строк — описания книг в указанном формате.\n\nФормат выходных данных:\n    \"YES\" или \"NO\" в соответствии с условием задачи.\n\nПримечание 1. Инициалы автора при сортировке не учитываются.\nПримечание 2. Книги в наборе не повторяются.\nПримечание 3. Фамилия автора состоит из одного слова.\n\nПримечание. Пример теста:\n    2\n    \"During A.B., «Заводной апельсин»\"\n    \"Orwell G., «1984»\"\n    -> \"YES\"\n\"\"\"\n\n\ncount_books = int(input())\nbooks = []\nflag = True\n\nfor _ in range(count_books):\n    books.append(input())\n\nfor i in range(len(books) - 1):\n    start_surname_one = books[i].find(\" \")\n    surname_one = books[i][:start_surname_one]\n\n    start_surname_two = books[i + 1].find(\" \")\n    surname_two = books[i + 1][:start_surname_two]\n\n    if surname_one < surname_two:\n        i += 1\n    elif surname_one == surname_two:\n        start_title_one = books[i].find(\"«\")\n        title_one = books[i][start_title_one +1: -1]\n\n        start_title_two = books[i + 1].find(\"«\")\n        title_two = books[i + 1][start_title_two +1: -1]\n\n        if title_one > title_two:\n            flag = False\n            break\n    else:\n        flag = False\n        break\n\nif flag:\n    print(\"YES\")\nelse:\n    print(\"NO\")",
+    "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/poryadok_knig.py"
   }
 ];
   /* @gen:end */
@@ -1762,11 +2057,10 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
         <div class="dd-head">${dateStr}</div>
         <div class="dd-metrics">
           <div class="dd-metric"><div class="m-num">${day.tasks}</div><div class="m-cap">задач</div></div>
-          <div class="dd-metric"><div class="m-num">L${day.level}</div><div class="m-cap">интенсивность</div></div>
+          <div class="dd-metric"><div class="m-word" style="--lvl: var(--heat-${day.level})">${LEVEL_LABEL[day.level]}</div><div class="m-cap">интенсивность</div></div>
         </div>
         <div class="dd-note">${day.note}</div>
-        ${itemsBlock}
-        <div class="level-chip"><i style="background: var(--heat-${day.level})"></i>${LEVEL_LABEL[day.level]}</div>`;
+        ${itemsBlock}`;
     } else {
       const reason = key < TRACKING_SINCE
         ? "До 11 июля занятия шли прямо на Stepik — этих данных у панели нет."
@@ -1894,58 +2188,101 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
     return "очень сложная";
   }
   (function renderPractice() {
-    const activeCount = PRACTICE_QUEUE.filter(e => PQ_STATUS[e.status]?.active).length;
-    const doneCount = PRACTICE_QUEUE.filter(e => e.status === "done").length;
-    document.getElementById("pq-active").textContent = activeCount;
-    document.getElementById("pq-queued").textContent = PRACTICE_QUEUE.length;
-    document.getElementById("pq-done").textContent = doneCount;
+    const pending = PRACTICE_QUEUE.filter(e => PQ_STATUS[e.status]?.active);
+    const done = PRACTICE_QUEUE.filter(e => !PQ_STATUS[e.status]?.active);
+    const themeSet = new Set(PRACTICE_QUEUE.map(e => e.theme || "прочее"));
+    document.getElementById("pq-active").textContent = pending.length;
+    document.getElementById("pq-queued").textContent = themeSet.size;
+    document.getElementById("pq-done").textContent = done.length;
 
-    const list = document.getElementById("pq-list");
-    if (!PRACTICE_QUEUE.length) {
-      list.innerHTML = '<div class="card"><div class="card-head"><span class="card-title">Пока пусто</span></div><p style="color: var(--ink-dim); margin: 0;">Слабых тем не отмечено — так держать!</p></div>';
-      return;
-    }
-    list.innerHTML = "";
-    PRACTICE_QUEUE.forEach(e => {
-      const st = PQ_STATUS[e.status] || PQ_STATUS.pending;
-      const card = document.createElement("div");
-      card.className = "card";
-      const head = document.createElement("div");
-      head.className = "card-head";
-      const title = document.createElement("span");
-      title.className = "card-title";
-      title.textContent = e.topic;
-      const pill = document.createElement("span");
-      pill.className = "status-pill " + st.pill;
-      pill.textContent = st.label;
-      head.append(title, pill);
-      const reason = document.createElement("p");
-      reason.style.cssText = "color: var(--ink-dim); margin: 0 0 .6rem;";
-      reason.textContent = e.reason;
-      const meta = document.createElement("div");
-      meta.className = "note";
-      meta.style.cssText = "border: none; text-align: left; margin: 0; padding: 0;";
-      meta.textContent = typeof e.difficulty === "number"
-        ? `Сложность: ${diffAdj(e.difficulty)} · ${e.difficulty}/10`
-        : "Сложность: " + e.difficulty;
-      card.append(head, reason, meta);
-      if (e.code != null || e.file) {
-        const btn = document.createElement("button");
-        btn.className = "dd-item pq-code";
-        btn.innerHTML = '<span class="dd-item-name">Моё решение</span><span class="dd-item-go">код ›</span>';
-        btn.addEventListener("click", () => openCode({ name: e.topic, file: e.file, code: e.code, github: e.github }));
-        card.append(btn);
+    const diffText = d => typeof d === "number" ? `${diffAdj(d)} · ${d}/10` : String(d);
+    function row(e) {
+      const clickable = e.code != null || e.file;
+      const el = document.createElement(clickable ? "button" : "div");
+      el.className = "pq-row" + (PQ_STATUS[e.status]?.active ? " pending" : "");
+      if (clickable) el.type = "button";
+      const main = document.createElement("div");
+      main.className = "pq-row-main";
+      const t = document.createElement("div");
+      t.className = "pq-row-topic";
+      t.textContent = e.topic;
+      const r = document.createElement("div");
+      r.className = "pq-row-reason";
+      r.textContent = e.reason;
+      main.append(t, r);
+      const diff = document.createElement("div");
+      diff.className = "pq-row-diff";
+      diff.textContent = diffText(e.difficulty);
+      el.append(main, diff);
+      if (clickable) {
+        const go = document.createElement("div");
+        go.className = "pq-row-go";
+        go.textContent = "код ›";
+        el.append(go);
+        el.addEventListener("click", () => openCode({ name: e.topic, file: e.file, code: e.code, github: e.github }));
       }
-      list.appendChild(card);
+      return el;
+    }
+
+    /* «Ждут решения» — приоритет наверх */
+    const pendWrap = document.getElementById("pq-pending");
+    pendWrap.innerHTML = "";
+    const pt = document.createElement("div");
+    pt.className = "pq-section-title pending";
+    pt.textContent = `Ждут решения · ${pending.length}`;
+    pendWrap.append(pt);
+    if (pending.length) {
+      pending.forEach(e => pendWrap.append(row(e)));
+    } else {
+      const empty = document.createElement("div");
+      empty.className = "pq-empty";
+      empty.textContent = "Всё закрыто — новых слабых тем нет.";
+      pendWrap.append(empty);
+    }
+
+    /* Решённое — свёрнуто по темам */
+    const list = document.getElementById("pq-list");
+    list.innerHTML = "";
+    const dt = document.createElement("div");
+    dt.className = "pq-section-title";
+    dt.textContent = "Закрыто по темам";
+    list.append(dt);
+    const byTheme = {};
+    done.forEach(e => { (byTheme[e.theme || "прочее"] = byTheme[e.theme || "прочее"] || []).push(e); });
+    const themes = Object.keys(byTheme).sort((a, b) => byTheme[b].length - byTheme[a].length);
+    if (!themes.length) {
+      const empty = document.createElement("div");
+      empty.className = "pq-empty";
+      empty.textContent = "Пока ничего не закрыто.";
+      list.append(empty);
+    }
+    themes.forEach((theme, gi) => {
+      const g = document.createElement("details");
+      g.className = "pq-group";
+      if (gi === 0) g.open = true;
+      const sm = document.createElement("summary");
+      sm.innerHTML = `${escapeHtml(theme)}<span class="pq-group-count">${byTheme[theme].length}</span>`;
+      g.append(sm);
+      const body = document.createElement("div");
+      body.className = "pq-group-body";
+      byTheme[theme].forEach(e => body.append(row(e)));
+      g.append(body);
+      list.append(g);
+    });
+
+    /* Плитка «ждут решения» → скролл к блоку pending */
+    const activeBtn = document.getElementById("pq-active-btn");
+    if (activeBtn) activeBtn.addEventListener("click", () => {
+      pendWrap.scrollIntoView({ behavior: "smooth", block: "start" });
     });
   })();
 
-  /* ── Лента «Последняя активность» (Обзор) ───────────────── */
-  (function renderFeed() {
-    const feed = document.getElementById("ov-feed");
+  /* ── Лента «Последняя активность» (Обзор + Календарь) ───── */
+  function renderFeed(feed, limit, totalEl) {
     if (!feed) return;
-    const recent = activeDays.slice(-5).reverse();
-    feed.innerHTML = recent.map(key => {
+    let keys = activeDays.slice().reverse();
+    if (limit) keys = keys.slice(0, limit);
+    feed.innerHTML = keys.map(key => {
       const day = ACTIVITY[key];
       const d = parseYmd(key).toLocaleDateString("ru-RU", { weekday: "short", day: "numeric", month: "long" });
       const tasks = (day.items || []).map((it, i) => {
@@ -1956,7 +2293,7 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
           : `<span class="feed-task static">${dot}${escapeHtml(it.name)}</span>`;
       }).join("");
       const inner = tasks || `<span style="color: var(--ink-faint); font-size: 0.8rem;">—</span>`;
-      return `<div class="feed-day"><div class="feed-date">${d} · L${day.level}</div><div class="feed-items">${inner}</div></div>`;
+      return `<div class="feed-day"><div class="feed-date">${d}<span class="feed-level">${LEVEL_LABEL[day.level]}</span></div><div class="feed-items">${inner}</div></div>`;
     }).join("");
     feed.addEventListener("click", e => {
       const btn = e.target.closest(".feed-task");
@@ -1965,8 +2302,68 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
       const item = day && day.items && day.items[+btn.dataset.idx];
       if (item) openCode(item);
     });
-    const totalEl = document.getElementById("feed-total");
     if (totalEl) totalEl.textContent = activeDays.length + " дней";
+  }
+  renderFeed(document.getElementById("ov-feed"), 3, null);
+  renderFeed(document.getElementById("cal-feed"), null, document.getElementById("cal-feed-total"));
+
+  /* ── Повторения по расписанию (SM-2) во вкладке «Закрепление» ───── */
+  function renderReviewLog(el, totalEl) {
+    if (!el) return;
+    const rows = [];
+    activeDays.slice().reverse().forEach(key => {
+      const day = ACTIVITY[key];
+      (day.items || []).forEach((it, i) => {
+        if (it.kind === "повторено") rows.push({ key, i, it });
+      });
+    });
+    el.innerHTML = rows.length ? rows.map(({ key, i, it }) => {
+      const d = parseYmd(key).toLocaleDateString("ru-RU", { day: "numeric", month: "long" });
+      const task = it.file
+        ? `<button class="feed-task" data-day="${key}" data-idx="${i}"><span class="kind-dot kdot-repeat"></span>${escapeHtml(it.name)}</button>`
+        : `<span class="feed-task static"><span class="kind-dot kdot-repeat"></span>${escapeHtml(it.name)}</span>`;
+      return `<div class="feed-day"><div class="feed-date">${d}</div><div class="feed-items">${task}</div></div>`;
+    }).join("") : `<div class="pq-empty">Повторений пока не было.</div>`;
+    el.addEventListener("click", e => {
+      const btn = e.target.closest(".feed-task");
+      if (!btn || btn.classList.contains("static")) return;
+      const day = ACTIVITY[btn.dataset.day];
+      const item = day && day.items && day.items[+btn.dataset.idx];
+      if (item) openCode(item);
+    });
+    if (totalEl) totalEl.textContent = rows.length;
+  }
+  renderReviewLog(document.getElementById("pq-reviews"), document.getElementById("pq-reviews-total"));
+
+  /* ── Карточка «Далось труднее всего» (Обзор) ────────────── */
+  (function renderHardest() {
+    const block = document.getElementById("ov-hardest-block");
+    const box = document.getElementById("ov-hardest");
+    if (!block || !box || !PRACTICE_QUEUE.length) return;
+    const ranked = PRACTICE_QUEUE
+      .map((e, i) => ({ e, i }))
+      .filter(x => typeof x.e.difficulty === "number")
+      .sort((a, b) => (b.e.difficulty - a.e.difficulty) || (b.i - a.i));
+    if (!ranked.length) return;
+    const h = ranked[0].e;
+    block.hidden = false;
+    const solved = !PQ_STATUS[h.status]?.active;
+    const pill = document.getElementById("ov-hardest-pill");
+    pill.className = "status-pill " + (solved ? "done" : "active");
+    pill.textContent = solved ? "решено" : "ждёт";
+    const hasCode = h.code != null || h.file;
+    box.innerHTML = `
+      <div class="h-topic">${escapeHtml(h.topic)}</div>
+      <p class="h-reason">${escapeHtml(h.reason)}</p>
+      <div class="h-foot">
+        <span>сложность <span class="h-diff">${h.difficulty}/10</span> · ${diffAdj(h.difficulty)}</span>
+        ${hasCode ? '<span class="h-code">код ›</span>' : ''}
+      </div>`;
+    if (hasCode) {
+      box.addEventListener("click", () => openCode({ name: h.topic, file: h.file, code: h.code, github: h.github }));
+    } else {
+      box.style.cursor = "default";
+    }
   })();
 
   /* ── Переключение видов ─────────────────────────────────── */
@@ -1987,6 +2384,7 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
   const miniCard = document.getElementById("ov-mini-card");
   miniCard.addEventListener("click", () => showView("calendar"));
   miniCard.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); showView("calendar"); } });
+  document.querySelectorAll("[data-goto]").forEach(b => b.addEventListener("click", e => { e.stopPropagation(); showView(b.dataset.goto); }));
   const initial = location.hash.slice(1);
   showView(views[initial] ? initial : "overview");
 

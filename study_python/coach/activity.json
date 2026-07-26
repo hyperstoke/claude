@@ -2,24 +2,25 @@
   "_comment": "Журнал активности для календаря на сайте прогресса. level 1-4 — оценка Claude: объём (число задач) + сложность/новизна темы. items — конкретные задачи дня: name, kind (изучено|пройдено|повторено|пример), file (путь от корня репо или null). Пишется СРАЗУ, как только за сессию написан код (не в конце сессии), затем прогоняется scripts/build_site.py и данные попадают в roadmap_artifact.html. Дни 11-18 июля восстановлены по заметкам, нумерации разделов и git-датам — привязка файл→день местами приблизительная.",
   "tracking_since": "2026-07-11",
   "deadline": {
-    "goal": "этап 0 — добить синтаксис Python (функции, словари, исключения, файлы)",
-    "date": "2026-09-05",
-    "basis": "интенсив-план 30 ч/нед от 2026-07-24 (BACKEND_PLAN.md): этап 0 до 2026-09-05; далее ООП до 20.10, Git до 31.10, SQL до 30.11, тесты до 20.12, FastAPI до 05.02, REST+Docker до 10.03, пет-проект до 05.05; job-ready ~май 2027, окно оффера июнь–сен 2027"
+    "goal": "раздел 10 «Списки»",
+    "date": "2026-08-03",
+    "basis": "раздел 9 закрыт 2026-07-24, на 3 дня раньше срока. Пересчёт под новый темп (25+ ч/нед вместо 10–12): раздел 9 занял 2 недели, раздел 10 сопоставим по объёму → ~8-9 дней. Цель и календарь вех — PLAN_TO_OFFER.md"
   },
   "progress": {
-    "_comment": "Общий прогресс к backend-разработчику. Общий % = сумма weight завершённых этапов + weight текущего * sub_pct/100. Веса (сумма 100) — трудозатраты junior-пути. sub_pct текущего этапа 0 оценён по Stepik: разделы 1-4,6,7 пройдены, 5 частично, 8 засчитан, 9 в процессе; ~15 разделов -> ~55%. Обновлять статусы/sub_pct по мере продвижения и прогонять build_site.py.",
-    "updated": "2026-07-21",
+    "_comment": "Общий прогресс к цели «стажировка Python-backend» (PLAN_TO_OFFER.md). Общий % = сумма weight завершённых этапов + weight текущего * sub_pct/100. Веса (сумма 100) — трудозатраты пути. Перевес 2026-07-24 под цель «стажировка»: добавлен этап «Алгоритмы и подготовка к отбору» (вес 8) — отбор идёт через алгоритмический онлайн-тест на время, это главный фильтр; вес взят у ознакомительных этапов (Кэширование 5->2, Деплой 5->2, Docker 5->4, Тестирование 7->6). sub_pct текущего этапа 0 по Stepik: разделы 1-4,6,7 пройдены, 5 частично, 8 засчитан, 9 пройден полностью, идёт 10-й из ~15 -> ~65%. Обновлять статусы/sub_pct по мере продвижения и прогонять build_site.py.",
+    "updated": "2026-07-24",
     "stages": [
-      { "name": "Синтаксис Python", "weight": 20, "status": "current", "sub_pct": 55 },
+      { "name": "Синтаксис Python", "weight": 20, "status": "current", "sub_pct": 65 },
       { "name": "ООП и продвинутый Python", "weight": 14, "status": "todo" },
       { "name": "Git и контроль версий", "weight": 5, "status": "todo" },
       { "name": "SQL и базы данных", "weight": 13, "status": "todo" },
-      { "name": "Тестирование", "weight": 7, "status": "todo" },
+      { "name": "Тестирование", "weight": 6, "status": "todo" },
+      { "name": "Алгоритмы и подготовка к отбору", "weight": 8, "status": "todo" },
       { "name": "Backend-фреймворк", "weight": 16, "status": "todo" },
       { "name": "REST API и аутентификация", "weight": 10, "status": "todo" },
-      { "name": "Docker", "weight": 5, "status": "todo" },
-      { "name": "Кэширование и фоновые задачи", "weight": 5, "status": "todo" },
-      { "name": "Деплой и CI/CD", "weight": 5, "status": "todo" }
+      { "name": "Docker", "weight": 4, "status": "todo" },
+      { "name": "Кэширование и фоновые задачи", "weight": 2, "status": "todo" },
+      { "name": "Деплой и CI/CD", "weight": 2, "status": "todo" }
     ]
   },
   "days": {
@@ -28,13 +29,13 @@
       "tasks": 7,
       "note": "9.1 «Строки: индексация и срезы» — 7 задач",
       "items": [
-        { "name": "Сумма цифр", "kind": "пройдено", "file": "study_python/practice/09/09_01/09_01_summa_cifr.py" },
-        { "name": "Цифра (вариант 2)", "kind": "пройдено", "file": "study_python/practice/09/09_01/09_01_cifra_2.py" },
-        { "name": "Сложение в столбик", "kind": "пройдено", "file": "study_python/practice/09/09_01/09_01_v_stolbik_2.py" },
-        { "name": "Перевод в двоичную систему", "kind": "пройдено", "file": "study_python/practice/09/09_01/09_01_decimal_to_binary.py" },
-        { "name": "Инициалы (ФИО)", "kind": "пройдено", "file": "study_python/practice/09/09_01/09_01_fio.py" },
-        { "name": "Гласные и согласные", "kind": "пройдено", "file": "study_python/practice/09/09_01/09_01_glasnye_soglasnye.py" },
-        { "name": "Сколько раз встречается", "kind": "пройдено", "file": "study_python/practice/09/09_01/09_01_skolko_raz.py" }
+        { "name": "Сумма цифр", "kind": "пройдено", "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_01_Indeksatsiya/summa_cifr.py" },
+        { "name": "Цифра (вариант 2)", "kind": "пройдено", "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_01_Indeksatsiya/cifra_2.py" },
+        { "name": "Сложение в столбик", "kind": "пройдено", "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_01_Indeksatsiya/v_stolbik_2.py" },
+        { "name": "Перевод в двоичную систему", "kind": "пройдено", "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_01_Indeksatsiya/decimal_to_binary.py" },
+        { "name": "Инициалы (ФИО)", "kind": "пройдено", "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_01_Indeksatsiya/fio.py" },
+        { "name": "Гласные и согласные", "kind": "пройдено", "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_01_Indeksatsiya/glasnye_soglasnye.py" },
+        { "name": "Сколько раз встречается", "kind": "пройдено", "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_01_Indeksatsiya/skolko_raz.py" }
       ]
     },
     "2026-07-12": {
@@ -42,19 +43,19 @@
       "tasks": 13,
       "note": "9.1–9.3 — плотный день, 13 задач (в т.ч. первая coach-задача)",
       "items": [
-        { "name": "Одинаковые соседи", "kind": "пройдено", "file": "study_python/practice/09/09_01/09_01_odinakovye_sosedi.py" },
-        { "name": "По одному", "kind": "пройдено", "file": "study_python/practice/09/09_01/09_01_po_odnomu.py" },
-        { "name": "Две половинки", "kind": "пройдено", "file": "study_python/practice/09/09_02/09_02_dve_polovinki.py" },
-        { "name": "Палиндром", "kind": "пройдено", "file": "study_python/practice/09/09_02/09_02_palindrom.py" },
-        { "name": "Срезы (1)", "kind": "пройдено", "file": "study_python/practice/09/09_02/09_02_slices_1.py" },
-        { "name": "Срезы (2)", "kind": "пройдено", "file": "study_python/practice/09/09_02/09_02_slices_2.py" },
-        { "name": "com или ru", "kind": "пройдено", "file": "study_python/practice/09/09_03/09_03_com_or_ru.py" },
-        { "name": "Хороший оттенок", "kind": "пройдено", "file": "study_python/practice/09/09_03/09_03_horoshiy_ottenok.py" },
-        { "name": "Количество слов", "kind": "пройдено", "file": "study_python/practice/09/09_03/09_03_kolichestvo_slov.py" },
-        { "name": "Количество цифр", "kind": "пройдено", "file": "study_python/practice/09/09_03/09_03_kolichestvo_tsifr.py" },
-        { "name": "Нижний регистр", "kind": "пройдено", "file": "study_python/practice/09/09_03/09_03_nizgniy_registr.py" },
-        { "name": "Смена регистра (swapcase)", "kind": "пройдено", "file": "study_python/practice/09/09_03/09_03_swap_case.py" },
-        { "name": "Заглавные буквы", "kind": "пройдено", "file": "study_python/practice/09/09_03/09_03_zaglavnye_bukvy.py" }
+        { "name": "Одинаковые соседи", "kind": "пройдено", "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_01_Indeksatsiya/odinakovye_sosedi.py" },
+        { "name": "По одному", "kind": "пройдено", "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_01_Indeksatsiya/po_odnomu.py" },
+        { "name": "Две половинки", "kind": "пройдено", "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_02_Srezy/dve_polovinki.py" },
+        { "name": "Палиндром", "kind": "пройдено", "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_02_Srezy/palindrom.py" },
+        { "name": "Срезы (1)", "kind": "пройдено", "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_02_Srezy/slices_1.py" },
+        { "name": "Срезы (2)", "kind": "пройдено", "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_02_Srezy/slices_2.py" },
+        { "name": "com или ru", "kind": "пройдено", "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_03_Metody_strok/com_or_ru.py" },
+        { "name": "Хороший оттенок", "kind": "пройдено", "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_03_Metody_strok/horoshiy_ottenok.py" },
+        { "name": "Количество слов", "kind": "пройдено", "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_03_Metody_strok/kolichestvo_slov.py" },
+        { "name": "Количество цифр", "kind": "пройдено", "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_03_Metody_strok/kolichestvo_tsifr.py" },
+        { "name": "Нижний регистр", "kind": "пройдено", "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_03_Metody_strok/nizgniy_registr.py" },
+        { "name": "Смена регистра (swapcase)", "kind": "пройдено", "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_03_Metody_strok/swap_case.py" },
+        { "name": "Заглавные буквы", "kind": "пройдено", "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_03_Metody_strok/zaglavnye_bukvy.py" }
       ]
     },
     "2026-07-13": {
@@ -62,9 +63,9 @@
       "tasks": 3,
       "note": "9.3 «Методы строк. Часть 1» — 3 задачи",
       "items": [
-        { "name": "Первый и последний", "kind": "пройдено", "file": "study_python/practice/09/09_03/09_03_pervii_i_poslednii.py" },
-        { "name": "Самый частотный символ", "kind": "пройдено", "file": "study_python/practice/09/09_03/09_03_samyy_chastotnyy_simvol.py" },
-        { "name": "Очень странные дела", "kind": "пройдено", "file": "study_python/practice/09/09_03/09_03_ochen_strannye_dela.py" }
+        { "name": "Первый и последний", "kind": "пройдено", "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_03_Metody_strok/pervii_i_poslednii.py" },
+        { "name": "Самый частотный символ", "kind": "пройдено", "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_03_Metody_strok/samyy_chastotnyy_simvol.py" },
+        { "name": "Очень странные дела", "kind": "пройдено", "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_03_Metody_strok/ochen_strannye_dela.py" }
       ]
     },
     "2026-07-14": {
@@ -72,8 +73,8 @@
       "tasks": 3,
       "note": "9.3 — 2 задачи + coach-практика (нормализация slug)",
       "items": [
-        { "name": "Минутка генетики", "kind": "пройдено", "file": "study_python/practice/09/09_03/09_03_minutka_genetiki.py" },
-        { "name": "Плохие комментарии", "kind": "пройдено", "file": "study_python/practice/09/09_03/09_03_plohie_kommentarii.py" },
+        { "name": "Минутка генетики", "kind": "пройдено", "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_03_Metody_strok/minutka_genetiki.py" },
+        { "name": "Плохие комментарии", "kind": "пройдено", "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_03_Metody_strok/plohie_kommentarii.py" },
         { "name": "Нормализация slug (coach)", "kind": "пример", "file": "study_python/practice/coach_tasks/normalize_slug.py" }
       ]
     },
@@ -82,9 +83,9 @@
       "tasks": 4,
       "note": "9.3 остаток + coach (Mac и ПК), начало темы 9.4",
       "items": [
-        { "name": "Автомобильный номер", "kind": "пройдено", "file": "study_python/practice/09/09_03/09_03_avtomobilnyy_nomer.py" },
-        { "name": "Проверка никнейма", "kind": "пройдено", "file": "study_python/practice/09/09_03/09_03_proverka_nikneima.py" },
-        { "name": "Удаление фрагмента", "kind": "пройдено", "file": "study_python/practice/09/09_03/09_03_udalenie_fragmenta.py" },
+        { "name": "Автомобильный номер", "kind": "пройдено", "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_03_Metody_strok/avtomobilnyy_nomer.py" },
+        { "name": "Проверка никнейма", "kind": "пройдено", "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_03_Metody_strok/proverka_nikneima.py" },
+        { "name": "Удаление фрагмента", "kind": "пройдено", "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_03_Metody_strok/udalenie_fragmenta.py" },
         { "name": "Палиндром-запрос, дедуп (coach)", "kind": "пример", "file": "study_python/practice/coach_tasks/is_palindrome_query.py" }
       ]
     },
@@ -93,9 +94,9 @@
       "tasks": 3,
       "note": "9.4 «Форматирование строк» + старт 9.5 (Unicode: ord/chr)",
       "items": [
-        { "name": "Похудение", "kind": "пройдено", "file": "study_python/practice/09/09_04/09_04_pohudenie.py" },
-        { "name": "Соотнести символы и коды", "kind": "изучено", "file": "study_python/practice/09/09_05/09_05_sootnesti_simvoly_i_kody.py" },
-        { "name": "Следующая буква", "kind": "пройдено", "file": "study_python/practice/09/09_05/09_05_sleduyuschaya_bukva.py" }
+        { "name": "Похудение", "kind": "пройдено", "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_04_Formatirovanie_strok/pohudenie.py" },
+        { "name": "Соотнести символы и коды", "kind": "изучено", "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/sootnesti_simvoly_i_kody.py" },
+        { "name": "Следующая буква", "kind": "пройдено", "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/sleduyuschaya_bukva.py" }
       ]
     },
     "2026-07-17": {
@@ -103,8 +104,8 @@
       "tasks": 2,
       "note": "9.5 — символы в диапазоне, простой шифр",
       "items": [
-        { "name": "Символы в диапазоне", "kind": "пройдено", "file": "study_python/practice/09/09_05/09_05_simvoly_v_diapazone.py" },
-        { "name": "Простой шифр", "kind": "пройдено", "file": "study_python/practice/09/09_05/09_05_prostoy_shifr.py" }
+        { "name": "Символы в диапазоне", "kind": "пройдено", "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/simvoly_v_diapazone.py" },
+        { "name": "Простой шифр", "kind": "пройдено", "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/prostoy_shifr.py" }
       ]
     },
     "2026-07-18": {
@@ -112,10 +113,10 @@
       "tasks": 4,
       "note": "9.5 — «Самое тяжёлое слово» (с трудом) + стоимость ответа/накрутка + сбой в системе",
       "items": [
-        { "name": "Самое тяжёлое слово", "kind": "пройдено", "file": "study_python/practice/09/09_05/09_05_samoe_tyazheloe_slovo.py" },
-        { "name": "Стоимость ответа", "kind": "пройдено", "file": "study_python/practice/09/09_05/09_05_stoimost_otveta.py" },
-        { "name": "Накручиваем стоимость ответа", "kind": "пройдено", "file": "study_python/practice/09/09_05/09_05_nakruchivaem_stoimost_otveta.py" },
-        { "name": "Сбой в системе", "kind": "пройдено", "file": "study_python/practice/09/09_05/09_05_sboy_v_sisteme.py" }
+        { "name": "Самое тяжёлое слово", "kind": "пройдено", "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/samoe_tyazheloe_slovo.py" },
+        { "name": "Стоимость ответа", "kind": "пройдено", "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/stoimost_otveta.py" },
+        { "name": "Накручиваем стоимость ответа", "kind": "пройдено", "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/nakruchivaem_stoimost_otveta.py" },
+        { "name": "Сбой в системе", "kind": "пройдено", "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/sboy_v_sisteme.py" }
       ]
     },
     "2026-07-20": {
@@ -123,7 +124,7 @@
       "tasks": 2,
       "note": "9.5 — разбор «Шифра Цезаря» + закрепление ord/chr (контрольная буква)",
       "items": [
-        { "name": "Шифр Цезаря", "kind": "пройдено", "file": "study_python/practice/09/09_05/09_05_shifr_cezarya.py" },
+        { "name": "Шифр Цезаря", "kind": "пройдено", "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/shifr_cezarya.py" },
         { "name": "Контрольная буква (закрепление ord/chr)", "kind": "повторено", "file": "study_python/practice/coach_tasks/control_letter.py" }
       ]
     },
@@ -140,10 +141,53 @@
       "tasks": 4,
       "note": "9.5 — «Волшебное число» и «Строковые минимум и максимум» решены чисто; закрепление границ while-цикла (common_prefix_length); «Необычное сравнение» — с трудом (несколько итераций: пропущенные скобки у .lower(), путаница с while/else, разделение проверки длины и посимвольного сравнения)",
       "items": [
-        { "name": "Волшебное число", "kind": "пройдено", "file": "study_python/practice/09/09_05/09_05_volshebnoe_chislo.py" },
-        { "name": "Строковые минимум и максимум", "kind": "пройдено", "file": "study_python/practice/09/09_05/09_05_strokovye_minimum_i_maksimum.py" },
+        { "name": "Волшебное число", "kind": "пройдено", "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/volshebnoe_chislo.py" },
+        { "name": "Строковые минимум и максимум", "kind": "пройдено", "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/strokovye_minimum_i_maksimum.py" },
         { "name": "Границы while-цикла, общий префикс (закрепление)", "kind": "повторено", "file": "study_python/practice/coach_tasks/common_prefix_length.py" },
-        { "name": "Необычное сравнение", "kind": "пройдено", "file": "study_python/practice/09/09_05/09_05_neobychnoe_sravnenie.py" }
+        { "name": "Необычное сравнение", "kind": "пройдено", "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/neobychnoe_sravnenie.py" }
+      ]
+    },
+    "2026-07-23": {
+      "level": 3,
+      "tasks": 3,
+      "note": "9.5 — «Сортируем слова» решена чисто (min/remove, потом оптимизация под join); «Название класса» — с трудом: несколько падений (int() на нечисловой букве, `is int` вместо isdigit(), ord() на срезе длиннее 1 символа); «Порядок книг» — с трудом: IndexError на границе, перезапись/инверсия флага, и главное — сравнивал сырые строки целиком вместо вытащенных фамилии/названия, из-за чего сравнение по названию оставалось недостижимым",
+      "items": [
+        { "name": "Сортируем слова", "kind": "пройдено", "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/sortiruem_slova.py" },
+        { "name": "Название класса", "kind": "пройдено", "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/nazvanie_klassa.py" },
+        { "name": "Порядок книг", "kind": "пройдено", "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/poryadok_knig.py" }
+      ]
+    },
+    "2026-07-24": {
+      "level": 2,
+      "tasks": 5,
+      "note": "9.5 — «Каждый третий», «Замени меня полностью», «Удали меня полностью», «Второе вхождение» и «Переворот» решены чисто (методы строк: replace, find со start/rfind)",
+      "items": [
+        { "name": "Каждый третий", "kind": "пройдено", "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/kazhdyy_tretiy.py" },
+        { "name": "Замени меня полностью", "kind": "пройдено", "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/zameni_menya_polnostyu.py" },
+        { "name": "Удали меня полностью", "kind": "пройдено", "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/udali_menya_polnostyu.py" },
+        { "name": "Второе вхождение", "kind": "пройдено", "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/vtoroe_vhozhdenie.py" },
+        { "name": "Переворот", "kind": "пройдено", "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/perevorot.py" }
+      ]
+    },
+    "2026-07-26": {
+      "level": 1,
+      "tasks": 1,
+      "note": "закрепление методов строк (просроченное повторение) — валидация email, решено с замечанием по PEP8 (непоследовательные отступы)",
+      "items": [
+        { "name": "Валидация email (закрепление методов строк)", "kind": "повторено", "file": "study_python/practice/coach_tasks/support_email_normalize.py" }
+      ]
+    },
+    "2026-07-27": {
+      "level": 3,
+      "tasks": 6,
+      "note": "10.1 — начат раздел «Списки»: «Алфавит», «Список строк», «Список кубов», «Все сразу 1», «Список делителей» и «Суммы двух» решены чисто (chr/ord, сбор списка вводом n элементов, len/индексация/срез/in/del, перебор делителей, суммы соседних элементов)",
+      "items": [
+        { "name": "Алфавит", "kind": "пройдено", "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/alfavit.py" },
+        { "name": "Список строк", "kind": "пройдено", "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/spisok_strok.py" },
+        { "name": "Список кубов", "kind": "пройдено", "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/spisok_kubov.py" },
+        { "name": "Все сразу 1", "kind": "пройдено", "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/vse_srazu_1.py" },
+        { "name": "Список делителей", "kind": "пройдено", "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/spisok_deliteley.py" },
+        { "name": "Суммы двух", "kind": "пройдено", "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/summy_dvuh.py" }
       ]
     }
   }
