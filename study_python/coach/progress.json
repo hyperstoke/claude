@@ -1,19 +1,20 @@
 {
   "topics": {
     "методы строк": {
-      "attempts": 6,
+      "attempts": 7,
       "grades": [
         1,
         1,
         1,
         1,
         5,
+        4,
         4
       ],
-      "interval_days": 7,
+      "interval_days": 14,
       "ease": 1.7999999999999998,
-      "last_seen": "2026-07-14",
-      "next_review": "2026-07-21"
+      "last_seen": "2026-07-26",
+      "next_review": "2026-08-09"
     },
     "таблица Unicode (ord/chr)": {
       "attempts": 1,

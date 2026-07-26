@@ -1064,6 +1064,16 @@
 
       <div id="pq-pending"></div>
       <div id="pq-list"></div>
+
+      <section class="ov-block" id="pq-reviews-block">
+        <div class="card-head">
+          <span class="card-title">Повторения по расписанию</span>
+          <span class="status-pill todo" id="pq-reviews-total">—</span>
+        </div>
+        <p class="view-sub" style="margin:0 0 0.9rem;">Отдельная система от очереди выше: плановое повторение уже пройденных тем (SM-2), а не темы, где было тяжело.</p>
+        <div class="feed" id="pq-reviews"></div>
+      </section>
+
       <footer class="note" style="border: none; text-align: left; margin-top: 1.5rem;">список ведётся автоматически — темы добавляются, когда даются тяжело, и закрываются после решённой задачи</footer>
     </section>
 
@@ -1225,7 +1235,7 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
     }
   };
 
-                                          /* @gen:start — генерируется scripts/build_site.py из coach/*.json, вручную не править */
+                                                        /* @gen:start — генерируется scripts/build_site.py из coach/*.json, вручную не править */
   const TRACKING_SINCE = "2026-07-11";
   const ACTIVITY = {
   "2026-07-11": {
@@ -1694,6 +1704,69 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
         "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/perevorot.py",
         "code": "\"\"\"\nЗадача: «Переворот» 🙃\n\nНа вход программе подаётся строка текста, в которой буква \"h\"\nвстречается как минимум два раза. Нужно вывести исходную строку,\nразвернув в ней последовательность символов, заключённую между первым\nи последним вхождением буквы \"h\" (сами буквы \"h\" тоже входят в\nразворачиваемый участок).\n\nФормат входных данных:\n    Строка текста, содержащая не менее двух букв \"h\".\n\nФормат выходных данных:\n    Строка текста с развёрнутым участком между первым и последним \"h\".\n\nПримечание. Пример теста:\n    \"haphazard\"\n    -> \"hpahazard\"\n\"\"\"\n\ntext = input()\n\nfirst = text.find(\"h\")\nlast = text.rfind(\"h\")\n\nmidle = text[first+1:last]\n\nprint(text[:first+1] + midle[::-1] + text[last:])\n\n",
         "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/perevorot.py"
+      }
+    ]
+  },
+  "2026-07-26": {
+    "level": 1,
+    "tasks": 1,
+    "note": "закрепление методов строк (просроченное повторение) — валидация email, решено с замечанием по PEP8 (непоследовательные отступы)",
+    "items": [
+      {
+        "name": "Валидация email (закрепление методов строк)",
+        "kind": "повторено",
+        "file": "study_python/practice/coach_tasks/support_email_normalize.py",
+        "code": "\"\"\"\nЗадача: Валидация email в форме техподдержки\nТема: методы строк (strip, lower, count, endswith)  |  Сложность: 4 (средняя)\n\nЛегенда: бот техподдержки принимает email из формы обращения перед тем,\nкак сохранить его в базе. Пользователи вставляют email откуда попало —\nс лишними пробелами по краям, в разном регистре — и иногда ошибаются\nв формате. Нужно проверить и привести к единому виду перед сохранением.\n\nEmail считается валидным, если после удаления пробелов по краям:\n- в строке ровно один символ \"@\";\n- внутри строки (не по краям) нет пробелов;\n- строка оканчивается на один из разрешённых доменов:\n  \"@mail.ru\", \"@gmail.com\", \"@yandex.ru\".\n\nВход:  одна строка через input() — email, возможно с пробелами по краям\n       и в произвольном регистре.\nВыход: если email валиден — напечатать его в нормализованном виде\n       (без пробелов по краям, в нижнем регистре); иначе — напечатать\n       \"Неверный email\".\n\nПримеры:\n    \"  User@Mail.RU  \"\n    -> \"user@mail.ru\"\n\n    \"user@@mail.ru\"\n    -> \"Неверный email\"   # два \"@\"\n\n    \"user @mail.ru\"\n    -> \"Неверный email\"   # пробел внутри строки\n\n    \"user@ya.ru\"\n    -> \"Неверный email\"   # домен не из разрешённого списка\n\"\"\"\n\n# твой код здесь\n\n\nemail = input()\n\nemail = email.lower()\nemail = email.strip()\n\nif email.count(\" \") or email.count(\"@\") != 1:\n    print(\"Неверный email\")\nelse:\n       if email.endswith((\"@mail.ru\", \"@gmail.com\", \"@yandex.ru\")):\n              print(email)\n       else:\n              print(\"Неверный email\")\n       ",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/coach_tasks/support_email_normalize.py"
+      }
+    ]
+  },
+  "2026-07-27": {
+    "level": 3,
+    "tasks": 6,
+    "note": "10.1 — начат раздел «Списки»: «Алфавит», «Список строк», «Список кубов», «Все сразу 1», «Список делителей» и «Суммы двух» решены чисто (chr/ord, сбор списка вводом n элементов, len/индексация/срез/in/del, перебор делителей, суммы соседних элементов)",
+    "items": [
+      {
+        "name": "Алфавит",
+        "kind": "пройдено",
+        "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/alfavit.py",
+        "code": "\"\"\"\nЗадача: «Алфавит»\n\nНапишите программу, выводящую следующий список:\n['a', 'bb', 'ccc', 'dddd', 'eeeee', 'ffffff', ...]\n\nФормат входных данных:\n    На вход программе ничего не подаётся.\n\nФормат выходных данных:\n    Программа должна вывести указанный список.\n\nПримечание. Последний элемент списка должен состоять из 26 символов z.\n\"\"\"\n\nalfabet = []\ncount = 1\n\nfor i in range(ord(\"a\"), ord(\"z\") + 1):\n    alfabet.append(chr(i) * count)\n    count += 1\n    \nprint(alfabet)",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/alfavit.py"
+      },
+      {
+        "name": "Список строк",
+        "kind": "пройдено",
+        "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/spisok_strok.py",
+        "code": "\"\"\"\nЗадача: «Список строк»\n\nНа вход программе подаются натуральное число n, а затем n строк. Напишите\nпрограмму, которая создаёт из указанных строк список, а затем выводит его.\n\nФормат входных данных:\n    Натуральное число n, а затем n строк, каждая на отдельной строке.\n\nФормат выходных данных:\n    Программа должна вывести список, состоящий из указанных строк.\n\"\"\"\nn = int(input())\nlst = []\n\nfor i in range(1, n + 1):\n    lang = input()\n    lst.append(lang)\n\nprint(lst)",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/spisok_strok.py"
+      },
+      {
+        "name": "Список кубов",
+        "kind": "пройдено",
+        "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/spisok_kubov.py",
+        "code": "\"\"\"\nЗадача: «Список кубов»\n\nНа вход программе подаются натуральное число n, а затем n целых чисел.\nНапишите программу, которая создаёт из указанных чисел список их кубов,\nа затем выводит его.\n\nФормат входных данных:\n    Натуральное число n, а затем n целых чисел, каждое на отдельной строке.\n\nФормат выходных данных:\n    Программа должна вывести список, состоящий из кубов указанных чисел.\n\"\"\"\n\n\n\n\nnum_of_values = int(input())\nlst_num = []\n\nfor _ in range(1, num_of_values + 1):\n    lst_num.append(pow(int(input()), 3))\n\nprint(lst_num)\n\n",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/spisok_kubov.py"
+      },
+      {
+        "name": "Все сразу 1",
+        "kind": "пройдено",
+        "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/vse_srazu_1.py",
+        "code": "\"\"\"\nЗадача: «Все сразу 1»\n\nДополните приведённый ниже код, чтобы он:\n- вывел длину списка;\n- вывел последний элемент списка;\n- вывел список в обратном порядке (вспоминаем срезы);\n- вывел «YES» (без кавычек), если список содержит числа 5 и 17,\n  или «NO» (без кавычек) в противном случае;\n- вывел список с удалёнными первым и последним элементами.\n\nПримечание. Каждый вывод необходимо осуществлять на новой строке.\n\"\"\"\n\nnumbers = [2, 6, 3, 14, 10, 4, 11, 16, 12, 5, 4, 16, 1, 0, 8, 16, 10, 10, 8, 5, 1, 11, 10, 10, 12, 0, 0, 6, 14, 8, 2, 12, 14, 5, 6, 12, 1, 2, 10, 14, 9, 1, 15, 1, 2, 14, 16, 6, 7, 5]\n\nprint(len(numbers))\nprint(numbers[-1])\nprint(numbers[::-1])\nprint(\"YES\" if 5 in numbers and 17 in numbers else \"NO\")\ndel numbers[0]\ndel numbers[-1]\nprint(numbers)\n",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/vse_srazu_1.py"
+      },
+      {
+        "name": "Список делителей",
+        "kind": "пройдено",
+        "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/spisok_deliteley.py",
+        "code": "\"\"\"\nЗадача: «Список делителей»\n\nНа вход программе подаётся натуральное число n. Напишите программу,\nкоторая создаёт список, состоящий из делителей введённого числа в\nпорядке возрастания, а затем выводит этот список.\n\nФормат входных данных:\n    Натуральное число n.\n\nФормат выходных данных:\n    Программа должна вывести список в соответствии с условием задачи.\n\"\"\"\n\nn = int(input())\ndividers = []\n\nfor i in range(1, n + 1):\n    if n % i == 0:\n        dividers.append(i)\n\nprint(dividers)\n",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/spisok_deliteley.py"
+      },
+      {
+        "name": "Суммы двух",
+        "kind": "пройдено",
+        "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/summy_dvuh.py",
+        "code": "\"\"\"\nЗадача: «Суммы двух»\n\nНа вход программе подаётся натуральное число n (n >= 2). Затем поступают\nn целых чисел. Напишите программу, которая создаёт из указанных чисел\nсписок, состоящий из сумм соседних чисел.\n\nФормат входных данных:\n    Натуральное число n (n >= 2), а затем n целых чисел, каждое на\n    отдельной строке.\n\nФормат выходных данных:\n    Программа должна вывести список, состоящий из сумм соседних чисел.\n\"\"\"\n\ncount_num = int(input())\nnum_list = []\nnew_num_list = []\n\nfor _ in range(count_num):\n    num = int(input())\n    num_list.append(num)\n\nfor i in range(len(num_list) - 1):\n    sum_num = num_list[i] + num_list[i+1]\n    new_num_list.append(sum_num)\n\nprint(new_num_list)\n\n",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/summy_dvuh.py"
       }
     ]
   }
@@ -2233,6 +2306,34 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
   }
   renderFeed(document.getElementById("ov-feed"), 3, null);
   renderFeed(document.getElementById("cal-feed"), null, document.getElementById("cal-feed-total"));
+
+  /* ── Повторения по расписанию (SM-2) во вкладке «Закрепление» ───── */
+  function renderReviewLog(el, totalEl) {
+    if (!el) return;
+    const rows = [];
+    activeDays.slice().reverse().forEach(key => {
+      const day = ACTIVITY[key];
+      (day.items || []).forEach((it, i) => {
+        if (it.kind === "повторено") rows.push({ key, i, it });
+      });
+    });
+    el.innerHTML = rows.length ? rows.map(({ key, i, it }) => {
+      const d = parseYmd(key).toLocaleDateString("ru-RU", { day: "numeric", month: "long" });
+      const task = it.file
+        ? `<button class="feed-task" data-day="${key}" data-idx="${i}"><span class="kind-dot kdot-repeat"></span>${escapeHtml(it.name)}</button>`
+        : `<span class="feed-task static"><span class="kind-dot kdot-repeat"></span>${escapeHtml(it.name)}</span>`;
+      return `<div class="feed-day"><div class="feed-date">${d}</div><div class="feed-items">${task}</div></div>`;
+    }).join("") : `<div class="pq-empty">Повторений пока не было.</div>`;
+    el.addEventListener("click", e => {
+      const btn = e.target.closest(".feed-task");
+      if (!btn || btn.classList.contains("static")) return;
+      const day = ACTIVITY[btn.dataset.day];
+      const item = day && day.items && day.items[+btn.dataset.idx];
+      if (item) openCode(item);
+    });
+    if (totalEl) totalEl.textContent = rows.length;
+  }
+  renderReviewLog(document.getElementById("pq-reviews"), document.getElementById("pq-reviews-total"));
 
   /* ── Карточка «Далось труднее всего» (Обзор) ────────────── */
   (function renderHardest() {

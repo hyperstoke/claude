@@ -168,6 +168,27 @@
         { "name": "Второе вхождение", "kind": "пройдено", "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/vtoroe_vhozhdenie.py" },
         { "name": "Переворот", "kind": "пройдено", "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/perevorot.py" }
       ]
+    },
+    "2026-07-26": {
+      "level": 1,
+      "tasks": 1,
+      "note": "закрепление методов строк (просроченное повторение) — валидация email, решено с замечанием по PEP8 (непоследовательные отступы)",
+      "items": [
+        { "name": "Валидация email (закрепление методов строк)", "kind": "повторено", "file": "study_python/practice/coach_tasks/support_email_normalize.py" }
+      ]
+    },
+    "2026-07-27": {
+      "level": 3,
+      "tasks": 6,
+      "note": "10.1 — начат раздел «Списки»: «Алфавит», «Список строк», «Список кубов», «Все сразу 1», «Список делителей» и «Суммы двух» решены чисто (chr/ord, сбор списка вводом n элементов, len/индексация/срез/in/del, перебор делителей, суммы соседних элементов)",
+      "items": [
+        { "name": "Алфавит", "kind": "пройдено", "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/alfavit.py" },
+        { "name": "Список строк", "kind": "пройдено", "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/spisok_strok.py" },
+        { "name": "Список кубов", "kind": "пройдено", "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/spisok_kubov.py" },
+        { "name": "Все сразу 1", "kind": "пройдено", "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/vse_srazu_1.py" },
+        { "name": "Список делителей", "kind": "пройдено", "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/spisok_deliteley.py" },
+        { "name": "Суммы двух", "kind": "пройдено", "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/summy_dvuh.py" }
+      ]
     }
   }
 }
