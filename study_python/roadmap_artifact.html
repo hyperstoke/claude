@@ -1235,7 +1235,7 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
     }
   };
 
-                                                        /* @gen:start — генерируется scripts/build_site.py из coach/*.json, вручную не править */
+                                                          /* @gen:start — генерируется scripts/build_site.py из coach/*.json, вручную не править */
   const TRACKING_SINCE = "2026-07-11";
   const ACTIVITY = {
   "2026-07-11": {
@@ -1723,8 +1723,8 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
   },
   "2026-07-27": {
     "level": 3,
-    "tasks": 6,
-    "note": "10.1 — начат раздел «Списки»: «Алфавит», «Список строк», «Список кубов», «Все сразу 1», «Список делителей» и «Суммы двух» решены чисто (chr/ord, сбор списка вводом n элементов, len/индексация/срез/in/del, перебор делителей, суммы соседних элементов)",
+    "tasks": 9,
+    "note": "10.1 — раздел «Списки»: «Алфавит», «Список строк», «Список кубов», «Все сразу 1», «Список делителей», «Суммы двух», «Удалите нечётные индексы» (с трудом — сначала спутал чётность индекса со значением, off-by-one в range, потом ошибочное условие длины ==), «Символы всех строк» и «k-ая буква слова» (с трудом — сравнение длины строки == k вместо >=) решены",
     "items": [
       {
         "name": "Алфавит",
@@ -1765,8 +1765,29 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
         "name": "Суммы двух",
         "kind": "пройдено",
         "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/summy_dvuh.py",
-        "code": "\"\"\"\nЗадача: «Суммы двух»\n\nНа вход программе подаётся натуральное число n (n >= 2). Затем поступают\nn целых чисел. Напишите программу, которая создаёт из указанных чисел\nсписок, состоящий из сумм соседних чисел.\n\nФормат входных данных:\n    Натуральное число n (n >= 2), а затем n целых чисел, каждое на\n    отдельной строке.\n\nФормат выходных данных:\n    Программа должна вывести список, состоящий из сумм соседних чисел.\n\"\"\"\n\ncount_num = int(input())\nnum_list = []\nnew_num_list = []\n\nfor _ in range(count_num):\n    num = int(input())\n    num_list.append(num)\n\nfor i in range(len(num_list) - 1):\n    sum_num = num_list[i] + num_list[i+1]\n    new_num_list.append(sum_num)\n\nprint(new_num_list)\n\n",
+        "code": "\"\"\"\nЗадача: «Суммы двух»\n\nНа вход программе подаётся натуральное число n (n >= 2). Затем поступают\nn целых чисел. Напишите программу, которая создаёт из указанных чисел\nсписок, состоящий из сумм соседних чисел.\n\nФормат входных данных:\n    Натуральное число n (n >= 2), а затем n целых чисел, каждое на\n    отдельной строке.\n\nФормат выходных данных:\n    Программа должна вывести список, состоящий из сумм соседних чисел.\n\"\"\"\n\ncount_num = int(input())\nnum_list = []\nnew_num_list = []\n\nfor _ in range(count_num):\n    num = int(input())\n    num_list.append(num)\n\nnew_num_list = [num_list[i] + num_list[i + 1] for i in range(len(num_list) - 1)]\n\nprint(new_num_list)\n\n",
         "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/summy_dvuh.py"
+      },
+      {
+        "name": "Удалите нечётные индексы",
+        "kind": "пройдено",
+        "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/udalite_nechetnye_indeksy.py",
+        "code": "\"\"\"\nЗадача: «Удалите нечётные индексы»\n\nНа вход программе подаются натуральное число n, а затем n целых чисел.\nНапишите программу, которая создаёт из указанных чисел список, затем\nудаляет все элементы, стоящие по нечётным индексам, а затем выводит\nполученный список.\n\nФормат входных данных:\n    Натуральное число n, а затем n целых чисел, каждое на отдельной строке.\n\nФормат выходных данных:\n    Программа должна вывести список в соответствии с условием задачи.\n\nПримечание. Используйте оператор del.\n\"\"\"\nlength_list = int(input())\nnum_list = []\n\nfor _ in range(length_list):\n    num = int(input())\n    num_list.append(num)\n\ndel num_list[1::2]\n\nprint(num_list)\n\n\n\n",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/udalite_nechetnye_indeksy.py"
+      },
+      {
+        "name": "Символы всех строк",
+        "kind": "пройдено",
+        "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/simvoly_vseh_strok.py",
+        "code": "\"\"\"\nЗадача: «Символы всех строк»\n\nНа вход программе подаются натуральное число n, а затем n строк. Напишите\nпрограмму, которая создает список из символов всех строк, а затем\nвыводит его.\n\nФормат входных данных:\n    Натуральное число n, а затем n строк, каждая на отдельной строке.\n\nФормат выходных данных:\n    Программа должна вывести список, состоящий из символов всех введённых\n    строк.\n\nПримечание. В результирующем списке могут содержаться одинаковые символы.\n\"\"\"\n\nn = int(input())\nfull_list = []\n\nfor _ in range(n):\n    text = list(input())\n    full_list.extend(text)\n\nprint(full_list)\n",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/simvoly_vseh_strok.py"
+      },
+      {
+        "name": "k-ая буква слова",
+        "kind": "пройдено",
+        "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/k_aya_bukva_slova.py",
+        "code": "\"\"\"\nЗадача: «k-ая буква слова»\n\nНа вход программе подаются натуральное число n и n строк, а затем число k.\nНапишите программу, которая выводит k-ую букву из введённых строк на\nодной строке без пробелов.\n\nФормат входных данных:\n    Натуральное число n, далее n строк, каждая на отдельной строке. В\n    конце вводится натуральное число k — номер буквы (нумерация\n    начинается с единицы).\n\nФормат выходных данных:\n    Программа должна вывести текст в соответствии с условием задачи.\n\nПримечание. Если некоторые строки слишком короткие и в них нет символа с\nзаданным номером, то такие строки при выводе нужно игнорировать.\n\"\"\"\n\nn = int(input())\nlst_values = []\n\nfor _ in range(n):\n    value = input()\n    lst_values.append(value)\n\nlst_second_i = []\noutput_i = int(input())\n\nfor i in range(len(lst_values)):\n    if len(lst_values[i]) >= output_i:\n        lst_second_i.append(lst_values[i][output_i - 1])\n\nprint(*lst_second_i, sep=\"\")\n",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/k_aya_bukva_slova.py"
       }
     ]
   }
@@ -1878,7 +1899,7 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
   {
     "theme": "защитные проверки",
     "topic": "защитная проверка формата строки: избегание падений int()/ord() на некорректных срезах, порядок условий в and (short-circuit)",
-    "reason": "Задача «Название класса» — несколько неудачных попыток, программа падала (ValueError на int() от нечисловой буквы, `is int` вместо isdigit(), TypeError на ord() от среза длиннее 1 символа); исправлено только переносом проверки длины первым условием в and.",
+    "reason": "Задача «Название класса» — несколько неудачных попыток, программа падала (ValueError на int() от нечисловой буквы, `is int` вместо isdigit(), TypeError на ord() от среза длиннее 1 символа); исправлено только переносом проверки длины первым условием в and. Повторилось 2026-07-27 на задаче «k-ая буква слова»: сначала не было проверки длины строки вообще (IndexError), потом условие `len(строки) == k` вместо `>=` — отбрасывало подходящие строки длиннее k.",
     "difficulty": 5,
     "status": "pending",
     "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/nazvanie_klassa.py",

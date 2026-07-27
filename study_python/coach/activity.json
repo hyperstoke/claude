@@ -179,15 +179,18 @@
     },
     "2026-07-27": {
       "level": 3,
-      "tasks": 6,
-      "note": "10.1 — начат раздел «Списки»: «Алфавит», «Список строк», «Список кубов», «Все сразу 1», «Список делителей» и «Суммы двух» решены чисто (chr/ord, сбор списка вводом n элементов, len/индексация/срез/in/del, перебор делителей, суммы соседних элементов)",
+      "tasks": 9,
+      "note": "10.1 — раздел «Списки»: «Алфавит», «Список строк», «Список кубов», «Все сразу 1», «Список делителей», «Суммы двух», «Удалите нечётные индексы» (с трудом — сначала спутал чётность индекса со значением, off-by-one в range, потом ошибочное условие длины ==), «Символы всех строк» и «k-ая буква слова» (с трудом — сравнение длины строки == k вместо >=) решены",
       "items": [
         { "name": "Алфавит", "kind": "пройдено", "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/alfavit.py" },
         { "name": "Список строк", "kind": "пройдено", "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/spisok_strok.py" },
         { "name": "Список кубов", "kind": "пройдено", "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/spisok_kubov.py" },
         { "name": "Все сразу 1", "kind": "пройдено", "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/vse_srazu_1.py" },
         { "name": "Список делителей", "kind": "пройдено", "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/spisok_deliteley.py" },
-        { "name": "Суммы двух", "kind": "пройдено", "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/summy_dvuh.py" }
+        { "name": "Суммы двух", "kind": "пройдено", "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/summy_dvuh.py" },
+        { "name": "Удалите нечётные индексы", "kind": "пройдено", "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/udalite_nechetnye_indeksy.py" },
+        { "name": "Символы всех строк", "kind": "пройдено", "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/simvoly_vseh_strok.py" },
+        { "name": "k-ая буква слова", "kind": "пройдено", "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/k_aya_bukva_slova.py" }
       ]
     }
   }
