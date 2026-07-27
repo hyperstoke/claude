@@ -1275,7 +1275,7 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
     }
   };
 
-    /* @gen:start — генерируется scripts/build_site.py из coach/*.json, вручную не править */
+          /* @gen:start — генерируется scripts/build_site.py из coach/*.json, вручную не править */
   const TRACKING_SINCE = "2026-07-11";
   const ACTIVITY = {
   "2026-07-11": {
@@ -1763,8 +1763,8 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
   },
   "2026-07-27": {
     "level": 3,
-    "tasks": 9,
-    "note": "10.1 — раздел «Списки»: «Алфавит», «Список строк», «Список кубов», «Все сразу 1», «Список делителей», «Суммы двух», «Удалите нечётные индексы» (с трудом — сначала спутал чётность индекса со значением, off-by-one в range, потом ошибочное условие длины ==), «Символы всех строк» и «k-ая буква слова» (с трудом — сравнение длины строки == k вместо >=) решены",
+    "tasks": 11,
+    "note": "10.1 — раздел «Списки»: «Алфавит», «Список строк», «Список кубов», «Все сразу 1», «Список делителей», «Суммы двух», «Удалите нечётные индексы» (с трудом — сначала спутал чётность индекса со значением, off-by-one в range, потом ошибочное условие длины ==), «Символы всех строк», «k-ая буква слова» (с трудом — сравнение длины строки == k вместо >=), «Сумма квадратов» и «Negatives, Zeros and Positives» решены чисто",
     "items": [
       {
         "name": "Алфавит",
@@ -1828,6 +1828,34 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
         "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/k_aya_bukva_slova.py",
         "code": "\"\"\"\nЗадача: «k-ая буква слова»\n\nНа вход программе подаются натуральное число n и n строк, а затем число k.\nНапишите программу, которая выводит k-ую букву из введённых строк на\nодной строке без пробелов.\n\nФормат входных данных:\n    Натуральное число n, далее n строк, каждая на отдельной строке. В\n    конце вводится натуральное число k — номер буквы (нумерация\n    начинается с единицы).\n\nФормат выходных данных:\n    Программа должна вывести текст в соответствии с условием задачи.\n\nПримечание. Если некоторые строки слишком короткие и в них нет символа с\nзаданным номером, то такие строки при выводе нужно игнорировать.\n\"\"\"\n\nn = int(input())\nlst_values = []\n\nfor _ in range(n):\n    value = input()\n    lst_values.append(value)\n\nlst_second_i = []\noutput_i = int(input())\n\nfor i in range(len(lst_values)):\n    if len(lst_values[i]) >= output_i:\n        lst_second_i.append(lst_values[i][output_i - 1])\n\nprint(*lst_second_i, sep=\"\")\n",
         "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/k_aya_bukva_slova.py"
+      },
+      {
+        "name": "Сумма квадратов",
+        "kind": "пройдено",
+        "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/summa_kvadratov.py",
+        "code": "\"\"\"\nЗадача: «Сумма квадратов элементов списка»\n\nДан список чисел numbers. Дополните код так, чтобы он вывел сумму\nквадратов элементов этого списка.\n\nФормат входных данных:\n    Список чисел уже задан в коде (переменная numbers), ввода с клавиатуры нет.\n\nФормат выходных данных:\n    Одно число — сумма квадратов элементов списка.\n\"\"\"\n\nnumbers = [1, 78, 23, -65, 99, 9089, 34, -32, 0, -67, 1, 11, 111]\n\nfor i in range(len(numbers)):\n    numbers[i] = pow(numbers[i], 2)\nprint(sum(numbers))\n",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/summa_kvadratov.py"
+      },
+      {
+        "name": "Negatives, Zeros and Positives",
+        "kind": "пройдено",
+        "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/negativy_nuli_pozitivy.py",
+        "code": "\"\"\"\nЗадача: «Negatives, Zeros and Positives»\n\nНа вход программе подаются натуральное число n, а затем n целых чисел.\nНапишите программу, которая сначала выводит все отрицательные числа,\nзатем нули, а затем все положительные числа. Все числа должны быть\nвыведены в том же порядке, в котором они были введены, каждое на\nотдельной строке.\n\nФормат входных данных:\n    Натуральное число n, а затем n целых чисел, каждое на отдельной строке.\n\nФормат выходных данных:\n    Текст в соответствии с условием задачи.\n\"\"\"\ncount_value = int(input())\nlst_value = []\n\nfor _ in range(count_value):\n    lst_value.append(int(input()))\n\nnew_lst_value = []\n\nfor num in lst_value:\n    if num < 0:\n        new_lst_value.append(num)\nfor num in lst_value:\n    if num == 0:\n        new_lst_value.append(num)\nfor num in lst_value:\n    if num > 0:\n        new_lst_value.append(num)\n\nprint(* new_lst_value, sep=\"\\n\")\n\n\n",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/negativy_nuli_pozitivy.py"
+      }
+    ]
+  },
+  "2026-07-28": {
+    "level": 1,
+    "tasks": 1,
+    "note": "10.1 — «Без дубликатов»: первая попытка через set(not_dupl) не сохраняла порядок ввода (множества не гарантируют порядок), после разбора темы set и подсказки про паттерн `in` на отвлечённом примере сам переписал через список+in и решил верно",
+    "items": [
+      {
+        "name": "Без дубликатов",
+        "kind": "пройдено",
+        "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/bez_dublikatov.py",
+        "code": "\"\"\"\nЗадача: «Без дубликатов»\n\nНа вход программе подаются натуральное число n, а затем n строк.\nНапишите программу, которая выводит только уникальные строки, в том же\nпорядке, в котором они были введены.\n\nФормат входных данных:\n    Натуральное число n, а затем n строк, каждая на отдельной строке.\n\nФормат выходных данных:\n    Текст в соответствии с условием задачи.\n\nПримечание. Считайте, что все строки состоят из строчных символов.\n\"\"\"\n\nn_line = int(input())\nlst_str = []\n\nfor _ in range(n_line):\n    text = input()\n    lst_str.append(text)\n\nlst_str_new = []\n\nfor i in lst_str:\n    if i not in lst_str_new:\n        lst_str_new.append(i)\n\nprint(*lst_str_new, sep=\"\\n\")\n    ",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/bez_dublikatov.py"
       }
     ]
   }

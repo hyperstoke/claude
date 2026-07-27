@@ -6,3 +6,4 @@
 - [Python interpreter path](python-interpreter-path.md) — рабочий Python на ПК лежит в uv, системный `python` не работает
 - [Review style: soft nudge](review-style-soft-nudge.md) — «мягко подталкивать» для тем, что видел, но не закрепил
 - [Task docstring format](feedback-task-docstring-format.md) — условие coach-задач оформлять `"""..."""`, не `#`; примеры в кавычках + `#`-пояснения
+- [Task docstring no indent](feedback_task_docstring_no_indent.md) — многострочные блоки докстринга (Примеры и т.п.) без отступов, flush-left

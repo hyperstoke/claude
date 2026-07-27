@@ -176,8 +176,8 @@
     },
     "2026-07-27": {
       "level": 3,
-      "tasks": 9,
-      "note": "10.1 — раздел «Списки»: «Алфавит», «Список строк», «Список кубов», «Все сразу 1», «Список делителей», «Суммы двух», «Удалите нечётные индексы» (с трудом — сначала спутал чётность индекса со значением, off-by-one в range, потом ошибочное условие длины ==), «Символы всех строк» и «k-ая буква слова» (с трудом — сравнение длины строки == k вместо >=) решены",
+      "tasks": 11,
+      "note": "10.1 — раздел «Списки»: «Алфавит», «Список строк», «Список кубов», «Все сразу 1», «Список делителей», «Суммы двух», «Удалите нечётные индексы» (с трудом — сначала спутал чётность индекса со значением, off-by-one в range, потом ошибочное условие длины ==), «Символы всех строк», «k-ая буква слова» (с трудом — сравнение длины строки == k вместо >=), «Сумма квадратов» и «Negatives, Zeros and Positives» решены чисто",
       "items": [
         { "name": "Алфавит", "kind": "пройдено", "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/alfavit.py" },
         { "name": "Список строк", "kind": "пройдено", "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/spisok_strok.py" },
@@ -187,7 +187,17 @@
         { "name": "Суммы двух", "kind": "пройдено", "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/summy_dvuh.py" },
         { "name": "Удалите нечётные индексы", "kind": "пройдено", "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/udalite_nechetnye_indeksy.py" },
         { "name": "Символы всех строк", "kind": "пройдено", "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/simvoly_vseh_strok.py" },
-        { "name": "k-ая буква слова", "kind": "пройдено", "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/k_aya_bukva_slova.py" }
+        { "name": "k-ая буква слова", "kind": "пройдено", "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/k_aya_bukva_slova.py" },
+        { "name": "Сумма квадратов", "kind": "пройдено", "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/summa_kvadratov.py" },
+        { "name": "Negatives, Zeros and Positives", "kind": "пройдено", "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/negativy_nuli_pozitivy.py" }
+      ]
+    },
+    "2026-07-28": {
+      "level": 1,
+      "tasks": 1,
+      "note": "10.1 — «Без дубликатов»: первая попытка через set(not_dupl) не сохраняла порядок ввода (множества не гарантируют порядок), после разбора темы set и подсказки про паттерн `in` на отвлечённом примере сам переписал через список+in и решил верно",
+      "items": [
+        { "name": "Без дубликатов", "kind": "пройдено", "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/bez_dublikatov.py" }
       ]
     }
   }
