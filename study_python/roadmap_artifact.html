@@ -472,6 +472,13 @@
 
   .card-desc { color: var(--ink-dim); font-size: 0.89rem; margin: 0.15rem 0 0.6rem; }
 
+  /* дата вехи в шапке карточки этапа (проставляется из JS по PROGRESS.stages) */
+  .stage-date {
+    margin-left: auto; flex-shrink: 0; font-size: 0.71rem; color: var(--ink-faint);
+    font-variant-numeric: tabular-nums; white-space: nowrap;
+  }
+  .stage.progress .stage-date, .stage.active .stage-date { color: var(--accent); }
+
   .topics { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 0.4rem; }
   .topics li { display: contents; }
   .topic-btn {
@@ -548,8 +555,44 @@
   .prog-seg.done > i { width: 100%; }
   .prog-seg.current > i { background: linear-gradient(90deg, var(--accent), var(--heat-3)); }
   .prog-note { font-size: 0.74rem; color: var(--ink-faint); }
-  .prog-goal { display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.8rem; padding-top: 0.7rem; border-top: 1px solid var(--border); font-size: 0.88rem; color: var(--ink-dim); }
-  .prog-goal-cap { font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-faint); background: var(--inset); border-radius: 4px; padding: 0.14rem 0.42rem; }
+  /* ── Таймлайн этапов с датами (Обзор) ──────────────────── */
+  .tl {
+    margin-top: 0.85rem; padding-top: 0.75rem; border-top: 1px solid var(--border);
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(268px, 1fr)); gap: 0.3rem 1.4rem;
+  }
+  .tl-row {
+    display: flex; align-items: baseline; gap: 0.55rem;
+    font-size: 0.83rem; color: var(--ink-dim); padding: 0.2rem 0;
+  }
+  .tl-num {
+    flex-shrink: 0; width: 1.35rem; font-size: 0.7rem; color: var(--ink-faint);
+    font-variant-numeric: tabular-nums;
+  }
+  .tl-name { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+  .tl-date {
+    flex-shrink: 0; font-size: 0.78rem; color: var(--ink-faint);
+    font-variant-numeric: tabular-nums; white-space: nowrap;
+  }
+  .tl-row.done .tl-name, .tl-row.done .tl-date { color: var(--ink-faint); }
+  .tl-row.done .tl-num::after { content: "✓"; color: var(--accent); }
+  .tl-row.current { color: var(--ink); }
+  .tl-row.current .tl-name { font-weight: 620; }
+  .tl-row.current .tl-num { color: var(--accent); }
+  .tl-row.current .tl-date { color: var(--accent); }
+  .tl-par {
+    flex-shrink: 0; font-size: 0.58rem; letter-spacing: 0.05em; text-transform: uppercase;
+    color: var(--now); background: var(--now-soft); border-radius: 4px; padding: 0.08rem 0.34rem;
+  }
+  .tl-finish {
+    grid-column: 1 / -1; margin-top: 0.5rem; padding-top: 0.6rem;
+    border-top: 1px dashed var(--border); font-size: 0.83rem; color: var(--ink-dim);
+    display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap;
+  }
+  .tl-finish-cap {
+    font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-faint);
+    background: var(--inset); border-radius: 4px; padding: 0.14rem 0.42rem;
+  }
+  .tl-finish b { color: var(--accent); font-weight: 620; }
 
   /* ── Сводка у мини-heatmap (Обзор) ─────────────────────── */
   .mini .hm-flex { flex-wrap: wrap; }
@@ -746,7 +789,7 @@
         </div>
         <div class="tile">
           <div class="t-num" id="ov-dl">—<span class="unit">дн.</span></div>
-          <div class="t-cap">до цели раздела</div>
+          <div class="t-cap">до ближайшего этапа</div>
         </div>
       </div>
 
@@ -764,10 +807,7 @@
         </div>
         <div class="prog-bar" id="ov-prog-bar" role="img" aria-label="Прогресс по этапам дорожной карты"></div>
         <div class="prog-note" id="ov-prog-note"></div>
-        <div class="prog-goal">
-          <span class="prog-goal-cap">ближняя цель</span>
-          <span>Цель: <strong id="ov-dl-goal">—</strong> до <span id="ov-dl-date">—</span></span>
-        </div>
+        <div class="tl" id="ov-timeline"></div>
       </section>
 
       <section class="ov-block" id="ov-hardest-block" hidden>
@@ -1235,7 +1275,7 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
     }
   };
 
-                                                          /* @gen:start — генерируется scripts/build_site.py из coach/*.json, вручную не править */
+    /* @gen:start — генерируется scripts/build_site.py из coach/*.json, вручную не править */
   const TRACKING_SINCE = "2026-07-11";
   const ACTIVITY = {
   "2026-07-11": {
@@ -1792,69 +1832,81 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
     ]
   }
 };
-  const DEADLINE = {
-  "goal": "раздел 10 «Списки»",
-  "date": "2026-08-03",
-  "note": "раздел 9 закрыт 2026-07-24, на 3 дня раньше срока. Пересчёт под новый темп (25+ ч/нед вместо 10–12): раздел 9 занял 2 недели, раздел 10 сопоставим по объёму → ~8-9 дней. Цель и календарь вех — PLAN_TO_OFFER.md"
-};
   const PROGRESS = {
-  "updated": "2026-07-24",
+  "updated": "2026-07-27",
+  "finish": {
+    "apply": "март–апрель 2027",
+    "offer": "май–июль 2027"
+  },
   "stages": [
     {
       "name": "Синтаксис Python",
       "weight": 20,
       "status": "current",
-      "sub_pct": 65
+      "sub_pct": 65,
+      "deadline": "2026-09-15"
     },
     {
       "name": "ООП и продвинутый Python",
       "weight": 14,
-      "status": "todo"
+      "status": "todo",
+      "deadline": "2026-10-31"
     },
     {
       "name": "Git и контроль версий",
       "weight": 5,
-      "status": "todo"
+      "status": "todo",
+      "deadline": "2026-09-30",
+      "parallel": true
     },
     {
       "name": "SQL и базы данных",
       "weight": 13,
-      "status": "todo"
+      "status": "todo",
+      "deadline": "2026-11-30"
     },
     {
       "name": "Тестирование",
       "weight": 6,
-      "status": "todo"
+      "status": "todo",
+      "deadline": "2026-12-15"
     },
     {
       "name": "Алгоритмы и подготовка к отбору",
       "weight": 8,
-      "status": "todo"
+      "status": "todo",
+      "deadline": "2027-03-31",
+      "parallel": true
     },
     {
       "name": "Backend-фреймворк",
       "weight": 16,
-      "status": "todo"
+      "status": "todo",
+      "deadline": "2027-02-05"
     },
     {
       "name": "REST API и аутентификация",
       "weight": 10,
-      "status": "todo"
+      "status": "todo",
+      "deadline": "2027-02-05"
     },
     {
       "name": "Docker",
       "weight": 4,
-      "status": "todo"
+      "status": "todo",
+      "deadline": "2027-03-15"
     },
     {
       "name": "Кэширование и фоновые задачи",
       "weight": 2,
-      "status": "todo"
+      "status": "todo",
+      "deadline": null
     },
     {
       "name": "Деплой и CI/CD",
       "weight": 2,
-      "status": "todo"
+      "status": "todo",
+      "deadline": "2027-03-15"
     }
   ]
 };
@@ -2136,14 +2188,7 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
   document.getElementById("ov-tasks").textContent = totalTasks;
   if (current > 0) document.getElementById("side-flame").classList.add("live");
 
-  /* ── Ближняя цель раздела (плитка + строка в карточке) ──── */
-  const dlDate = parseYmd(DEADLINE.date);
-  const daysLeft = Math.round((dlDate - parseYmd(todayKey)) / 86400000);
-  document.getElementById("ov-dl").innerHTML = (daysLeft >= 0 ? daysLeft : 0) + '<span class="unit">дн.</span>';
-  document.getElementById("ov-dl-goal").textContent = DEADLINE.goal;
-  document.getElementById("ov-dl-date").textContent = fmtRu(dlDate);
-
-  /* ── Общий прогресс к backend-разработчику ──────────────── */
+  /* ── Общий прогресс к стажировке Python-backend ─────────── */
   (function renderProgress() {
     const bar = document.getElementById("ov-prog-bar");
     if (!bar || !PROGRESS || !PROGRESS.stages) return;
@@ -2172,6 +2217,51 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
     if (rp) rp.textContent = "~" + pct + "%";
     const rs = document.getElementById("rm-track-stage");
     if (rs) rs.textContent = `Этап ${idx} из ${lastIdx}`;
+
+    /* Таймлайн этапов с датами (даты — из PLAN_TO_OFFER.md через activity.json) */
+    const fmtStage = iso => {
+      const d = parseYmd(iso);
+      return `${d.getDate()} ${MONTHS_RU[d.getMonth()]} ${d.getFullYear()}`;
+    };
+    const tl = document.getElementById("ov-timeline");
+    if (tl) {
+      const rows = stages.map((s, i) => {
+        const cls = s.status === "done" ? "done" : s.status === "current" ? "current" : "";
+        const par = s.parallel ? '<span class="tl-par">параллельно</span>' : "";
+        const date = s.deadline ? fmtStage(s.deadline) : "по возможности";
+        return `<div class="tl-row ${cls}"><span class="tl-num">${i}</span>`
+          + `<span class="tl-name">${escapeHtml(s.name)}</span>${par}`
+          + `<span class="tl-date">${date}</span></div>`;
+      });
+      const fin = PROGRESS.finish;
+      if (fin) {
+        rows.push('<div class="tl-finish"><span class="tl-finish-cap">финиш</span>'
+          + `<span>подача заявки — ${escapeHtml(fin.apply)}, оффер — <b>${escapeHtml(fin.offer)}</b></span></div>`);
+      }
+      tl.innerHTML = rows.join("");
+    }
+
+    /* Даты вех в карточках «Дорожной карты» — по индексу этапа */
+    document.querySelectorAll("#view-roadmap .stages .stage").forEach((el, i) => {
+      const s = stages[i];
+      const head = el.querySelector(".card-head");
+      if (!s || !s.deadline || !head || head.querySelector(".stage-date")) return;
+      const badge = document.createElement("span");
+      badge.className = "stage-date";
+      badge.textContent = "до " + fmtStage(s.deadline);
+      head.insertBefore(badge, head.querySelector(".status-pill"));
+    });
+
+    /* Плитка: дни до ближайшей ненаступившей вехи */
+    const today = parseYmd(todayKey);
+    const next = stages
+      .filter(s => s.deadline && parseYmd(s.deadline) >= today)
+      .sort((a, b) => parseYmd(a.deadline) - parseYmd(b.deadline))[0];
+    const dlTile = document.getElementById("ov-dl");
+    if (dlTile) {
+      const days = next ? Math.round((parseYmd(next.deadline) - today) / 86400000) : 0;
+      dlTile.innerHTML = days + '<span class="unit">дн.</span>';
+    }
   })();
 
   /* ── Значки стрика (Обзор) ──────────────────────────────── */

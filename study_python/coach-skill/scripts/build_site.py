@@ -9,9 +9,12 @@
   1. Читает coach/activity.json и coach/practice_queue.json.
   2. Для каждого item с полем file читает .py-файл, кладёт его текст в
      item.code и ссылку на GitHub в item.github.
-  3. Генерирует JS-константы TRACKING_SINCE, ACTIVITY, DEADLINE,
+  3. Генерирует JS-константы TRACKING_SINCE, ACTIVITY, PROGRESS,
      PRACTICE_QUEUE и вставляет их в roadmap_artifact.html между маркерами
      /* @gen:start ... */ и /* @gen:end */.
+
+Даты этапов живут в progress.stages[].deadline (источник правды —
+PLAN_TO_OFFER.md) и проходят в PROGRESS насквозь, без отдельной обработки.
 
 Запуск (рабочий Python через uv на ПК):
   <uv-python> study_python/coach-skill/scripts/build_site.py
@@ -107,12 +110,6 @@ def build_block(activity: dict, queue: dict) -> str:
         if rel and embed_file(entry, rel, f"queue/{e.get('id', '?')}", warnings):
             embedded += 1
         pq.append(entry)
-    dl = activity["deadline"]
-    deadline = {
-        "goal": dl["goal"],
-        "date": dl["date"],
-        "note": dl.get("note") or dl.get("basis", ""),
-    }
     progress = activity.get("progress")
     if isinstance(progress, dict):
         progress = {k: v for k, v in progress.items() if not k.startswith("_")}
@@ -120,7 +117,6 @@ def build_block(activity: dict, queue: dict) -> str:
         f"  {START} — генерируется scripts/build_site.py из coach/*.json, вручную не править */\n"
         + js_const("TRACKING_SINCE", activity["tracking_since"])
         + js_const("ACTIVITY", days)
-        + js_const("DEADLINE", deadline)
         + js_const("PROGRESS", progress)
         + js_const("PRACTICE_QUEUE", pq)
         + f"  {END}"
