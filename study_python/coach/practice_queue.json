@@ -59,6 +59,16 @@
       "status": "pending",
       "created": "2026-07-23",
       "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/poryadok_knig.py"
+    },
+    {
+      "id": "multi-condition-filter-all",
+      "theme": "фильтрация по нескольким условиям",
+      "topic": "проверка нескольких условий сразу через all(): направление in (запрос in строка, а не наоборот), генератор внутри all(), регистронезависимое сравнение",
+      "reason": "Задача «Google search - 2» — несколько неудачных попыток подряд: сначала перепутал формат ввода с задачей 1 (лишний счётчик), затем TypeError (пытался сравнить список с строкой через in), затем перепутано направление in (line in TRIGGER вместо запрос in line), дважды забывал привести к одному регистру уже после подсказки — all() и генераторы внутри него разбирались отдельно на отвлечённом примере.",
+      "difficulty": 6,
+      "status": "pending",
+      "created": "2026-07-28",
+      "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/google_search_2.py"
     }
   ]
 }

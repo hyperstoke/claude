@@ -1275,7 +1275,7 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
     }
   };
 
-          /* @gen:start — генерируется scripts/build_site.py из coach/*.json, вручную не править */
+            /* @gen:start — генерируется scripts/build_site.py из coach/*.json, вручную не править */
   const TRACKING_SINCE = "2026-07-11";
   const ACTIVITY = {
   "2026-07-11": {
@@ -1846,9 +1846,9 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
     ]
   },
   "2026-07-28": {
-    "level": 1,
-    "tasks": 1,
-    "note": "10.1 — «Без дубликатов»: первая попытка через set(not_dupl) не сохраняла порядок ввода (множества не гарантируют порядок), после разбора темы set и подсказки про паттерн `in` на отвлечённом примере сам переписал через список+in и решил верно",
+    "level": 3,
+    "tasks": 5,
+    "note": "10.1 — «Без дубликатов» (первая попытка через set() не сохраняла порядок, переписал через список+in), «Значение функции» и «Remove outliers» решены чисто, «Google search - 1» решено чисто; «Google search - 2» — с трудом: перепутал формат ввода с задачей 1, TypeError при сравнении списка со строкой через in, перепутано направление in, дважды забывал регистр — разобрано пошагово с all()",
     "items": [
       {
         "name": "Без дубликатов",
@@ -1856,6 +1856,34 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
         "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/bez_dublikatov.py",
         "code": "\"\"\"\nЗадача: «Без дубликатов»\n\nНа вход программе подаются натуральное число n, а затем n строк.\nНапишите программу, которая выводит только уникальные строки, в том же\nпорядке, в котором они были введены.\n\nФормат входных данных:\n    Натуральное число n, а затем n строк, каждая на отдельной строке.\n\nФормат выходных данных:\n    Текст в соответствии с условием задачи.\n\nПримечание. Считайте, что все строки состоят из строчных символов.\n\"\"\"\n\nn_line = int(input())\nlst_str = []\n\nfor _ in range(n_line):\n    text = input()\n    lst_str.append(text)\n\nlst_str_new = []\n\nfor i in lst_str:\n    if i not in lst_str_new:\n        lst_str_new.append(i)\n\nprint(*lst_str_new, sep=\"\\n\")\n    ",
         "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/bez_dublikatov.py"
+      },
+      {
+        "name": "Значение функции",
+        "kind": "пройдено",
+        "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/znachenie_funktsii.py",
+        "code": "\"\"\"\nЗадача: «Значение функции»\n\nНа вход программе подаются натуральное число n, а затем n целых чисел.\nНапишите программу, которая для каждого введённого числа x выводит\nзначение функции f(x) = x^2 + 2x + 1, каждое на отдельной строке.\n\nФормат входных данных:\n    Натуральное число n, а затем n целых чисел, каждое на отдельной строке.\n\nФормат выходных данных:\n    Программа должна вывести сначала введённые числа, каждое на отдельной\n    строке, затем пустую строку, а затем соответствующие значения функции,\n    каждое на отдельной строке.\n\nПримечание. Для первого теста имеем:\nf(1) = 1^2 + 2*1 + 1 = 4, f(2) = 2^2 + 2*2 + 1 = 9, f(3) = 3^2 + 2*3 + 1 = 16, ...\n\"\"\"\n\ncount_x = int(input())\n\nvalues_x = [int(input()) for _ in range(count_x)]\nvalues_f = [x ** 2 + 2 * x + 1 for x in values_x]\n\nprint(*values_x, sep=\"\\n\")\nprint()\nprint(*values_f, sep=\"\\n\")",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/znachenie_funktsii.py"
+      },
+      {
+        "name": "Remove outliers",
+        "kind": "пройдено",
+        "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/udalit_vybrosy.py",
+        "code": "\"\"\"\nЗадача: «Remove outliers»\n\nПри анализе данных, собранных в рамках научного эксперимента, бывает\nполезно удалить самое большое и самое маленькое значение.\n\nНа вход программе подаются натуральное число n, а затем n различных\nнатуральных чисел. Напишите программу, которая удаляет наименьшее и\nнаибольшее значение из указанных чисел, а затем выводит оставшиеся числа\nкаждое на отдельной строке, не меняя их порядок.\n\nФормат входных данных:\n    Натуральное число n, а затем n различных натуральных чисел, каждое на\n    отдельной строке.\n\nФормат выходных данных:\n    Программа должна вывести текст в соответствии с условием задачи.\n\"\"\"\n\ncount_values = int(input())\n\nlst_values = [int(input()) for _ in range(count_values)]\n\nlst_values.remove(min(lst_values))\nlst_values.remove(max(lst_values))\n\nprint(*lst_values, sep=\"\\n\")",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/udalit_vybrosy.py"
+      },
+      {
+        "name": "Google search - 1",
+        "kind": "пройдено",
+        "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/google_search_1.py",
+        "code": "\"\"\"\nЗадача: «Google search - 1»\n\nНа вход программе подаются натуральное число n, затем n строк, затем ещё\nодна строка – поисковый запрос. Напишите программу, которая выводит все\nвведённые строки, в которых встречается поисковый запрос.\n\nФормат входных данных:\n    Натуральное число n – количество строк, затем сами строки в указанном\n    количестве, затем один поисковый запрос.\n\nФормат выходных данных:\n    Программа должна вывести все введённые строки, в которых встречается\n    поисковый запрос.\n\nПримечание. Поиск не должен быть чувствителен к регистру символов.\n\"\"\"\n\ncount_lines = int(input())\nlines = [input() for _ in range(count_lines)]\n\nTRIGGER = input()\n\nlines_search = [line for line in lines if TRIGGER.lower() in line.lower()]\n\nprint(*lines_search, sep=\"\\n\")\n\n",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/google_search_1.py"
+      },
+      {
+        "name": "Google search - 2",
+        "kind": "пройдено",
+        "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/google_search_2.py",
+        "code": "\"\"\"\nЗадача: «Google search - 2»\n\nНа вход программе подаются натуральное число n, затем n строк, затем число\nk – количество поисковых запросов, затем k строк – поисковые запросы.\nНапишите программу, которая выводит все введённые строки, в которых\nвстречаются одновременно все поисковые запросы.\n\nФормат входных данных:\n    Натуральное число n – количество строк, затем сами строки в указанном\n    количестве, затем число k, затем сами поисковые запросы.\n\nФормат выходных данных:\n    Программа должна вывести все введённые строки, в которых встречаются\n    все поисковые запросы.\n\nПримечание. Поиск не должен быть чувствителен к регистру символов.\n\"\"\"\ncount_lines = int(input())\nlines = [input() for _ in range(count_lines)]\n\ncount_trigger = int(input())\nTRIGGER = [input() for _ in range(count_trigger)]\n\nlines_search = []\nfor line in lines:\n    if all(i.lower() in line.lower() for i in TRIGGER):\n        lines_search.append(line)\n\nprint(*lines_search, sep=\"\\n\")\n",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/google_search_2.py"
       }
     ]
   }
@@ -1995,6 +2023,16 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
     "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/poryadok_knig.py",
     "code": "\"\"\"\nЗадача: «Порядок книг»\n\nВсе книги в домашней библиотеке должны быть отсортированы по возрастанию:\nсначала по фамилиям авторов, а при совпадении фамилий — по названиям\nкниг. Напишите программу, которая проверяет, верно ли отсортированы\nкниги.\n\nКаждая книга задаётся строкой в формате:\n    <фамилия автора> <инициалы автора>, «<название книги>»\n\nПрограмма должна вывести \"YES\", если книги отсортированы по правилам,\nиначе \"NO\".\n\nФормат входных данных:\n    Число n, затем n строк — описания книг в указанном формате.\n\nФормат выходных данных:\n    \"YES\" или \"NO\" в соответствии с условием задачи.\n\nПримечание 1. Инициалы автора при сортировке не учитываются.\nПримечание 2. Книги в наборе не повторяются.\nПримечание 3. Фамилия автора состоит из одного слова.\n\nПримечание. Пример теста:\n    2\n    \"During A.B., «Заводной апельсин»\"\n    \"Orwell G., «1984»\"\n    -> \"YES\"\n\"\"\"\n\n\ncount_books = int(input())\nbooks = []\nflag = True\n\nfor _ in range(count_books):\n    books.append(input())\n\nfor i in range(len(books) - 1):\n    start_surname_one = books[i].find(\" \")\n    surname_one = books[i][:start_surname_one]\n\n    start_surname_two = books[i + 1].find(\" \")\n    surname_two = books[i + 1][:start_surname_two]\n\n    if surname_one < surname_two:\n        i += 1\n    elif surname_one == surname_two:\n        start_title_one = books[i].find(\"«\")\n        title_one = books[i][start_title_one +1: -1]\n\n        start_title_two = books[i + 1].find(\"«\")\n        title_two = books[i + 1][start_title_two +1: -1]\n\n        if title_one > title_two:\n            flag = False\n            break\n    else:\n        flag = False\n        break\n\nif flag:\n    print(\"YES\")\nelse:\n    print(\"NO\")",
     "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/poryadok_knig.py"
+  },
+  {
+    "theme": "фильтрация по нескольким условиям",
+    "topic": "проверка нескольких условий сразу через all(): направление in (запрос in строка, а не наоборот), генератор внутри all(), регистронезависимое сравнение",
+    "reason": "Задача «Google search - 2» — несколько неудачных попыток подряд: сначала перепутал формат ввода с задачей 1 (лишний счётчик), затем TypeError (пытался сравнить список с строкой через in), затем перепутано направление in (line in TRIGGER вместо запрос in line), дважды забывал привести к одному регистру уже после подсказки — all() и генераторы внутри него разбирались отдельно на отвлечённом примере.",
+    "difficulty": 6,
+    "status": "pending",
+    "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/google_search_2.py",
+    "code": "\"\"\"\nЗадача: «Google search - 2»\n\nНа вход программе подаются натуральное число n, затем n строк, затем число\nk – количество поисковых запросов, затем k строк – поисковые запросы.\nНапишите программу, которая выводит все введённые строки, в которых\nвстречаются одновременно все поисковые запросы.\n\nФормат входных данных:\n    Натуральное число n – количество строк, затем сами строки в указанном\n    количестве, затем число k, затем сами поисковые запросы.\n\nФормат выходных данных:\n    Программа должна вывести все введённые строки, в которых встречаются\n    все поисковые запросы.\n\nПримечание. Поиск не должен быть чувствителен к регистру символов.\n\"\"\"\ncount_lines = int(input())\nlines = [input() for _ in range(count_lines)]\n\ncount_trigger = int(input())\nTRIGGER = [input() for _ in range(count_trigger)]\n\nlines_search = []\nfor line in lines:\n    if all(i.lower() in line.lower() for i in TRIGGER):\n        lines_search.append(line)\n\nprint(*lines_search, sep=\"\\n\")\n",
+    "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/google_search_2.py"
   }
 ];
   /* @gen:end */
