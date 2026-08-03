@@ -26,7 +26,6 @@ n песен, отсортированных в алфавитном поряд�
 count_songs = int(input())
 
 songs = [input() for _ in range(count_songs)]
-
 songs.sort()
 
 print(*songs, sep="\n")
