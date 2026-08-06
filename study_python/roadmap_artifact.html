@@ -17,6 +17,7 @@
     --accent-soft: #1F1834;
     --now: #E0A93F;
     --now-soft: #241C10;
+    --late: #EE7B70;
     --today: #CBBBFF;
     --shadow: none;
     --shadow-lg: 0 16px 48px rgba(0,0,0,0.55);
@@ -644,6 +645,9 @@
   .tile-btn:hover { border-color: var(--accent); }
   .tile-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   .tile-btn .t-cap { color: var(--accent); }
+  .tile.late { background: #1E1315; border-color: #4A2A28; }
+  .tile.late .t-num { color: var(--late); }
+  .tile.late .t-cap { color: var(--late); }
 
   /* ── Крупный календарь на Обзоре ───────────────────────── */
   .hm-flex-big { gap: 2rem; align-items: center; flex-wrap: wrap; }
@@ -702,6 +706,18 @@
   .pq-row-diff {
     font-size: 0.72rem; color: var(--ink-faint); font-variant-numeric: tabular-nums; white-space: nowrap; flex-shrink: 0;
   }
+  /* Срок закрепления: возраст записи + дедлайн от сложности */
+  .pq-row-due {
+    display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;
+    font-size: 0.74rem; color: var(--ink-faint); margin-top: 0.35rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .pq-due-pill {
+    border-radius: 999px; padding: 0.05rem 0.45rem; font-size: 0.7rem;
+    background: var(--inset); color: var(--ink-dim);
+  }
+  .pq-due-pill.hot { background: var(--now-soft); color: var(--now); }
+  .pq-due-pill.late { background: #2A1614; color: var(--late); }
   .pq-row-go { font-size: 0.76rem; color: var(--accent); white-space: nowrap; flex-shrink: 0; }
   .pq-group { border: none; margin-bottom: 0.5rem; }
   .pq-group > summary {
@@ -791,6 +807,10 @@
           <div class="t-num" id="ov-dl">—<span class="unit">дн.</span></div>
           <div class="t-cap">до ближайшего этапа</div>
         </div>
+        <button class="tile tile-btn" id="ov-pq" type="button" data-goto="practice">
+          <div class="t-num" id="ov-pq-num">—</div>
+          <div class="t-cap" id="ov-pq-cap">закрепление →</div>
+        </button>
       </div>
 
       <section class="ov-block">
@@ -1275,7 +1295,7 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
     }
   };
 
-                                                /* @gen:start — генерируется scripts/build_site.py из coach/*.json, вручную не править */
+                                                                        /* @gen:start — генерируется scripts/build_site.py из coach/*.json, вручную не править */
   const TRACKING_SINCE = "2026-07-11";
   const ACTIVITY = {
   "2026-07-11": {
@@ -2022,8 +2042,78 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
         "name": "Поиск по логу сервиса (закрепление: all и направление in)",
         "kind": "повторено",
         "file": "study_python/practice/coach_tasks/log_filter_all_keywords.py",
-        "code": "\"\"\"\nЗадача: Поиск по логу сервиса\nТема: проверка нескольких условий сразу через all()  |  Сложность: 5 (средняя)\n\nЛегенда: на бэкенде сервиса включили простой поиск по логам — примерно то,\nчто делают Kibana или `grep` с несколькими терминами. Дежурный инженер вводит\nнесколько ключевых слов, и система показывает только те строки лога, где\nвстречаются ВСЕ введённые слова сразу. Регистр значения не имеет: инженер в\nтри часа ночи пишет \"error\", а в логе может стоять \"ERROR\".\n\nВход:  натуральное число n — количество строк лога;\n       затем n строк лога;\n       затем одна строка с ключевыми словами, разделёнными пробелом.\nВыход: строки лога, содержащие все ключевые слова, каждая на отдельной\n       строке, в исходном порядке и в исходном виде (регистр не менять).\n       Если не подошла ни одна строка — вывести \"Совпадений нет\".\n\nПримеры:\n    4\n    2026-08-04 ERROR payment gateway timeout\n    2026-08-04 INFO payment accepted\n    2026-08-04 error DB connection lost\n    2026-08-04 WARN payment retry scheduled\n    error payment\n    -> 2026-08-04 ERROR payment gateway timeout\n    # только здесь есть и \"error\", и \"payment\"; регистр в логе другой\n\n    3\n    GET /api/orders 200\n    POST /api/orders 500\n    GET /api/users 200\n    api 200\n    -> GET /api/orders 200\n       GET /api/users 200\n    # оба слова встречаются, порядок строк сохранён\n\n    2\n    INFO cache warm\n    INFO cache cold\n    redis\n    -> Совпадений нет   # граничный случай: не подошла ни одна строка\n\"\"\"\n\n# твой код здесь\n\ncount_logs = int(input())\n\nlogs = [input() for _ in range(count_logs)]\ncorect_logs = []\n\nTRIGGERS = input().split()\n\nfor log in logs:\n    if all(trigger.lower() in log.lower() for trigger in TRIGGERS):\n       corect_logs.append(log)\n\nif len(corect_logs) > 0:\n       print(*corect_logs, sep=\"\\n\")\nelse:\n     print(\"Совпадений нет\")",
+        "code": "\"\"\"\nЗадача: Поиск по логу сервиса\nТема: проверка нескольких условий сразу через all()  |  Сложность: 5 (средняя)\n\nЛегенда: на бэкенде сервиса включили простой поиск по логам — примерно то,\nчто делают Kibana или `grep` с несколькими терминами. Дежурный инженер вводит\nнесколько ключевых слов, и система показывает только те строки лога, где\nвстречаются ВСЕ введённые слова сразу. Регистр значения не имеет: инженер в\nтри часа ночи пишет \"error\", а в логе может стоять \"ERROR\".\n\nВход:  натуральное число n — количество строк лога;\n       затем n строк лога;\n       затем одна строка с ключевыми словами, разделёнными пробелом.\nВыход: строки лога, содержащие все ключевые слова, каждая на отдельной\n       строке, в исходном порядке и в исходном виде (регистр не менять).\n       Если не подошла ни одна строка — вывести \"Совпадений нет\".\n\nПримеры:\n    4\n    2026-08-04 ERROR payment gateway timeout\n    2026-08-04 INFO payment accepted\n    2026-08-04 error DB connection lost\n    2026-08-04 WARN payment retry scheduled\n    error payment\n    -> 2026-08-04 ERROR payment gateway timeout\n    # только здесь есть и \"error\", и \"payment\"; регистр в логе другой\n\n    3\n    GET /api/orders 200\n    POST /api/orders 500\n    GET /api/users 200\n    api 200\n    -> GET /api/orders 200\n       GET /api/users 200\n    # оба слова встречаются, порядок строк сохранён\n\n    2\n    INFO cache warm\n    INFO cache cold\n    redis\n    -> Совпадений нет   # граничный случай: не подошла ни одна строка\n\"\"\"\n\n# твой код здесь\n\ncount_logs = int(input())\n\nlogs = [input() for _ in range(count_logs)]\ncorrect_logs = []\n\ntriggers = input().split()\n\nfor log in logs:\n    if all(trigger.lower() in log.lower() for trigger in triggers):\n        correct_logs.append(log)\n\nif len(correct_logs) > 0:\n    print(*correct_logs, sep=\"\\n\")\nelse:\n    print(\"Совпадений нет\")",
         "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/coach_tasks/log_filter_all_keywords.py"
+      }
+    ]
+  },
+  "2026-08-05": {
+    "level": 2,
+    "tasks": 5,
+    "note": "10.1 — «Удалить первый символ» (первая задача, где условие прямо требует списочное выражение). Рабочее решение с первой версии и без подсказок: [element[1::] for element in keywords] — цикл идёт прямо по элементам списка, а не через range(len()), срез строки применён верно. Это второй подряд случай самостоятельного comprehension после «Сортируем песни», причём здесь ещё и обход по элементам — ровно тот мотив, который не давался в «Инициалах» и «Добавь разделитель». Замечания косметические: в срезе [1::] лишнее второе двоеточие (достаточно [1:]) — третий раз после «Взлома Братства Стали»; список keywords разбит на строки обратными слэшами с растущей лесенкой отступов, хотя внутри квадратных скобок перенос работает и без \\, а отступ по PEP8 держат ровным. Следом «Длины строк» — чисто, с первой версии и без подсказок: [len(element) for element in keywords], каркас перенесён с предыдущей задачи, менялась только левая часть выражения. Замечаний нет; comprehension на однотипных задачах закрепляется. Третьей — «Слова длиной не менее пяти символов»: снова чисто, с первой версии, [element for element in keywords if len(element) >= 5]. Здесь впервые понадобилась фильтрующая часть comprehension (if в конце), и граница «не менее пяти, включительно» взята верно (>= 5, не > 5) — типичная ловушка off-by-one не сработала. Четвёртой — «Числа-палиндромы от 100 до 1000», со второй версии. До кода спросил, палиндром ли это «число, которое делится только на 1 и на себя» — перепутал с простым числом, определение дано. Сама проверка написана верно и сразу: str(num) == str(num)[::-1], разворот через срез с шагом -1 применён самостоятельно, и первый раз источником comprehension стал range, а не готовый список. Ошибки были вокруг неё: range(1, 1001) вместо range(100, 1001) — в ответ попали 1–9 и 11–99 (верхняя граница 1001 при этом взята правильно), и print(*palindromes) вместо print(palindromes) — условие просит список, а распаковка печатает числа через пробел. Зеркало «Сортировки чисел», где было ровно наоборот: там требовались числа через пробел, а печатался список; вывод берётся из условия, а не по инерции с прошлой задачи. Вторая версия верная. Пятой — «В одну строку 1» (слова строки в столбик): верно с первой версии и без подсказок, print(*(input().split()), sep=\"\\n\") — split и распаковка с sep сложены в одну строку, цикл не понадобился. Замечание косметическое: скобки вокруг input().split() лишние, звёздочка и так применяется к результату вызова; плюс нет пустой строки между докстрингом и кодом.",
+    "items": [
+      {
+        "name": "Удалить первый символ",
+        "kind": "пройдено",
+        "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/udalit_pervyy_simvol.py",
+        "code": "\"\"\"\nИспользуя списочное выражение, дополните приведённый код так, чтобы получить\nновый список, содержащий строки исходного списка, где у каждой строки удалён\nпервый символ.\n\nВход: готовый список keywords (задан в коде).\nВыход: печать нового списка new_keywords.\n\nПример:\n['False', 'True', 'None']   # исходный список\n['alse', 'rue', 'one']      # что должно получиться\n\"\"\"\n\nkeywords = ['False', 'True', 'None', 'and', 'with', 'as', 'assert', \\\n            'break', 'class', 'continue', 'def', 'del', 'elif', 'else', \\\n            'except', 'finally', 'try', 'for', 'from', 'global', 'if', \\\n            'import', 'in', 'is', 'lambda', 'nonlocal', 'not', 'or', \\\n            'pass', 'raise', 'return', 'while', 'yield']\n\nnew_keywords = [element[1::] for element in keywords]\n\nprint(new_keywords)\n",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/udalit_pervyy_simvol.py"
+      },
+      {
+        "name": "Длины строк",
+        "kind": "пройдено",
+        "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/dliny_strok.py",
+        "code": "\"\"\"\nИспользуя списочное выражение, дополните приведённый код так, чтобы получить\nновый список, содержащий длины строк исходного списка.\n\nВход: готовый список keywords (задан в коде).\nВыход: печать списка lengths.\n\nПример:\n['False', 'True', 'None']   # исходный список\n[5, 4, 4]                   # что должно получиться\n\"\"\"\n\nkeywords = ['False', 'True', 'None', 'and', 'with', 'as', 'assert', 'break', 'class', 'continue', 'def', 'del', 'elif', 'else', 'except', 'finally', 'try', 'for', 'from', 'global', 'if', 'import', 'in', 'is', 'lambda', 'nonlocal', 'not', 'or', 'pass', 'raise', 'return', 'while', 'yield']\n\nlengths = [len(element) for element in keywords]\n\nprint(lengths)\n",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/dliny_strok.py"
+      },
+      {
+        "name": "Слова длиной не менее пяти символов",
+        "kind": "пройдено",
+        "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/slova_ot_pyati_simvolov.py",
+        "code": "\"\"\"\nИспользуя списочное выражение, дополните приведённый код так, чтобы получить\nновый список, содержащий только слова длиной не менее пяти символов\n(включительно).\n\nВход: готовый список keywords (задан в коде).\nВыход: печать списка new_keywords.\n\nПример:\n['False', 'True', 'None', 'assert']   # исходный список\n['False', 'assert']                   # что должно получиться\n\"\"\"\n\nkeywords = ['False', 'True', 'None', 'and', 'with', 'as', 'assert', 'break', 'class', 'continue', 'def', 'del', 'elif', 'else', 'except', 'finally', 'try', 'for', 'from', 'global', 'if', 'import', 'in', 'is', 'lambda', 'nonlocal', 'not', 'or', 'pass', 'raise', 'return', 'while', 'yield']\n\nnew_keywords = [element for element in keywords if len(element) >= 5]\n\nprint(new_keywords)\n",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/slova_ot_pyati_simvolov.py"
+      },
+      {
+        "name": "Числа-палиндромы от 100 до 1000",
+        "kind": "пройдено",
+        "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/chisla_palindromy.py",
+        "code": "\"\"\"\nИспользуя списочное выражение, получите список всех целых чисел-палиндромов\nот 100 до 1000 (включительно) в порядке возрастания.\n\nПалиндром — число, которое читается одинаково слева направо и справа налево.\n\nВход: нет, диапазон задан в условии.\nВыход: печать списка palindromes.\n\nПример:\n101, 111, 121   # палиндромы\n100, 123, 130   # не палиндромы\n\"\"\"\n\npalindromes = [num for num in range(100, 1001) if str(num) == str(num)[::-1]]\n\nprint(palindromes)\n",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/chisla_palindromy.py"
+      },
+      {
+        "name": "В одну строку 1",
+        "kind": "пройдено",
+        "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/v_odnu_stroku_1.py",
+        "code": "\"\"\"\nВ одну строку 1\n\nНа вход программе подаётся строка текста, содержащая слова. Напишите\nпрограмму, которая выводит слова введённой строки в столбик.\n\nФормат входных данных: строка текста, слова разделены пробелом.\nФормат выходных данных: слова строки, каждое на своей строке.\n\nПримечание: программу можно написать в одну строку кода.\n\nПример входа:\n\"Timeo Danaos et dona ferentes\"\n\nПример выхода:\nTimeo\nDanaos\net\ndona\nferentes\n\"\"\"\n\nprint(*input().split(), sep=\"\\n\")",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/v_odnu_stroku_1.py"
+      }
+    ]
+  },
+  "2026-08-06": {
+    "level": 2,
+    "tasks": 3,
+    "note": "10.1 — «Списочное выражение 1» (квадраты чисел от 1 до n построчно). Первая версия печатает верный результат — print(*[num ** 2 for num in range(1, int(input()) + 1)], sep=\"\\n\"), comprehension по range и граница «включительно» взяты верно, — но идёт вразрез с условием: примечание требует выводить элементы циклом for, а сама задача — сначала создать список, потом вывести его элементы. Здесь списка как объекта нет: он создаётся и тут же распаковывается в аргументы print. Инерция с предыдущей задачи «В одну строку 1», где распаковка с sep как раз была решением; второй случай подряд, когда формат вывода берётся по привычке, а не из условия (до этого — «Числа-палиндромы»). При попытке переделать скобки [] пропали совсем — print(num ** 2 for num in range(...)) напечатал <generator object>, прямое «не пойму почему ошибка»: генераторное выражение как единственный аргумент функции не нуждается в собственных скобках, поэтому потеря [] молча превращает список в ленивый генератор (повтор «Инициалов», тема закрепления вернулась к difficulty 4). После разбора и каркаса с пропусками версия по условию написана верно: n = int(input()), squares = [num ** 2 for num in range(1, n + 1)], цикл for element in squares с print(element). Ученик оставил в файле обе версии и заметил, что однострочник «лаконичнее» — разобрано, что короче не значит проще (ввод спрятан внутри range, списка как объекта нет, условие требует цикл), и что два input() в одном файле сломают проверку на Stepik. Следом «Списочное выражение 2» (кубы чисел на одной строке) — верно с первой версии и без подсказок: nums = [pow(int(num), 3) for num in input().split()], вывод циклом с print(element, end=\" \"). Структура из предыдущей задачи перенесена самостоятельно, int() внутри выражения не забыт, end вместо sep выбран верно. Замечания стилевые: имя nums у списка, который хранит уже кубы (лучше cubes), pow(x, 3) вместо привычного x ** 3, и завершающий пустой print() не нужен. Третьей — задача-закрепление «Отчёт по медленным запросам» (тема очереди: список vs генератор). Решена с первой версии и без подсказок: [response for response in response_time if int(response) >= 300], len() от списка, вывод циклом — ровно те три места, где раньше вылезал генератор вместо списка; тема переведена в done, grade 3. Замечание вне темы: список хранит строки, int() вызывается внутри фильтра — времена ответа по смыслу числа, и приводить их логично один раз при чтении (map(int, ...) или comprehension), иначе для любой арифметики придётся конвертировать заново; плюс имена response_time/long_response для списков во множественном числе.",
+    "items": [
+      {
+        "name": "Списочное выражение 1",
+        "kind": "пройдено",
+        "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/spisochnoe_vyrazhenie_1.py",
+        "code": "\"\"\"\nСписочное выражение 1\n\nНа вход программе подаётся натуральное число n. Напишите программу,\nиспользующую списочное выражение, которая создаёт список, содержащий квадраты\nчисел от 1 до n (включительно), а затем выводит его элементы построчно, то\nесть каждый на отдельной строке.\n\nФормат входных данных: натуральное число n.\nФормат выходных данных: элементы списка, каждый на своей строке.\n\nПримечание: для вывода элементов списка используйте цикл for.\n\nПример входа:\n\"4\"\n\nПример выхода:\n1\n4\n9\n16\n\"\"\"\n\nprint(*[num ** 2 for num in range(1, int(input()) + 1)], sep=\"\\n\")\n\nprint()\n\nn = int(input())\nsquares = [num ** 2 for num in range(1, n + 1)]\nfor element in squares:\n    print(element)\n\n\n\n",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/spisochnoe_vyrazhenie_1.py"
+      },
+      {
+        "name": "Списочное выражение 2",
+        "kind": "пройдено",
+        "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/spisochnoe_vyrazhenie_2.py",
+        "code": "\"\"\"\nСписочное выражение 2\n\nНа вход программе подаётся строка текста, содержащая целые числа. Напишите\nпрограмму, использующую списочное выражение, которая выведет кубы указанных\nчисел на одной строке.\n\nФормат входных данных: строка целых чисел, разделённых пробелом.\nФормат выходных данных: кубы этих чисел, все на одной строке.\n\nПримечание 1: для вывода элементов списка используйте цикл for.\nПримечание 2: используйте метод split().\n\nПример входа:\n\"1 2 3 4\"\n\nПример выхода:\n\"1 8 27 64\"\n\"\"\"\n\nnums_quad = [int(num) ** 3 for num in input().split()]\nfor element in nums_quad:\n    print(element, end=\" \")",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/spisochnoe_vyrazhenie_2.py"
+      },
+      {
+        "name": "Отчёт по медленным запросам (закрепление: список vs генератор)",
+        "kind": "повторено",
+        "file": "study_python/practice/coach_tasks/slow_requests_report.py",
+        "code": "\"\"\"\nЗадача: Отчёт по медленным запросам\nТема: списочное выражение (список vs генератор), обход по элементам  |  Сложность: 4 (средняя)\n\nЛегенда: сервис пишет в лог время ответа каждого запроса к API в\nмиллисекундах. Дежурный инженер раз в час снимает срез и должен понять,\nсколько запросов вышло за SLA (300 мс) и какие именно это были значения.\nТакой отчёт — типовая задача мониторинга: сначала счётчик для алерта,\nпотом сами значения для разбора.\n\nВход:\n    одна строка — времена ответа в миллисекундах, целые числа через пробел\n\nВыход:\n    первая строка — количество запросов, у которых время >= 300\n    далее — сами эти значения, каждое на отдельной строке, в исходном порядке\n\nТребования (в них суть задачи):\n    - список медленных времён построить списочным выражением\n    - количество получить функцией len() от этого списка\n    - значения вывести циклом for\n\nПримеры:\n\"120 450 300 90 780\"    # вход\n\"3\"                     # столько запросов вышли за SLA (300 входит: >= )\n\"450\"\n\"300\"\n\"780\"\n\n\"50 100 299\"            # вход: медленных нет\n\"0\"                     # счётчик выводится всегда, дальше пусто\n\"\"\"\n\nresponse_time = input().split()\n\nlong_response = [response for response in response_time if int(response) >= 300]\n\nprint(len(long_response))\n\nfor response in long_response:\n    print(response)",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/coach_tasks/slow_requests_report.py"
       }
     ]
   }
@@ -2174,18 +2264,18 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
     "difficulty": 5,
     "status": "done",
     "file": "study_python/practice/coach_tasks/log_filter_all_keywords.py",
-    "code": "\"\"\"\nЗадача: Поиск по логу сервиса\nТема: проверка нескольких условий сразу через all()  |  Сложность: 5 (средняя)\n\nЛегенда: на бэкенде сервиса включили простой поиск по логам — примерно то,\nчто делают Kibana или `grep` с несколькими терминами. Дежурный инженер вводит\nнесколько ключевых слов, и система показывает только те строки лога, где\nвстречаются ВСЕ введённые слова сразу. Регистр значения не имеет: инженер в\nтри часа ночи пишет \"error\", а в логе может стоять \"ERROR\".\n\nВход:  натуральное число n — количество строк лога;\n       затем n строк лога;\n       затем одна строка с ключевыми словами, разделёнными пробелом.\nВыход: строки лога, содержащие все ключевые слова, каждая на отдельной\n       строке, в исходном порядке и в исходном виде (регистр не менять).\n       Если не подошла ни одна строка — вывести \"Совпадений нет\".\n\nПримеры:\n    4\n    2026-08-04 ERROR payment gateway timeout\n    2026-08-04 INFO payment accepted\n    2026-08-04 error DB connection lost\n    2026-08-04 WARN payment retry scheduled\n    error payment\n    -> 2026-08-04 ERROR payment gateway timeout\n    # только здесь есть и \"error\", и \"payment\"; регистр в логе другой\n\n    3\n    GET /api/orders 200\n    POST /api/orders 500\n    GET /api/users 200\n    api 200\n    -> GET /api/orders 200\n       GET /api/users 200\n    # оба слова встречаются, порядок строк сохранён\n\n    2\n    INFO cache warm\n    INFO cache cold\n    redis\n    -> Совпадений нет   # граничный случай: не подошла ни одна строка\n\"\"\"\n\n# твой код здесь\n\ncount_logs = int(input())\n\nlogs = [input() for _ in range(count_logs)]\ncorect_logs = []\n\nTRIGGERS = input().split()\n\nfor log in logs:\n    if all(trigger.lower() in log.lower() for trigger in TRIGGERS):\n       corect_logs.append(log)\n\nif len(corect_logs) > 0:\n       print(*corect_logs, sep=\"\\n\")\nelse:\n     print(\"Совпадений нет\")",
+    "code": "\"\"\"\nЗадача: Поиск по логу сервиса\nТема: проверка нескольких условий сразу через all()  |  Сложность: 5 (средняя)\n\nЛегенда: на бэкенде сервиса включили простой поиск по логам — примерно то,\nчто делают Kibana или `grep` с несколькими терминами. Дежурный инженер вводит\nнесколько ключевых слов, и система показывает только те строки лога, где\nвстречаются ВСЕ введённые слова сразу. Регистр значения не имеет: инженер в\nтри часа ночи пишет \"error\", а в логе может стоять \"ERROR\".\n\nВход:  натуральное число n — количество строк лога;\n       затем n строк лога;\n       затем одна строка с ключевыми словами, разделёнными пробелом.\nВыход: строки лога, содержащие все ключевые слова, каждая на отдельной\n       строке, в исходном порядке и в исходном виде (регистр не менять).\n       Если не подошла ни одна строка — вывести \"Совпадений нет\".\n\nПримеры:\n    4\n    2026-08-04 ERROR payment gateway timeout\n    2026-08-04 INFO payment accepted\n    2026-08-04 error DB connection lost\n    2026-08-04 WARN payment retry scheduled\n    error payment\n    -> 2026-08-04 ERROR payment gateway timeout\n    # только здесь есть и \"error\", и \"payment\"; регистр в логе другой\n\n    3\n    GET /api/orders 200\n    POST /api/orders 500\n    GET /api/users 200\n    api 200\n    -> GET /api/orders 200\n       GET /api/users 200\n    # оба слова встречаются, порядок строк сохранён\n\n    2\n    INFO cache warm\n    INFO cache cold\n    redis\n    -> Совпадений нет   # граничный случай: не подошла ни одна строка\n\"\"\"\n\n# твой код здесь\n\ncount_logs = int(input())\n\nlogs = [input() for _ in range(count_logs)]\ncorrect_logs = []\n\ntriggers = input().split()\n\nfor log in logs:\n    if all(trigger.lower() in log.lower() for trigger in triggers):\n        correct_logs.append(log)\n\nif len(correct_logs) > 0:\n    print(*correct_logs, sep=\"\\n\")\nelse:\n    print(\"Совпадений нет\")",
     "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/coach_tasks/log_filter_all_keywords.py"
   },
   {
     "theme": "генераторы и comprehension",
     "topic": "генераторное выражение: ленивый объект vs готовый список, распаковка элементов в print, по чему бежит цикл — по элементам или по индексам",
-    "reason": "Задача «Инициалы» (2026-07-30): print(full_name[0 + i][0] for i in full_name) — print напечатал сам объект <generator object>, а не элементы; внутри генератора индексация списка строкой (i — элемент, не индекс), ошибка не всплывала из-за ленивости; лишнее 0 + i. На вопрос о происходящем — прямое «не понимаю что происходит», тему разбирали пошагово на отвлечённом примере. После разбора решено верно, но через range(len(full_name)) с индексом, а не обходом элементов, и с сохранившимся 0 + i — то есть идея «цикл может идти прямо по элементам» пока не закрепилась. 2026-08-01, Stepik «Добавь разделитель»: решение снова собрано через range(len(text)) + append, хотя строка итерируема по символам напрямую; плюс прямой вопрос «не понимаю, как тут использовать split или join» — join (вызов у разделителя, приём любого итерируемого) разбирался с нуля. Мотив «цикл идёт по элементам» по-прежнему не закреплён. 2026-08-04, Stepik «Сортируем песни»: список песен собран как [input() for _ in range(n)] — списочное выражение написано самостоятельно, без подсказки и к месту. Первый случай, когда ученик выбрал comprehension сам; тема сдвинулась, difficulty снижена, но запись держим до задачи-закрепления.",
-    "difficulty": 5,
-    "status": "pending",
-    "file": "study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/initsialy.py",
-    "code": "\"\"\"\nЗадача: «Инициалы»\n\nНа вход программе подаётся строка текста, содержащая фамилию, имя и\nотчество человека. Напишите программу, которая выводит инициалы человека.\n\nФормат входных данных:\n    Одна строка текста: фамилия, имя и отчество.\n\nФормат выходных данных:\n    Программа должна вывести текст в соответствии с условием задачи.\n\"\"\"\n\n\nfull_name = input().split()\n\nprint(*[full_name[0 + i][0] for i in range(len(full_name))], sep=\".\", end=\".\")\n\n\n",
-    "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/10_Spiski/10_01_Sozdanie_spiskov/initsialy.py"
+    "reason": "Задача «Инициалы» (2026-07-30): print(full_name[0 + i][0] for i in full_name) — print напечатал сам объект <generator object>, а не элементы; внутри генератора индексация списка строкой (i — элемент, не индекс), ошибка не всплывала из-за ленивости; лишнее 0 + i. На вопрос о происходящем — прямое «не понимаю что происходит», тему разбирали пошагово на отвлечённом примере. После разбора решено верно, но через range(len(full_name)) с индексом, а не обходом элементов, и с сохранившимся 0 + i — то есть идея «цикл может идти прямо по элементам» пока не закрепилась. 2026-08-01, Stepik «Добавь разделитель»: решение снова собрано через range(len(text)) + append, хотя строка итерируема по символам напрямую; плюс прямой вопрос «не понимаю, как тут использовать split или join» — join (вызов у разделителя, приём любого итерируемого) разбирался с нуля. Мотив «цикл идёт по элементам» по-прежнему не закреплён. 2026-08-04, Stepik «Сортируем песни»: список песен собран как [input() for _ in range(n)] — списочное выражение написано самостоятельно, без подсказки и к месту. Первый случай, когда ученик выбрал comprehension сам; тема сдвинулась, difficulty снижена, но запись держим до задачи-закрепления. 2026-08-05, Stepik «Удалить первый символ» (условие прямо требует списочное выражение): [element[1::] for element in keywords] написано с первой версии, без подсказок, с обходом по элементам, а не через range(len()) — второй самостоятельный comprehension подряд и первый случай, когда обход идёт по элементам. Мотив сдвинулся заметно; запись держим до задачи-закрепления, где comprehension надо выбрать самому, без подсказки в условии. Там же 2026-08-05 «Длины строк» и «Слова длиной не менее пяти символов» — обе чисто с первой версии, включая фильтрующий if в конце выражения и верную границу >= 5. Три чистых comprehension подряд; difficulty снижена до 3, закрываем после задачи-закрепления, где конструкцию надо выбрать без подсказки в условии. 2026-08-06, Stepik «Списочное выражение 1»: при попытке убрать распаковку скобки [] заменились на пустоту — print(num ** 2 for num in range(...)) снова напечатал <generator object>, ровно симптом «Инициалов»; прямое «не пойму почему ошибка». Разобрано повторно: генераторное выражение как единственный аргумент функции не требует своих скобок, поэтому пропажа [] молча превращает список в ленивый генератор. Difficulty возвращена к 4 — три чистых comprehension до этого были на готовом списке keywords, а различение список/генератор не закрепилось. 2026-08-06, закрепление «Отчёт по медленным запросам»: тема закрыта — списочное выражение в квадратных скобках, len() от списка и цикл по элементам написаны с первой версии, без подсказок и без сбоя «print получил генератор». Grade 3: осталась неоптимальность вне темы — список хранит строки, а int() вызывается внутри условия фильтра, хотя времена ответа по смыслу числа.",
+    "difficulty": 4,
+    "status": "done",
+    "file": "study_python/practice/coach_tasks/slow_requests_report.py",
+    "code": "\"\"\"\nЗадача: Отчёт по медленным запросам\nТема: списочное выражение (список vs генератор), обход по элементам  |  Сложность: 4 (средняя)\n\nЛегенда: сервис пишет в лог время ответа каждого запроса к API в\nмиллисекундах. Дежурный инженер раз в час снимает срез и должен понять,\nсколько запросов вышло за SLA (300 мс) и какие именно это были значения.\nТакой отчёт — типовая задача мониторинга: сначала счётчик для алерта,\nпотом сами значения для разбора.\n\nВход:\n    одна строка — времена ответа в миллисекундах, целые числа через пробел\n\nВыход:\n    первая строка — количество запросов, у которых время >= 300\n    далее — сами эти значения, каждое на отдельной строке, в исходном порядке\n\nТребования (в них суть задачи):\n    - список медленных времён построить списочным выражением\n    - количество получить функцией len() от этого списка\n    - значения вывести циклом for\n\nПримеры:\n\"120 450 300 90 780\"    # вход\n\"3\"                     # столько запросов вышли за SLA (300 входит: >= )\n\"450\"\n\"300\"\n\"780\"\n\n\"50 100 299\"            # вход: медленных нет\n\"0\"                     # счётчик выводится всегда, дальше пусто\n\"\"\"\n\nresponse_time = input().split()\n\nlong_response = [response for response in response_time if int(response) >= 300]\n\nprint(len(long_response))\n\nfor response in long_response:\n    print(response)",
+    "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/coach_tasks/slow_requests_report.py"
   }
 ];
   /* @gen:end */
@@ -2510,6 +2600,27 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
     in_progress: { pill: "active", label: "в работе", active: true  },
     done:        { pill: "done",   label: "сделано",  active: false }
   };
+  /* Срок на закрепление: запас в днях зависит от сложности темы
+     (шкала task-design.md: 0–2 лёгкая, 3–5 средняя, 6+ сложная). */
+  const pqAllowance = d => (typeof d !== "number" ? 7 : d <= 2 ? 3 : d <= 5 ? 7 : 14);
+  function pqDue(e) {
+    if (!e.created) return null;
+    const day = 86400000;
+    const now = parseYmd(todayKey);
+    const created = parseYmd(e.created);
+    const due = addDays(created, pqAllowance(e.difficulty));
+    const left = Math.round((due - now) / day);
+    return {
+      due, left,
+      age: Math.round((now - created) / day),
+      state: left < 0 ? "late" : left <= 2 ? "hot" : "ok"
+    };
+  }
+  const PQ_DUE_LABEL = {
+    late: i => `просрочено на ${-i.left} дн.`,
+    hot: i => (i.left === 0 ? "срок сегодня" : `осталось ${i.left} дн.`),
+    ok: i => `осталось ${i.left} дн.`
+  };
   /* Прилагательное сложности по шкале 0–10 (см. task-design.md) */
   function diffAdj(n) {
     if (n <= 2) return "лёгкая";
@@ -2517,6 +2628,31 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
     if (n <= 7) return "сложная";
     return "очень сложная";
   }
+  /* Плитка «закрепление» на Обзоре: сколько тем ждёт и насколько горит */
+  (function renderOvPractice() {
+    const num = document.getElementById("ov-pq-num");
+    const cap = document.getElementById("ov-pq-cap");
+    const tile = document.getElementById("ov-pq");
+    if (!num || !cap || !tile) return;
+    const active = PRACTICE_QUEUE.filter(e => PQ_STATUS[e.status]?.active);
+    num.textContent = active.length;
+    if (!active.length) {
+      cap.textContent = "закрепление: пусто →";
+      return;
+    }
+    const infos = active.map(pqDue).filter(Boolean);
+    const late = infos.filter(i => i.state === "late").length;
+    const nearest = infos.slice().sort((a, b) => a.due - b.due)[0];
+    if (late) {
+      tile.classList.add("late");
+      cap.textContent = `закрепление: ${late} просрочено →`;
+    } else if (nearest) {
+      cap.textContent = `закрепление, срок ${fmtRu(nearest.due)} →`;
+    } else {
+      cap.textContent = "закрепление →";
+    }
+  })();
+
   (function renderPractice() {
     const pending = PRACTICE_QUEUE.filter(e => PQ_STATUS[e.status]?.active);
     const done = PRACTICE_QUEUE.filter(e => !PQ_STATUS[e.status]?.active);
@@ -2540,6 +2676,18 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
       r.className = "pq-row-reason";
       r.textContent = e.reason;
       main.append(t, r);
+      const info = PQ_STATUS[e.status]?.active ? pqDue(e) : null;
+      if (info) {
+        const due = document.createElement("div");
+        due.className = "pq-row-due";
+        const pill = document.createElement("span");
+        pill.className = "pq-due-pill " + info.state;
+        pill.textContent = PQ_DUE_LABEL[info.state](info);
+        const txt = document.createElement("span");
+        txt.textContent = `в очереди ${info.age} дн. · решить до ${fmtRu(info.due)}`;
+        due.append(pill, txt);
+        main.append(due);
+      }
       const diff = document.createElement("div");
       diff.className = "pq-row-diff";
       diff.textContent = diffText(e.difficulty);
