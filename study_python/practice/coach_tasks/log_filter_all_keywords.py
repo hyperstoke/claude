@@ -31,7 +31,7 @@
     GET /api/users 200
     api 200
     -> GET /api/orders 200
-GET /api/users 200
+    -> GET /api/users 200
     # оба слова встречаются, порядок строк сохранён
 
     2
