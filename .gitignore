@@ -7,3 +7,5 @@ __pycache__/
 *.zip
 # Служебная папка Firecrawl CLI (создаётся при multi-URL scrape)
 .firecrawl/
+# Служебная папка MCP-сервера Serena (индексы и кэш проекта)
+.serena/

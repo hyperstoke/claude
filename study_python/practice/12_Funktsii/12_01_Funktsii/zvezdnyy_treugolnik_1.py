@@ -25,7 +25,11 @@
 
 
 def draw_triangle():
-    pass
+    scale_triangle = 1
+    for _ in range(10):
+        print("*" * scale_triangle)
+        scale_triangle += 1
+        
 
 
 draw_triangle()
