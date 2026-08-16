@@ -9,3 +9,4 @@
 - [Task docstring format](feedback-task-docstring-format.md) — условие coach-задач оформлять `"""..."""`, не `#`; примеры в кавычках + `#`-пояснения
 - [Task docstring no indent](feedback_task_docstring_no_indent.md) — многострочные блоки докстринга (Примеры и т.п.) без отступов, flush-left
 - [Task input early exit](feedback-task-input-early-exit.md) — если решение выходит по break, писать в условии, что весь ввод вводить не нужно
+- [Normalize types at boundary](feedback-normalize-types-at-boundary.md) — не советовать экономить `int()` ценой смешанных типов: числа должны быть числами
