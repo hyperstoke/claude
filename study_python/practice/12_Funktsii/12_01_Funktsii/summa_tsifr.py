@@ -17,7 +17,7 @@ print_digit_sum(1234)
 """
 
 def print_digit_sum(num):
-    print(sum((map(int, num))))
+    print(sum(map(int, num)))
 
 
 num = input()
