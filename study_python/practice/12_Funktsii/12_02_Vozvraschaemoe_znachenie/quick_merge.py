@@ -27,10 +27,17 @@
 """
 
 
-# объявление функции
-def quick_merge():
-    pass
+def quick_merge(values):
+    merged_values = []
+    for i in range(len(values)):
+        merged_values += values[i]
+    merged_values = list(map(int, merged_values))
+    merged_values.sort()
+    return merged_values
 
 
-# считываем данные
 n = int(input())
+values = [input().split() for _ in range(n)]
+
+
+print(*quick_merge(values))

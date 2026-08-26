@@ -1295,7 +1295,7 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
     }
   };
 
-                                                                                                                                      /* @gen:start — генерируется scripts/build_site.py из coach/*.json, вручную не править */
+                                                                                                                                            /* @gen:start — генерируется scripts/build_site.py из coach/*.json, вручную не править */
   const TRACKING_SINCE = "2026-07-11";
   const ACTIVITY = {
   "2026-07-11": {
@@ -2384,6 +2384,34 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
         "file": "study_python/practice/12_Funktsii/12_02_Vozvraschaemoe_znachenie/merge_list.py",
         "code": "\"\"\"\nMerge lists 1\n\nНапишите функцию merge(list1, list2), которая принимает в качестве аргументов два отсортированных по возрастанию списка, состоящих из целых чисел, и объединяет их в один отсортированный список.\n\nПримечание 1. Можно использовать списочный метод sort(), а можно обойтись и без него. 😎\n\nПримечание 2. Приведённый ниже код:\n\nprint(merge([1, 2, 3], [5, 6, 7, 8]))\nprint(merge([1, 7, 10, 16], [5, 6, 13, 20]))\n\nдолжен выводить:\n\n[1, 2, 3, 5, 6, 7, 8]\n[1, 5, 6, 7, 10, 13, 16, 20]\n\"\"\"\n\ndef merge(list1, list2):\n    merged = list1 + list2\n    return sorted(merged)\n\n\nlist1 = [int(i) for i in input().split()]\nlist2 = [int(i) for i in input().split()]\n\n\nprint(merge(list1, list2))",
         "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/12_Funktsii/12_02_Vozvraschaemoe_znachenie/merge_list.py"
+      }
+    ]
+  },
+  "2026-08-26": {
+    "level": 2,
+    "tasks": 3,
+    "note": "«Merge lists 2» (quick_merge) — объединение n списков в один отсортированный: цикл по индексам с += для склейки, map(int, ...) для приведения типов, sort() и возврат списка; работает верно. «Is the Triangle Valid?» — логика верна с первой версии: три условия неравенства треугольника соединены через and, результат возвращается напрямую. Перед решением ученик сам задал вопрос, должны ли три условия выполняться одновременно, — разобрано на примере 2, 3, 10, почему это and, а не or. Замечания по первой версии: лишняя обёртка bool() вокруг выражения, которое уже возвращает bool, и пробелы в конце строк (W291); показано, как заменить вызов bool() на группирующие скобки при переносе return. «Палиндром» (is_palindrome) — работает с первой версии, подход выбран сразу верно: чистка строки и сравнение с развёрнутой через срез [::-1], результат сравнения возвращается напрямую. Впервые генераторное выражение внутри join() применено верно и по делу (после провала на «Инициалах» 30 июля). Два замечания: фильтр isalpha() выбрасывает и цифры, тогда как условие велит игнорировать только пробелы и ,.!?- (на \"1abba\" ответ True вместо False; тесты Stepik цифр, похоже, не содержат), и lower() вызывается на каждом символе вместо одного вызова на всей строке (0.116 против 0.075 с на 140 тыс. символов). Правка по второму замечанию сломала рабочее решение: lower() вынесен верно и введено имя cleaned_text, но слева в сравнении осталось text — сырая строка против очищенной, все три примера дали False; после указания исправлено сразу. Тот же класс, что mounth/month в «Количестве дней»: имя существует, Python молчит, программа считает не то. Побочный вывод: пока параметр переприсваивался, такая ошибка была невозможна — при разведении имён каждое употребление нужно перепроверять. Замечание про isalpha() и цифры оставлено без правки.",
+    "items": [
+      {
+        "name": "Merge lists 2",
+        "kind": "пройдено",
+        "file": "study_python/practice/12_Funktsii/12_02_Vozvraschaemoe_znachenie/quick_merge.py",
+        "code": "\"\"\"\nЗадача: Merge lists 2\n\nНа вход подаётся натуральное число n, а затем n строк с целыми числами\nв порядке возрастания, разделёнными пробелом. Из строк формируются списки.\nНапишите программу, которая объединяет все эти списки в один отсортированный\nс помощью функции quick_merge(), а затем выводит его.\n\nВход: число n, затем n строк с числами по возрастанию через пробел\nВыход: элементы итогового отсортированного списка через пробел\n\nПример входа:\n\"3\"\n\"1 4 9\"\n\"2 3 12\"\n\"5 6 7\"\n\nПример вывода:\n\"1 2 3 4 5 6 7 9 12\"\n# пример составлен по описанию форматов — блок «Тестовые данные» из условия\n# не приложен, сверь с тем, что показывает Stepik\n# списков теперь не два, а n штук: сколько именно — известно только в момент ввода\n# вывод через пробел, а не списком: print([1, 2, 3]) выведет скобки и запятые\n\nИмя функции задано условием — quick_merge. Какие у неё аргументы, условие\nне уточняет; решай сам, но имя должно совпадать в точности.\n\"\"\"\n\n\ndef quick_merge(values):\n    merged_values = []\n    for i in range(len(values)):\n        merged_values += values[i]\n    merged_values = list(map(int, merged_values))\n    merged_values.sort()\n    return merged_values\n\n\nn = int(input())\nvalues = [input().split() for _ in range(n)]\n\n\nprint(*quick_merge(values))",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/12_Funktsii/12_02_Vozvraschaemoe_znachenie/quick_merge.py"
+      },
+      {
+        "name": "Is the Triangle Valid?",
+        "kind": "пройдено",
+        "file": "study_python/practice/12_Funktsii/12_02_Vozvraschaemoe_znachenie/is_valid_triangle.py",
+        "code": "\"\"\"\nЗадача: Is the Triangle Valid?\n\nНапишите функцию is_valid_triangle(side1, side2, side3), которая принимает\nтри натуральных числа — длины сторон, — и ВОЗВРАЩАЕТ True, если невырожденный\nтреугольник с такими сторонами существует, или False в противном случае.\n\nВход: три аргумента — числа side1, side2, side3\nВыход: функция ничего не печатает, а возвращает True или False\nЧисла вводятся с клавиатуры, по одному в строке, и передаются в функцию\n\nПримечание: с этой задачей мы уже сталкивались при изучении условного оператора.\n\nПример вызова:\nprint(is_valid_triangle(2, 2, 2))\nprint(is_valid_triangle(2, 3, 10))\nprint(is_valid_triangle(3, 4, 5))\n\nВывод:\n\"True\"\n\"False\"\n\"True\"\n# в файле образец показан в кавычках; печатать кавычки не нужно\n# 2, 3, 10 — треугольника нет: 2 + 3 меньше 10\n\"\"\"\n\n\ndef is_valid_triangle(side1, side2, side3):\n    return (side1 + side2 > side3\n        and side1 + side3 > side2\n        and side2 + side3 > side1)\n\n\na, b, c = int(input()), int(input()), int(input())\n\n\nprint(is_valid_triangle(a, b, c))",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/12_Funktsii/12_02_Vozvraschaemoe_znachenie/is_valid_triangle.py"
+      },
+      {
+        "name": "Палиндром",
+        "kind": "пройдено",
+        "file": "study_python/practice/12_Funktsii/12_02_Vozvraschaemoe_znachenie/is_palindrome.py",
+        "code": "\"\"\"\nЗадача: Палиндром\n\nНапишите функцию is_palindrome(text), которая принимает строку text\nи ВОЗВРАЩАЕТ True, если текст является палиндромом, или False в противном случае.\n\nВход: один аргумент — строка text (в программе читается с клавиатуры)\nВыход: функция ничего не печатает, а возвращает True или False\n\nПримечание 1: палиндром — строка, которая читается одинаково в обоих направлениях.\nПримечание 2: большие и маленькие буквы считать одинаковыми, а пробелы\nи символы ,.!?- игнорировать.\n\nПример вызова:\nprint(is_palindrome('А роза упала на лапу Азора.'))\nprint(is_palindrome('Gabler Ruby - burrel bag!'))\nprint(is_palindrome('BEEGEEK'))\n\nВывод:\n\"True\"\n\"True\"\n\"False\"\n# в файле образец показан в кавычках; печатать кавычки не нужно\n# после удаления пробелов, точки и приведения к одному регистру\n# 'арозаупаланалапуазора' читается одинаково в обе стороны\n\"\"\"\n\n\ndef is_palindrome(text):\n    cleaned_text = \"\".join(s for s in text.lower() if s.isalpha())\n    return cleaned_text == cleaned_text[::-1]\n\n\ntxt = input()\n\n\nprint(is_palindrome(txt))\n",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/12_Funktsii/12_02_Vozvraschaemoe_znachenie/is_palindrome.py"
       }
     ]
   }
