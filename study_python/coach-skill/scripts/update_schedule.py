@@ -33,13 +33,20 @@ import sys
 from datetime import date, timedelta
 from pathlib import Path
 
-DEFAULT_FILE = "progress.json"
+# Путь считается от самого скрипта, а не от текущей папки: скрипт запускают
+# из корня репозитория, и относительный "progress.json" там не находился —
+# load() молча возвращал пустой словарь, due печатал «повторений нет», а
+# record создавал второй файл рядом. Найдено 2026-08-27.
+DEFAULT_FILE = Path(__file__).resolve().parents[2] / "coach" / "progress.json"
 INTERVALS = [1, 3, 7, 14, 30]  # дни; после 30 — умножение на ease
 
 
 def load(path: Path) -> dict:
     if not path.exists():
-        return {"topics": {}}
+        sys.exit(
+            f"Файл прогресса не найден: {path}\n"
+            "Если это первый запуск — создать его содержимым {\"topics\": {}}."
+        )
     return json.loads(path.read_text(encoding="utf-8"))
 
 
