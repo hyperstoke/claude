@@ -19,8 +19,8 @@
 """
 
 print(*[
-    square 
-    for element in map(int, input().split()) 
-    if (square := element ** 2) % 2 == 0 
+    square
+    for element in map(int, input().split())
+    if (square := element ** 2) % 2 == 0
     and not str(square).endswith("4")
 ])

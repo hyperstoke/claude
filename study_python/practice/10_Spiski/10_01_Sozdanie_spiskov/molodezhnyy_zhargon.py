@@ -20,4 +20,3 @@
 text = input().split()
 
 print(*[word[1:] + word[0:1] + "ки" for word in text])
-    

@@ -19,5 +19,5 @@ count = 1
 for i in range(ord("a"), ord("z") + 1):
     alfabet.append(chr(i) * count)
     count += 1
-    
+
 print(alfabet)

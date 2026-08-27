@@ -28,4 +28,3 @@ for i in lst_str:
         lst_str_new.append(i)
 
 print(*lst_str_new, sep="\n")
-    

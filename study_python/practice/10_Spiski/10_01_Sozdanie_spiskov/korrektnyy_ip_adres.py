@@ -34,4 +34,3 @@ if flag:
     print("ДА")
 else:
     print("НЕТ")
-            

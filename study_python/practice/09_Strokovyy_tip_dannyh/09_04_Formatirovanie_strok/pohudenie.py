@@ -32,5 +32,6 @@ if current_weight <= weight_goal:
 else:
     print("Что-то пошло не так")
 
-print(f"#{day} ДЕНЬ: ТЕКУЩИЙ ВЕС = {current_weight} кг, ЦЕЛЬ по ВЕСУ = {weight_goal:.1f} кг")
+print(f"#{day} ДЕНЬ: ТЕКУЩИЙ ВЕС = {current_weight} кг, "
+      f"ЦЕЛЬ по ВЕСУ = {weight_goal:.1f} кг")
 

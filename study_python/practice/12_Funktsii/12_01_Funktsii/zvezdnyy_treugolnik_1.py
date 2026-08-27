@@ -29,7 +29,7 @@ def draw_triangle():
     for _ in range(10):
         print("*" * scale_triangle)
         scale_triangle += 1
-        
+
 
 
 draw_triangle()
