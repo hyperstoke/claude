@@ -9,9 +9,11 @@
   1. Читает coach/activity.json и coach/practice_queue.json.
   2. Для каждого item с полем file читает .py-файл, кладёт его текст в
      item.code и ссылку на GitHub в item.github.
-  3. Генерирует JS-константы TRACKING_SINCE, ACTIVITY, PROGRESS,
-     PRACTICE_QUEUE и вставляет их в roadmap_artifact.html между маркерами
-     /* @gen:start ... */ и /* @gen:end */.
+  3. Читает docs/INDEX.json и вшивает html каждой статьи (раздел
+     «Документация»).
+  4. Генерирует JS-константы TRACKING_SINCE, ACTIVITY, PROGRESS,
+     PRACTICE_QUEUE, DOCS и вставляет их в roadmap_artifact.html между
+     маркерами /* @gen:start ... */ и /* @gen:end */.
 
 Даты этапов живут в progress.stages[].deadline (источник правды —
 PLAN_TO_OFFER.md) и проходят в PROGRESS насквозь, без отдельной обработки.
@@ -37,6 +39,7 @@ except (AttributeError, ValueError):
 REPO_ROOT = Path(__file__).resolve().parents[3]
 ACTIVITY_JSON = REPO_ROOT / "study_python" / "coach" / "activity.json"
 QUEUE_JSON = REPO_ROOT / "study_python" / "coach" / "practice_queue.json"
+DOCS_JSON = REPO_ROOT / "study_python" / "docs" / "INDEX.json"
 HTML = REPO_ROOT / "study_python" / "roadmap_artifact.html"
 GITHUB_BASE = "https://github.com/hyperstoke/claude/blob/main/"
 
@@ -87,6 +90,29 @@ def enrich_items(activity: dict) -> tuple[dict, int, list[str]]:
     return days, embedded, warnings
 
 
+def build_docs(warnings: list[str]) -> list[dict]:
+    """Статьи раздела «Документация»: метаданные + html из docs/."""
+    if not DOCS_JSON.exists():
+        return []
+    docs = []
+    for d in load_json(DOCS_JSON).get("docs", []):
+        rel = d["file"]
+        fpath = REPO_ROOT / rel
+        if not fpath.exists():
+            warnings.append(f"docs/{d['id']}: файл не найден — {rel}")
+            continue
+        docs.append({
+            "id": d["id"],
+            "title": d["title"],
+            "subtitle": d.get("subtitle", ""),
+            "date": d.get("date"),
+            "tag": d.get("tag"),
+            "interactive": d.get("interactive"),
+            "html": fpath.read_text(encoding="utf-8"),
+        })
+    return docs
+
+
 def js_const(name: str, value) -> str:
     # json.dumps даёт валидный JS-литерал; экранируем закрывающий тег,
     # чтобы код с "</script>" внутри строки не рвал разметку.
@@ -110,6 +136,7 @@ def build_block(activity: dict, queue: dict) -> str:
         if rel and embed_file(entry, rel, f"queue/{e.get('id', '?')}", warnings):
             embedded += 1
         pq.append(entry)
+    docs = build_docs(warnings)
     progress = activity.get("progress")
     if isinstance(progress, dict):
         progress = {k: v for k, v in progress.items() if not k.startswith("_")}
@@ -119,15 +146,16 @@ def build_block(activity: dict, queue: dict) -> str:
         + js_const("ACTIVITY", days)
         + js_const("PROGRESS", progress)
         + js_const("PRACTICE_QUEUE", pq)
+        + js_const("DOCS", docs)
         + f"  {END}"
     )
-    return block, embedded, warnings
+    return block, embedded, len(docs), warnings
 
 
 def main() -> None:
     activity = load_json(ACTIVITY_JSON)
     queue = load_json(QUEUE_JSON)
-    block, embedded, warnings = build_block(activity, queue)
+    block, embedded, n_docs, warnings = build_block(activity, queue)
 
     html = HTML.read_text(encoding="utf-8")
     pattern = re.compile(
@@ -144,7 +172,10 @@ def main() -> None:
     for w in warnings:
         print("  ! " + w)
     n_days = len(activity["days"])
-    print(f"OK: {n_days} дней, вшито файлов кода: {embedded} → {HTML.name}")
+    print(
+        f"OK: {n_days} дней, вшито файлов кода: {embedded}, "
+        f"статей: {n_docs} → {HTML.name}"
+    )
 
 
 if __name__ == "__main__":

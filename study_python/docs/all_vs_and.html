@@ -1,0 +1,184 @@
+<!-- Статья для раздела «Документация». Вшивается в roadmap_artifact.html
+     скриптом build_site.py, открывается в панели сайта.
+     Код в <pre data-py> хранится обычным текстом — подсветку наводит
+     highlightPython() из скрипта сайта. -->
+<div class="doc-article" data-doc="all-vs-and">
+
+  <p class="doc-lede">Две записи «выполнено всё сразу» дают одинаковый ответ, но по-разному
+    относятся к работе: <b>список внутри <code>all()</code> вычисляется целиком</b>, а
+    <b><code>and</code> останавливается на первом <code>False</code></b>. Пока условия
+    независимы, разницы нет. Как только одно защищает другое — разница становится разницей
+    между ответом и падением.</p>
+
+  <h3>Четыре строки, из которых всё следует</h3>
+  <p>В <code>all()</code> нет ничего волшебного: это обычный цикл с ранним выходом. Вот её
+    полный эквивалент — и эквивалент сестры <code>any()</code>.</p>
+
+  <div class="doc-two">
+    <div class="doc-card">
+      <div class="doc-card-head"><span class="doc-mono">all(iterable)</span><span class="doc-tag">все ли истинны</span></div>
+      <pre class="doc-code" data-py>def all(iterable):
+    for element in iterable:
+        if not element:
+            return False   # нашли ложный — обрываем цикл
+    return True            # дошли до конца, ложных нет</pre>
+    </div>
+    <div class="doc-card">
+      <div class="doc-card-head"><span class="doc-mono">any(iterable)</span><span class="doc-tag">есть ли хоть один</span></div>
+      <pre class="doc-code" data-py>def any(iterable):
+    for element in iterable:
+        if element:
+            return True    # нашли истинный — обрываем цикл
+    return False           # дошли до конца, истинных нет</pre>
+    </div>
+  </div>
+
+  <ul class="doc-facts">
+    <li><b>Аргумент один, и по нему идёт цикл.</b> <code>for element in iterable</code> — внутрь
+      подаётся одна последовательность: список, строка, кортеж, генератор, <code>range</code>.
+      Поэтому <code>all(a, b, c)</code> через запятую — ошибка, а <code>all([a, b, c])</code> — нет.</li>
+    <li><b>Останавливается сама.</b> <code>return False</code> внутри цикла обрывает его
+      немедленно. Ленивость у <code>all()</code> есть всегда — теряется она раньше, на
+      построении списка, который ей передают.</li>
+    <li><b>Проверяет истинность, а не равенство <code>True</code>.</b> В коде стоит
+      <code>if not element</code>, поэтому ложными считаются <code>0</code>, <code>""</code>,
+      <code>[]</code>, <code>None</code> — всё пустое. <code>all([1, "текст", [0]])</code> →
+      <code>True</code>, а <code>all([1, 0, 3])</code> → <code>False</code>.</li>
+    <li><b>Пустой вход даёт <code>True</code>.</b> Тело цикла не выполнится ни разу, управление
+      сразу дойдёт до <code>return True</code>. У <code>any([])</code> по той же причине
+      <code>False</code>.</li>
+  </ul>
+
+  <h3>Одна проверка, две конструкции</h3>
+  <p>Слева — версия со списком, справа — цепочка. Условия те же самые, в том же порядке;
+    отличается только то, чем они склеены. Выбери артикул — увидишь, что вычислилось.</p>
+
+  <div class="doc-chips" role="group" aria-label="Артикул для разбора"></div>
+
+  <div class="doc-two">
+    <div class="doc-card">
+      <div class="doc-card-head"><span class="doc-mono">all([...])</span><span class="doc-tag">вычисляет всё</span></div>
+      <pre class="doc-code" data-py>return all([
+    len(code) == 7,
+    code[:2].isalpha(),
+    code[:2].isupper(),
+    code[2] == "-",      # нужен len >= 3
+    code[3:].isdigit(),
+    int(code[3:]) > 0    # нужны цифры
+])</pre>
+      <div class="doc-trace" data-trace="list"></div>
+      <div class="doc-verdict" data-verdict="list"></div>
+    </div>
+    <div class="doc-card">
+      <div class="doc-card-head"><span class="doc-mono">and</span><span class="doc-tag">останавливается</span></div>
+      <pre class="doc-code" data-py>return (len(code) == 7
+        and code[:2].isalpha()
+        and code[:2].isupper()
+        and code[2] == "-"
+        and code[3:].isdigit()
+        and int(code[3:]) > 0)</pre>
+      <div class="doc-trace" data-trace="chain"></div>
+      <div class="doc-verdict" data-verdict="chain"></div>
+    </div>
+  </div>
+
+  <ul class="doc-facts">
+    <li><b>"AB-1234"</b> — корректный. Обе версии проходят все шесть условий и отвечают
+      <code>True</code>. Здесь конструкции неразличимы.</li>
+    <li><b>"1B-1234"</b> — цифра вместо буквы. Ответ у обеих <code>False</code>, но список после
+      провала на втором условии вычислил ещё четыре впустую. Ошибки нет — есть лишняя работа.</li>
+    <li><b>""</b> — пустая строка. Цепочка останавливается на длине. Список продолжает
+      собираться и добирается до <code>code[2]</code>, которого не существует, —
+      <code>IndexError</code>.</li>
+    <li><b>"AB-a234"</b> — буква в номере. Цепочка останавливается на <code>isdigit()</code>.
+      Список доходит до <code>int("a234")</code> — <code>ValueError</code>. Проверка отработала
+      правильно и всё равно не спасла: её результат никого не остановил.</li>
+  </ul>
+
+  <h3>Почему в «Good password» список был уместен</h3>
+  <p>Тот же <code>all([...])</code>, и там он не был ошибкой — потому что ни одно из четырёх
+    условий не зависит от остальных.</p>
+
+  <div class="doc-card">
+    <div class="doc-card-head"><span class="doc-mono">is_password_good</span><span class="doc-tag">условия независимы</span></div>
+    <pre class="doc-code" data-py>return all([
+    len(password) >= 8,                     # не упадёт никогда
+    any(ch.isupper() for ch in password),   # цикл по пустой строке = False
+    any(ch.islower() for ch in password),   # индексов нет — падать не на чем
+    any(ch.isdigit() for ch in password)    # порядок можно тасовать как угодно
+])</pre>
+  </div>
+
+  <p>Ни одно условие не обращается к символу по индексу и не превращает строку в число. Любое
+    из них можно вычислить на любом входе, включая <code>""</code>. В артикуле всё иначе:
+    <code>code[2]</code> имеет смысл <b>только если</b> длина уже проверена, а <code>int()</code>
+    — <b>только если</b> уже известно, что там цифры. Появилась зависимость — список перестал
+    годиться.</p>
+
+  <h3>Когда что писать</h3>
+
+  <div class="doc-case">
+    <div class="doc-case-head"><span class="doc-tool">and</span><span class="doc-when">Одно условие защищает следующее</span></div>
+    <pre class="doc-code" data-py>return (len(code) == 7
+        and code[3:].isdigit()
+        and int(code[3:]) > 0)</pre>
+    <p class="doc-why"><b>Почему только так:</b> <code>and</code> — единственная конструкция,
+      которая физически не выполняет то, что правее первого <code>False</code>. Список сюда не
+      годится ни в каком виде.</p>
+  </div>
+
+  <div class="doc-case">
+    <div class="doc-case-head"><span class="doc-tool">all(... for ...)</span><span class="doc-when">Условие одно, объектов много</span></div>
+    <pre class="doc-code" data-py>def is_prime(num):
+    return num > 1 and all(num % i != 0
+                           for i in range(2, int(num ** 0.5) + 1))</pre>
+    <p class="doc-why"><b>Почему не <code>and</code>:</b> делителей заранее неизвестно сколько —
+      цепочку руками не напишешь. <b>Почему без <code>[]</code>:</b> список заставил бы перебрать
+      весь диапазон даже после того, как делитель нашёлся.</p>
+  </div>
+
+  <div class="doc-case">
+    <div class="doc-case-head"><span class="doc-tool">all([...])</span><span class="doc-when">Несколько независимых условий, написанных руками</span></div>
+    <pre class="doc-code" data-py>return all([
+    len(password) >= 8,
+    any(ch.isupper() for ch in password),
+    any(ch.islower() for ch in password),
+    any(ch.isdigit() for ch in password)
+])</pre>
+    <p class="doc-why"><b>Здесь это вопрос вкуса:</b> цепочка <code>and</code> дала бы тот же
+      результат и не вычисляла бы лишнего. Список выигрывает читаемостью — четыре требования
+      стоят столбиком, как в условии задачи.</p>
+  </div>
+
+  <div class="doc-case">
+    <div class="doc-case-head"><span class="doc-tool">all() по данным</span><span class="doc-when">Число условий заранее неизвестно</span></div>
+    <pre class="doc-code" data-py>required = ["host", "port", "user"]
+
+def config_is_full(config):
+    return all(key in config for key in required)</pre>
+    <p class="doc-why"><b>Почему только так:</b> список требований может прийти из файла или
+      вырасти завтра. <code>and</code> пишется руками, значит число звеньев зафиксировано в
+      момент написания кода — здесь это невозможно.</p>
+  </div>
+
+  <div class="doc-case doc-trap">
+    <div class="doc-case-head"><span class="doc-tool">ловушка</span><span class="doc-when">and возвращает операнд, а не True/False</span></div>
+    <pre class="doc-code" data-py>name = ""
+name and name.isupper()   # -> '' , а не False
+
+orders = []
+all(o["paid"] for o in orders)   # -> True: «все оплачены»,
+                                 #    хотя заказов нет вовсе</pre>
+    <p class="doc-why"><b>Два разных сюрприза.</b> <code>and</code> возвращает значение операнда,
+      на котором остановился, — функция с аннотацией <code>-&gt; bool</code> вернёт строку.
+      <code>all()</code> всегда даёт строгий <code>True</code>/<code>False</code>, но на пустом
+      входе этот <code>True</code> ничего не гарантирует.</p>
+  </div>
+
+  <div class="doc-rule">
+    <b>Проверочный вопрос перед тем, как написать <code>all([...])</code>:</b> могу ли я поменять
+    условия местами и ничего не сломать? Да — список уместен, выбирай по читаемости. Нет —
+    условия зависят друг от друга, и нужен <code>and</code>.
+  </div>
+
+</div>

@@ -506,6 +506,90 @@
   .legend .dot.seen { background: var(--now); }
   .legend .dot.todo { background: var(--border-strong); }
 
+  /* ── Документация ──────────────────────────────────────── */
+  .doc-list { display: flex; flex-direction: column; gap: 0.6rem; }
+  .doc-cardlink {
+    display: block; width: 100%; text-align: left; font: inherit; cursor: pointer;
+    background: var(--raised); border: var(--hairline); border-radius: 10px;
+    padding: 0.95rem 1.1rem; transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .doc-cardlink:hover { border-color: var(--accent); background: var(--inset); }
+  .doc-cardlink:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .doc-cardlink .dc-top { display: flex; align-items: baseline; justify-content: space-between; gap: 0.8rem; }
+  .doc-cardlink .dc-title { font-size: 1rem; font-weight: 650; letter-spacing: -0.01em; }
+  .doc-cardlink .dc-open { font-size: 0.8rem; color: var(--accent); flex-shrink: 0; }
+  .doc-cardlink .dc-sub { display: block; font-size: 0.86rem; color: var(--ink-dim); margin-top: 0.3rem; }
+  .doc-cardlink .dc-meta { display: block; font-family: var(--font-mono); font-size: 0.72rem; color: var(--ink-faint); margin-top: 0.5rem; }
+  .doc-empty { color: var(--ink-faint); font-size: 0.9rem; }
+
+  /* Статья внутри панели (разметка приходит из study_python/docs/) */
+  .panel.wide { max-width: 940px; }
+  .doc-article { font-size: 0.92rem; }
+  .doc-article h3 { font-size: 0.72rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--accent); margin: 1.5rem 0 0.5rem; }
+  .doc-article p { font-size: 0.92rem; color: var(--ink-dim); margin: 0 0 0.6rem; }
+  .doc-article b { color: var(--ink); font-weight: 600; }
+  .doc-article code { font-family: var(--font-mono); font-size: 0.82rem; color: var(--ink); }
+  .doc-lede { border-left: 2px solid var(--accent); padding-left: 0.9rem; }
+  .doc-two { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; margin-bottom: 0.6rem; }
+  @media (max-width: 760px) { .doc-two { grid-template-columns: 1fr; } }
+  .doc-card { background: var(--panel); border: var(--hairline); border-radius: 10px; overflow: hidden; margin-bottom: 0.6rem; }
+  .doc-two .doc-card { margin-bottom: 0; }
+  .doc-card-head {
+    display: flex; align-items: baseline; justify-content: space-between; gap: 0.6rem;
+    padding: 0.55rem 0.85rem; background: var(--inset); border-bottom: var(--hairline);
+  }
+  .doc-mono { font-family: var(--font-mono); font-size: 0.8rem; color: var(--ink); }
+  .doc-tag { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-faint); white-space: nowrap; }
+  .panel-body .doc-article pre.doc-code {
+    background: var(--bg); border: 0; border-radius: 0; margin: 0; padding: 0.7rem 0.85rem;
+    font-family: var(--font-mono); font-size: 0.79rem; line-height: 1.6; white-space: pre;
+    overflow-x: auto; max-height: none; color: var(--ink);
+  }
+  .doc-facts { margin: 0 0 0.6rem; padding-left: 1.1rem; font-size: 0.89rem; color: var(--ink-dim); }
+  .doc-facts li { margin-bottom: 0.35rem; }
+  .doc-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.7rem; }
+  .doc-chip {
+    font: inherit; font-family: var(--font-mono); font-size: 0.78rem; cursor: pointer;
+    padding: 0.35rem 0.65rem; border-radius: 999px; border: var(--hairline);
+    background: var(--panel); color: var(--ink); transition: border-color 0.15s ease;
+  }
+  .doc-chip:hover { border-color: var(--accent); }
+  .doc-chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .doc-chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .doc-chip .cw { opacity: 0.7; margin-left: 0.4rem; }
+  .doc-trace { border-top: var(--hairline); }
+  .doc-step {
+    display: grid; grid-template-columns: 1.1rem 1fr auto; gap: 0.5rem; align-items: center;
+    padding: 0.4rem 0.85rem; border-bottom: var(--hairline);
+    font-family: var(--font-mono); font-size: 0.75rem;
+  }
+  .doc-step:last-child { border-bottom: 0; }
+  .doc-step .si { color: var(--ink-faint); font-size: 0.68rem; }
+  .doc-step .sx { color: var(--ink); overflow-x: auto; }
+  .doc-step.skipped .sx { color: var(--ink-faint); text-decoration: line-through; }
+  .doc-step.boom { background: color-mix(in srgb, var(--late) 12%, transparent); }
+  .doc-bdg { font-size: 0.66rem; letter-spacing: 0.04em; padding: 0.18rem 0.4rem; border-radius: 4px; white-space: nowrap; }
+  .doc-bdg.t { background: var(--accent-soft); color: var(--accent); }
+  .doc-bdg.f { background: var(--now-soft); color: var(--now); }
+  .doc-bdg.b { background: color-mix(in srgb, var(--late) 18%, transparent); color: var(--late); }
+  .doc-bdg.s { background: var(--inset); color: var(--ink-faint); }
+  .doc-verdict {
+    display: flex; align-items: center; justify-content: space-between; gap: 0.6rem;
+    padding: 0.55rem 0.85rem; background: var(--inset); border-top: var(--hairline);
+    font-family: var(--font-mono); font-size: 0.75rem; color: var(--ink-dim); min-height: 2.4rem;
+  }
+  .doc-verdict strong { color: var(--ink); font-weight: 650; }
+  .doc-verdict.boom strong { color: var(--late); }
+  .doc-verdict .vc { color: var(--ink-faint); font-size: 0.7rem; white-space: nowrap; }
+  .doc-case { background: var(--panel); border: var(--hairline); border-radius: 10px; overflow: hidden; margin-bottom: 0.6rem; }
+  .doc-case-head { display: flex; align-items: baseline; gap: 0.6rem; flex-wrap: wrap; padding: 0.55rem 0.85rem; background: var(--inset); border-bottom: var(--hairline); }
+  .doc-tool { font-family: var(--font-mono); font-size: 0.75rem; padding: 0.18rem 0.45rem; border-radius: 5px; background: var(--accent-soft); color: var(--accent); white-space: nowrap; }
+  .doc-when { font-size: 0.88rem; font-weight: 600; color: var(--ink); }
+  .panel-body .doc-article p.doc-why { padding: 0.55rem 0.85rem; margin: 0; border-top: var(--hairline); font-size: 0.85rem; }
+  .doc-trap .doc-case-head { background: color-mix(in srgb, var(--late) 12%, transparent); }
+  .doc-trap .doc-when { color: var(--late); }
+  .doc-rule { background: var(--accent-soft); border: var(--hairline); border-radius: 10px; padding: 0.85rem 1rem; font-size: 0.9rem; color: var(--ink-dim); margin-top: 1rem; }
+
   /* ── Modal ─────────────────────────────────────────────── */
   .overlay {
     position: fixed; inset: 0; background: rgba(10,6,20,0.55); display: flex; align-items: flex-start;
@@ -771,6 +855,7 @@
       <button class="nav-btn" data-view="calendar"><span class="idx">02</span>Календарь</button>
       <button class="nav-btn" data-view="roadmap"><span class="idx">03</span>Дорожная карта</button>
       <button class="nav-btn" data-view="practice"><span class="idx">04</span>Закрепление</button>
+      <button class="nav-btn" data-view="docs"><span class="idx">05</span>Документация</button>
     </nav>
 
     <div class="side-streak">
@@ -1137,6 +1222,15 @@
       <footer class="note" style="border: none; text-align: left; margin-top: 1.5rem;">список ведётся автоматически — темы добавляются, когда даются тяжело, и закрываются после решённой задачи</footer>
     </section>
 
+    <!-- ── Документация ────────────────────────────── -->
+    <section class="view" id="view-docs" hidden>
+      <div class="eyebrow">разборы</div>
+      <h1 class="view-title">Документация</h1>
+      <p class="view-sub">Разборы тем, которые пришлось объяснять отдельно. Открываются здесь же, без ухода со страницы — можно вернуться к любой в любой момент.</p>
+      <div class="doc-list" id="doc-list"></div>
+      <footer class="note" style="border: none; text-align: left; margin-top: 1.5rem;">статьи лежат в <code>study_python/docs/</code> и вшиваются в страницу при сборке</footer>
+    </section>
+
   </main>
 </div>
 
@@ -1295,7 +1389,7 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
     }
   };
 
-                                                                                                                                                          /* @gen:start — генерируется scripts/build_site.py из coach/*.json, вручную не править */
+                                                                                                                                                              /* @gen:start — генерируется scripts/build_site.py из coach/*.json, вручную не править */
   const TRACKING_SINCE = "2026-07-11";
   const ACTIVITY = {
   "2026-07-11": {
@@ -2449,10 +2543,38 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
         "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/coach_tasks/utc_shift_hour.py"
       }
     ]
+  },
+  "2026-08-30": {
+    "level": 3,
+    "tasks": 3,
+    "note": "Закрепление «Проверка артикула» (защитные проверки) — три захода: all([...]) не защищает, список вычисляется целиком (IndexError на пустой строке, ValueError на int('a')); внешний if вылечил только длину; итог — цепочка and, форму показал я. «Правильная скобочная последовательность» — первая версия считала только баланс, ')(' проходило; добавлен ранний выход при уходе счётчика в минус. BEEGEEK — четыре захода: срез у int, односторонний len > 3, охранник через and без not вместо or, мёртвое a != 0 (сравнение строки с числом). Итог оптимален: охранник + распаковка, проверки по именам. Сквозная линия дня — какие типы в руках и что защищает что.",
+    "items": [
+      {
+        "name": "Проверка артикула на складе",
+        "kind": "повторено",
+        "file": "study_python/practice/coach_tasks/sku_format_check.py",
+        "code": "\"\"\"\nЗадача: Проверка артикула на складе\nТема: защитная проверка формата строки  |  Сложность: 5 (средняя)\n\nЛегенда: склад принимает артикулы товаров из внешней системы партнёра. Данные\nприходят грязные: обрезанные строки, пустые значения, буквы вместо цифр. Если\nпроверка формата написана небрежно, сервис падает с ValueError или IndexError\nпрямо на обработке партии — поэтому функция обязана возвращать False на любом\nмусоре, а не выбрасывать исключение.\n\nВход:  code — строка произвольного содержания (в том числе пустая).\nВыход: True, если артикул корректен, иначе False.\n\nАртикул корректен, когда выполнено всё сразу:\n- длина ровно 7 символов;\n- символы 1-2 — заглавные буквы;\n- символ 3 — дефис;\n- символы 4-7 — цифры, и записанное ими число больше нуля.\n\nТребование: функция не должна падать ни на каком входе. Проверить это руками\nна всех примерах ниже, а не только на корректном.\n\nПримеры:\nis_valid_sku(\"AB-1234\") -> True\nis_valid_sku(\"ab-1234\") -> False   # буквы не заглавные\nis_valid_sku(\"AB-0000\") -> False   # число должно быть больше нуля\nis_valid_sku(\"A-B1234\") -> False   # длина 7, но дефис не на третьей позиции\nis_valid_sku(\"AB1234\") -> False    # длина 6, дефиса нет\nis_valid_sku(\"AB-12345\") -> False  # длина 8\nis_valid_sku(\"AB-12a4\") -> False   # в номере буква\nis_valid_sku(\"\") -> False          # пустая строка, падать нельзя\n\"\"\"\n\n\ndef is_valid_sku(code: str) -> bool:\n    return (len(code) == 7\n            and code[:2].isupper() and code[:2].isalpha()\n            and code[2] == \"-\"\n            and code[3:].isdigit() and int(code[3:]) > 0)\n\n\nsku = input()\n\n\nprint(is_valid_sku(sku))",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/coach_tasks/sku_format_check.py"
+      },
+      {
+        "name": "Правильная скобочная последовательность",
+        "kind": "пройдено",
+        "file": "study_python/practice/12_Funktsii/12_02_Vozvraschaemoe_znachenie/is_correct_bracket.py",
+        "code": "\"\"\"\nПравильная скобочная последовательность\n\nНапишите функцию is_correct_bracket(text), которая принимает в качестве\nаргумента непустую строку text, состоящую из символов ( и ), и возвращает\nзначение True, если строка является правильной скобочной последовательностью,\nили False в противном случае.\n\nПримечание 1. Правильная скобочная последовательность — строка только из\nсимволов ( и ), где каждой открывающей скобке найдётся парная закрывающая,\nпричём открывающая стоит левее своей закрывающей.\n\nПримечание 2. Приведённый ниже код:\nprint(is_correct_bracket('()(()())'))\nprint(is_correct_bracket(')(())('))\n\nдолжен выводить:\nTrue     # каждая ( закрыта, порядок не нарушен\nFalse    # первая скобка — закрывающая, закрывать нечего\n\"\"\"\n\n\ndef is_correct_bracket(text: str) -> bool:\n    opened = 0\n    for ch in text:\n        if ch == \"(\":\n            opened += 1\n        elif ch == \")\":\n            opened -= 1\n            if opened < 0:\n                return False\n    return opened == 0\n\n\ntxt = input()\n\n\nprint(is_correct_bracket(txt))",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/12_Funktsii/12_02_Vozvraschaemoe_znachenie/is_correct_bracket.py"
+      },
+      {
+        "name": "BEEGEEK",
+        "kind": "пройдено",
+        "file": "study_python/practice/12_Funktsii/12_02_Vozvraschaemoe_znachenie/beegeek_password.py",
+        "code": "\"\"\"\nBEEGEEK\n\nBEEGEEK наконец-то открыл свой банк, в котором используются специальные\nбанкоматы с необычным паролем.\n\nДействительный пароль BEEGEEK банка имеет вид a:b:c, где a, b и c —\nнатуральные числа. Поскольку основатель BEEGEEK фанатеет от математики,\nто он решил:\n- число a должно быть палиндромом;\n- число b должно быть простым;\n- число c должно быть чётным.\n\nНапишите функцию is_valid_password(password), которая принимает в качестве\nаргумента строковое значение пароля password и возвращает значение True,\nесли пароль является действительным паролем BEEGEEK банка, или False\nв противном случае.\n\nПримечание. Приведённый ниже код:\nprint(is_valid_password('1221:101:22'))\nprint(is_valid_password('565:30:50'))\nprint(is_valid_password('112:7:9'))\nprint(is_valid_password('1221:101:22:22'))\n\nдолжен выводить:\nTrue     # 1221 палиндром, 101 простое, 22 чётное\nFalse    # 30 не простое\nFalse    # 112 не палиндром, 9 нечётное\nFalse    # частей четыре, а не три\n\"\"\"\n\n\ndef is_prime(num: int) -> bool:\n    return num > 1 and all(num % i != 0 for i in range(2, int(num ** 0.5) + 1))\n\n\ndef is_valid_password(password: str) -> bool:\n    parts = password.split(\":\")\n    if (len(parts) != 3\n            or not all(part.isdigit() and int(part) > 0 for part in parts)):\n        return False\n\n    a, b, c = parts\n    return (a == a[::-1]\n            and int(c) % 2 == 0\n            and is_prime(int(b)))\n\n\ntext = input()\n\n\nprint(is_valid_password(text))",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/12_Funktsii/12_02_Vozvraschaemoe_znachenie/beegeek_password.py"
+      }
+    ]
   }
 };
   const PROGRESS = {
-  "updated": "2026-08-29",
+  "updated": "2026-08-30",
   "finish": {
     "apply": "март–апрель 2027",
     "offer": "май–июль 2027"
@@ -2572,12 +2694,12 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
   {
     "theme": "защитные проверки",
     "topic": "защитная проверка формата строки: избегание падений int()/ord() на некорректных срезах, порядок условий в and (short-circuit)",
-    "reason": "Задача «Название класса» — несколько неудачных попыток, программа падала (ValueError на int() от нечисловой буквы, `is int` вместо isdigit(), TypeError на ord() от среза длиннее 1 символа); исправлено только переносом проверки длины первым условием в and. Повторилось 2026-07-27 на задаче «k-ая буква слова»: сначала не было проверки длины строки вообще (IndexError), потом условие `len(строки) == k` вместо `>=` — отбрасывало подходящие строки длиннее k. 2026-08-06, «Первая ошибка в логе выкатки»: снова неточная проверка формата — `\"ERROR\" in log` вместо log.startswith(\"ERROR\"), то есть условие ищет подстроку по всей строке вместо позиции, где уровень реально стоит; исправлено с подсказки. Тот же класс, что int() без isdigit(): проверка шире, чем нужно, и молча срабатывает на посторонних данных.",
+    "reason": "2026-08-30, закрепление «Проверка артикула»: НЕ закрыта, три захода. all([...]) не останавливается — список вычислялся целиком, отсюда IndexError на пустой строке и ValueError на int('a'); внешний if прикрыл только длину. Форму «цепочка and, от защищающего к зависимому» показал я. Вечером BEEGEEK: охранник через and без not вместо or. Нужна ещё задача на порядок условий.",
     "difficulty": 5,
-    "status": "pending",
-    "file": "study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/nazvanie_klassa.py",
-    "code": "\"\"\"\nЗадача: «Название класса» 👩‍🏫🌶️\n\nВ школе BEEGEEK названия учебных классов имеют формат:\n    <номер класса><буква класса>\n\nгде <номер класса> — цифра от 0 до 9 включительно, а <буква класса> —\nрусская буква верхнего регистра от «А» до «П» включительно (без «Ё» —\nсчитаем, что её нет в алфавите).\n\nНапишите программу, которая принимает натуральное число n, а далее n\nназваний классов (каждое на отдельной строке). Для каждого названия\nвыведите на отдельной строке \"YES\", если оно корректно, иначе \"NO\".\n\nФормат входных данных:\n    Число n, затем n строк — названия классов.\n\nФормат выходных данных:\n    Для каждого названия класса — \"YES\" или \"NO\" на отдельной строке.\n\nПримечание. Пример теста:\n    3\n    \"5Б\"\n    \"10Р\"\n    \"3Ё\"\n    -> \"YES\"\n    -> \"NO\"\n    -> \"NO\"\n\"\"\"\n\namount = int(input())\nclasses = []\n\nfor _ in range(amount):\n    classes.append(input())\n\nfor i in range(len(classes)):\n    value = classes[i]\n    if len(value) <= 2 and value[:1].isdigit() and 0 <= int(value[:1]) <= 9 \\\n        and value[1:].isalpha() and ord(\"А\") <= ord(value[1:]) <= ord(\"П\"):\n        print(\"YES\")\n    else:\n        print(\"NO\")\n",
-    "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/09_Strokovyy_tip_dannyh/09_05_Tablitsa_Unicode/nazvanie_klassa.py"
+    "status": "in_progress",
+    "file": "study_python/practice/coach_tasks/sku_format_check.py",
+    "code": "\"\"\"\nЗадача: Проверка артикула на складе\nТема: защитная проверка формата строки  |  Сложность: 5 (средняя)\n\nЛегенда: склад принимает артикулы товаров из внешней системы партнёра. Данные\nприходят грязные: обрезанные строки, пустые значения, буквы вместо цифр. Если\nпроверка формата написана небрежно, сервис падает с ValueError или IndexError\nпрямо на обработке партии — поэтому функция обязана возвращать False на любом\nмусоре, а не выбрасывать исключение.\n\nВход:  code — строка произвольного содержания (в том числе пустая).\nВыход: True, если артикул корректен, иначе False.\n\nАртикул корректен, когда выполнено всё сразу:\n- длина ровно 7 символов;\n- символы 1-2 — заглавные буквы;\n- символ 3 — дефис;\n- символы 4-7 — цифры, и записанное ими число больше нуля.\n\nТребование: функция не должна падать ни на каком входе. Проверить это руками\nна всех примерах ниже, а не только на корректном.\n\nПримеры:\nis_valid_sku(\"AB-1234\") -> True\nis_valid_sku(\"ab-1234\") -> False   # буквы не заглавные\nis_valid_sku(\"AB-0000\") -> False   # число должно быть больше нуля\nis_valid_sku(\"A-B1234\") -> False   # длина 7, но дефис не на третьей позиции\nis_valid_sku(\"AB1234\") -> False    # длина 6, дефиса нет\nis_valid_sku(\"AB-12345\") -> False  # длина 8\nis_valid_sku(\"AB-12a4\") -> False   # в номере буква\nis_valid_sku(\"\") -> False          # пустая строка, падать нельзя\n\"\"\"\n\n\ndef is_valid_sku(code: str) -> bool:\n    return (len(code) == 7\n            and code[:2].isupper() and code[:2].isalpha()\n            and code[2] == \"-\"\n            and code[3:].isdigit() and int(code[3:]) > 0)\n\n\nsku = input()\n\n\nprint(is_valid_sku(sku))",
+    "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/coach_tasks/sku_format_check.py"
   },
   {
     "theme": "сравнение по составному ключу",
@@ -2632,12 +2754,23 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
   {
     "theme": "циклы и флаги",
     "topic": "несколько независимых условий: отдельное значение на каждое, all()/any() вместо общего флага",
-    "reason": "2026-08-29, Stepik «Good password»: один флаг на четыре независимых условия — любая пройденная проверка поднимала его, 'aaaaaaaaaa' признавался надёжным. Плюс инструкции if/for внутри вызова all() и граница > 8 вместо >= 8. До рабочей версии дошёл сам, форму all([...]) с any() собрал по схеме. Тема закрывалась 06.08 и вернулась тем же корнем: что означает True у флага.",
+    "reason": "2026-08-29 «Good password»: один флаг на четыре независимых условия, 'aaaaaaaaaa' проходил; граница > 8 вместо >= 8. 2026-08-30 «Скобочная последовательность»: проверялся только баланс скобок, требование «открывающая левее закрывающей» не проверялось вовсе — ')(' считалось верным. Общий корень: требований несколько, проверено одно.",
     "difficulty": 4,
     "status": "pending",
     "file": "study_python/practice/12_Funktsii/12_02_Vozvraschaemoe_znachenie/good_password.py",
     "code": "\"\"\"\nGood password\n\nНапишите функцию is_password_good(password), которая принимает в качестве\nаргумента строковое значение пароля password и возвращает значение True,\nесли пароль является надёжным, или False в противном случае.\n\nПароль является надёжным, если:\n- его длина не менее 8 символов;\n- он содержит как минимум одну заглавную букву (верхний регистр);\n- он содержит как минимум одну строчную букву (нижний регистр);\n- он содержит хотя бы одну цифру.\n\nПримечание. Приведённый ниже код:\nprint(is_password_good('aabbCC11OP'))\nprint(is_password_good('abC1pu'))\n\nдолжен выводить:\nTrue     # длина 10, есть C, есть a, есть 1\nFalse    # длина 6 — коротко\n\"\"\"\n\n\ndef is_password_good(password: str) -> bool:\n    return all([len(password) >= 8,\n                any(ch.isupper() for ch in password),\n                any(ch.islower() for ch in password),\n                any(ch.isdigit() for ch in password)])\n\n\npas = input()\n\n\nprint(is_password_good(pas))\n\n",
     "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/12_Funktsii/12_02_Vozvraschaemoe_znachenie/good_password.py"
+  }
+];
+  const DOCS = [
+  {
+    "id": "all-vs-and",
+    "title": "Список против цепочки",
+    "subtitle": "Чем all([...]) отличается от цепочки and, почему список не умеет останавливаться и когда какая конструкция уместна.",
+    "date": "2026-08-30",
+    "tag": "логические операции",
+    "interactive": "allVsAnd",
+    "html": "<!-- Статья для раздела «Документация». Вшивается в roadmap_artifact.html\n     скриптом build_site.py, открывается в панели сайта.\n     Код в <pre data-py> хранится обычным текстом — подсветку наводит\n     highlightPython() из скрипта сайта. -->\n<div class=\"doc-article\" data-doc=\"all-vs-and\">\n\n  <p class=\"doc-lede\">Две записи «выполнено всё сразу» дают одинаковый ответ, но по-разному\n    относятся к работе: <b>список внутри <code>all()<\/code> вычисляется целиком<\/b>, а\n    <b><code>and<\/code> останавливается на первом <code>False<\/code><\/b>. Пока условия\n    независимы, разницы нет. Как только одно защищает другое — разница становится разницей\n    между ответом и падением.<\/p>\n\n  <h3>Четыре строки, из которых всё следует<\/h3>\n  <p>В <code>all()<\/code> нет ничего волшебного: это обычный цикл с ранним выходом. Вот её\n    полный эквивалент — и эквивалент сестры <code>any()<\/code>.<\/p>\n\n  <div class=\"doc-two\">\n    <div class=\"doc-card\">\n      <div class=\"doc-card-head\"><span class=\"doc-mono\">all(iterable)<\/span><span class=\"doc-tag\">все ли истинны<\/span><\/div>\n      <pre class=\"doc-code\" data-py>def all(iterable):\n    for element in iterable:\n        if not element:\n            return False   # нашли ложный — обрываем цикл\n    return True            # дошли до конца, ложных нет<\/pre>\n    <\/div>\n    <div class=\"doc-card\">\n      <div class=\"doc-card-head\"><span class=\"doc-mono\">any(iterable)<\/span><span class=\"doc-tag\">есть ли хоть один<\/span><\/div>\n      <pre class=\"doc-code\" data-py>def any(iterable):\n    for element in iterable:\n        if element:\n            return True    # нашли истинный — обрываем цикл\n    return False           # дошли до конца, истинных нет<\/pre>\n    <\/div>\n  <\/div>\n\n  <ul class=\"doc-facts\">\n    <li><b>Аргумент один, и по нему идёт цикл.<\/b> <code>for element in iterable<\/code> — внутрь\n      подаётся одна последовательность: список, строка, кортеж, генератор, <code>range<\/code>.\n      Поэтому <code>all(a, b, c)<\/code> через запятую — ошибка, а <code>all([a, b, c])<\/code> — нет.<\/li>\n    <li><b>Останавливается сама.<\/b> <code>return False<\/code> внутри цикла обрывает его\n      немедленно. Ленивость у <code>all()<\/code> есть всегда — теряется она раньше, на\n      построении списка, который ей передают.<\/li>\n    <li><b>Проверяет истинность, а не равенство <code>True<\/code>.<\/b> В коде стоит\n      <code>if not element<\/code>, поэтому ложными считаются <code>0<\/code>, <code>\"\"<\/code>,\n      <code>[]<\/code>, <code>None<\/code> — всё пустое. <code>all([1, \"текст\", [0]])<\/code> →\n      <code>True<\/code>, а <code>all([1, 0, 3])<\/code> → <code>False<\/code>.<\/li>\n    <li><b>Пустой вход даёт <code>True<\/code>.<\/b> Тело цикла не выполнится ни разу, управление\n      сразу дойдёт до <code>return True<\/code>. У <code>any([])<\/code> по той же причине\n      <code>False<\/code>.<\/li>\n  <\/ul>\n\n  <h3>Одна проверка, две конструкции<\/h3>\n  <p>Слева — версия со списком, справа — цепочка. Условия те же самые, в том же порядке;\n    отличается только то, чем они склеены. Выбери артикул — увидишь, что вычислилось.<\/p>\n\n  <div class=\"doc-chips\" role=\"group\" aria-label=\"Артикул для разбора\"><\/div>\n\n  <div class=\"doc-two\">\n    <div class=\"doc-card\">\n      <div class=\"doc-card-head\"><span class=\"doc-mono\">all([...])<\/span><span class=\"doc-tag\">вычисляет всё<\/span><\/div>\n      <pre class=\"doc-code\" data-py>return all([\n    len(code) == 7,\n    code[:2].isalpha(),\n    code[:2].isupper(),\n    code[2] == \"-\",      # нужен len >= 3\n    code[3:].isdigit(),\n    int(code[3:]) > 0    # нужны цифры\n])<\/pre>\n      <div class=\"doc-trace\" data-trace=\"list\"><\/div>\n      <div class=\"doc-verdict\" data-verdict=\"list\"><\/div>\n    <\/div>\n    <div class=\"doc-card\">\n      <div class=\"doc-card-head\"><span class=\"doc-mono\">and<\/span><span class=\"doc-tag\">останавливается<\/span><\/div>\n      <pre class=\"doc-code\" data-py>return (len(code) == 7\n        and code[:2].isalpha()\n        and code[:2].isupper()\n        and code[2] == \"-\"\n        and code[3:].isdigit()\n        and int(code[3:]) > 0)<\/pre>\n      <div class=\"doc-trace\" data-trace=\"chain\"><\/div>\n      <div class=\"doc-verdict\" data-verdict=\"chain\"><\/div>\n    <\/div>\n  <\/div>\n\n  <ul class=\"doc-facts\">\n    <li><b>\"AB-1234\"<\/b> — корректный. Обе версии проходят все шесть условий и отвечают\n      <code>True<\/code>. Здесь конструкции неразличимы.<\/li>\n    <li><b>\"1B-1234\"<\/b> — цифра вместо буквы. Ответ у обеих <code>False<\/code>, но список после\n      провала на втором условии вычислил ещё четыре впустую. Ошибки нет — есть лишняя работа.<\/li>\n    <li><b>\"\"<\/b> — пустая строка. Цепочка останавливается на длине. Список продолжает\n      собираться и добирается до <code>code[2]<\/code>, которого не существует, —\n      <code>IndexError<\/code>.<\/li>\n    <li><b>\"AB-a234\"<\/b> — буква в номере. Цепочка останавливается на <code>isdigit()<\/code>.\n      Список доходит до <code>int(\"a234\")<\/code> — <code>ValueError<\/code>. Проверка отработала\n      правильно и всё равно не спасла: её результат никого не остановил.<\/li>\n  <\/ul>\n\n  <h3>Почему в «Good password» список был уместен<\/h3>\n  <p>Тот же <code>all([...])<\/code>, и там он не был ошибкой — потому что ни одно из четырёх\n    условий не зависит от остальных.<\/p>\n\n  <div class=\"doc-card\">\n    <div class=\"doc-card-head\"><span class=\"doc-mono\">is_password_good<\/span><span class=\"doc-tag\">условия независимы<\/span><\/div>\n    <pre class=\"doc-code\" data-py>return all([\n    len(password) >= 8,                     # не упадёт никогда\n    any(ch.isupper() for ch in password),   # цикл по пустой строке = False\n    any(ch.islower() for ch in password),   # индексов нет — падать не на чем\n    any(ch.isdigit() for ch in password)    # порядок можно тасовать как угодно\n])<\/pre>\n  <\/div>\n\n  <p>Ни одно условие не обращается к символу по индексу и не превращает строку в число. Любое\n    из них можно вычислить на любом входе, включая <code>\"\"<\/code>. В артикуле всё иначе:\n    <code>code[2]<\/code> имеет смысл <b>только если<\/b> длина уже проверена, а <code>int()<\/code>\n    — <b>только если<\/b> уже известно, что там цифры. Появилась зависимость — список перестал\n    годиться.<\/p>\n\n  <h3>Когда что писать<\/h3>\n\n  <div class=\"doc-case\">\n    <div class=\"doc-case-head\"><span class=\"doc-tool\">and<\/span><span class=\"doc-when\">Одно условие защищает следующее<\/span><\/div>\n    <pre class=\"doc-code\" data-py>return (len(code) == 7\n        and code[3:].isdigit()\n        and int(code[3:]) > 0)<\/pre>\n    <p class=\"doc-why\"><b>Почему только так:<\/b> <code>and<\/code> — единственная конструкция,\n      которая физически не выполняет то, что правее первого <code>False<\/code>. Список сюда не\n      годится ни в каком виде.<\/p>\n  <\/div>\n\n  <div class=\"doc-case\">\n    <div class=\"doc-case-head\"><span class=\"doc-tool\">all(... for ...)<\/span><span class=\"doc-when\">Условие одно, объектов много<\/span><\/div>\n    <pre class=\"doc-code\" data-py>def is_prime(num):\n    return num > 1 and all(num % i != 0\n                           for i in range(2, int(num ** 0.5) + 1))<\/pre>\n    <p class=\"doc-why\"><b>Почему не <code>and<\/code>:<\/b> делителей заранее неизвестно сколько —\n      цепочку руками не напишешь. <b>Почему без <code>[]<\/code>:<\/b> список заставил бы перебрать\n      весь диапазон даже после того, как делитель нашёлся.<\/p>\n  <\/div>\n\n  <div class=\"doc-case\">\n    <div class=\"doc-case-head\"><span class=\"doc-tool\">all([...])<\/span><span class=\"doc-when\">Несколько независимых условий, написанных руками<\/span><\/div>\n    <pre class=\"doc-code\" data-py>return all([\n    len(password) >= 8,\n    any(ch.isupper() for ch in password),\n    any(ch.islower() for ch in password),\n    any(ch.isdigit() for ch in password)\n])<\/pre>\n    <p class=\"doc-why\"><b>Здесь это вопрос вкуса:<\/b> цепочка <code>and<\/code> дала бы тот же\n      результат и не вычисляла бы лишнего. Список выигрывает читаемостью — четыре требования\n      стоят столбиком, как в условии задачи.<\/p>\n  <\/div>\n\n  <div class=\"doc-case\">\n    <div class=\"doc-case-head\"><span class=\"doc-tool\">all() по данным<\/span><span class=\"doc-when\">Число условий заранее неизвестно<\/span><\/div>\n    <pre class=\"doc-code\" data-py>required = [\"host\", \"port\", \"user\"]\n\ndef config_is_full(config):\n    return all(key in config for key in required)<\/pre>\n    <p class=\"doc-why\"><b>Почему только так:<\/b> список требований может прийти из файла или\n      вырасти завтра. <code>and<\/code> пишется руками, значит число звеньев зафиксировано в\n      момент написания кода — здесь это невозможно.<\/p>\n  <\/div>\n\n  <div class=\"doc-case doc-trap\">\n    <div class=\"doc-case-head\"><span class=\"doc-tool\">ловушка<\/span><span class=\"doc-when\">and возвращает операнд, а не True/False<\/span><\/div>\n    <pre class=\"doc-code\" data-py>name = \"\"\nname and name.isupper()   # -> '' , а не False\n\norders = []\nall(o[\"paid\"] for o in orders)   # -> True: «все оплачены»,\n                                 #    хотя заказов нет вовсе<\/pre>\n    <p class=\"doc-why\"><b>Два разных сюрприза.<\/b> <code>and<\/code> возвращает значение операнда,\n      на котором остановился, — функция с аннотацией <code>-&gt; bool<\/code> вернёт строку.\n      <code>all()<\/code> всегда даёт строгий <code>True<\/code>/<code>False<\/code>, но на пустом\n      входе этот <code>True<\/code> ничего не гарантирует.<\/p>\n  <\/div>\n\n  <div class=\"doc-rule\">\n    <b>Проверочный вопрос перед тем, как написать <code>all([...])<\/code>:<\/b> могу ли я поменять\n    условия местами и ничего не сломать? Да — список уместен, выбирай по читаемости. Нет —\n    условия зависят друг от друга, и нужен <code>and<\/code>.\n  <\/div>\n\n<\/div>\n"
   }
 ];
   /* @gen:end */
@@ -3210,7 +3343,8 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
   const views = { overview: document.getElementById("view-overview"),
                   calendar: document.getElementById("view-calendar"),
                   roadmap: document.getElementById("view-roadmap"),
-                  practice: document.getElementById("view-practice") };
+                  practice: document.getElementById("view-practice"),
+                  docs: document.getElementById("view-docs") };
   const navBtns = document.querySelectorAll(".nav-btn");
   function showView(name) {
     Object.entries(views).forEach(([k, el]) => { el.hidden = (k !== name); });
@@ -3244,6 +3378,7 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
   }
   function closeNote() {
     overlay.classList.remove("open");
+    document.querySelector(".panel").classList.remove("wide");
     if (lastFocused) lastFocused.focus();
   }
   /* Лёгкая подсветка Python (инлайн — CSP артефакта запрещает внешние скрипты) */
@@ -3301,6 +3436,143 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
   document.querySelectorAll(".topic-btn.has-note").forEach(btn => {
     btn.addEventListener("click", () => openNote(btn.dataset.topic));
   });
+
+  /* ── Документация ───────────────────────────────────────
+     Статьи вшиты в DOCS скриптом build_site.py из study_python/docs/.
+     Разметка статьи — обычный html; интерактив (если есть) поднимает
+     функция из DOC_INIT по ключу doc.interactive. */
+  const DOC_INIT = {
+    /* «Список против цепочки»: показать, что вычислилось у all([...]) и у and */
+    allVsAnd(root) {
+      const CASES = [
+        { code: "AB-1234", why: "корректный" },
+        { code: "1B-1234", why: "цифра вместо буквы" },
+        { code: "", why: "пусто" },
+        { code: "AB-a234", why: "буква в номере" }
+      ];
+      const isAlpha = s => s.length > 0 && /^\p{L}+$/u.test(s);
+      const isUpper = s => /\p{L}/u.test(s) && s === s.toUpperCase() && s !== s.toLowerCase();
+      const isDigit = s => s.length > 0 && /^[0-9]+$/.test(s);
+      const STEPS = [
+        { label: 'len(code) == 7', run: c => ({ value: c.length === 7 }) },
+        { label: 'code[:2].isalpha()', run: c => ({ value: isAlpha(c.slice(0, 2)) }) },
+        { label: 'code[:2].isupper()', run: c => ({ value: isUpper(c.slice(0, 2)) }) },
+        { label: 'code[2] == "-"', run: c => c.length < 3
+            ? { crash: "IndexError: string index out of range" }
+            : { value: c[2] === "-" } },
+        { label: 'code[3:].isdigit()', run: c => ({ value: isDigit(c.slice(3)) }) },
+        { label: 'int(code[3:]) > 0', run: c => isDigit(c.slice(3))
+            ? { value: parseInt(c.slice(3), 10) > 0 }
+            : { crash: 'ValueError: invalid literal for int(): "' + c.slice(3) + '"' } }
+      ];
+      /* список вычисляет всё подряд и останавливается только на падении */
+      const evalList = c => {
+        const out = [];
+        for (const st of STEPS) {
+          const r = st.run(c);
+          if (r.crash) { out.push({ state: "b", crash: r.crash }); return out; }
+          out.push({ state: r.value ? "t" : "f" });
+        }
+        return out;
+      };
+      /* цепочка and бросает работу на первом False */
+      const evalChain = c => {
+        const out = [];
+        for (const st of STEPS) {
+          const r = st.run(c);
+          if (r.crash) { out.push({ state: "b", crash: r.crash }); break; }
+          out.push({ state: r.value ? "t" : "f" });
+          if (!r.value) break;
+        }
+        while (out.length < STEPS.length) out.push({ state: "s" });
+        return out;
+      };
+      const LABEL = { t: "True", f: "False", b: "падение", s: "не вычислялось" };
+      const traces = {};
+      root.querySelectorAll(".doc-trace").forEach(el => {
+        traces[el.dataset.trace] = el;
+        el.innerHTML = STEPS.map((st, i) =>
+          `<div class="doc-step"><span class="si">${i + 1}</span>` +
+          `<span class="sx">${escapeHtml(st.label)}</span>` +
+          `<span class="doc-bdg s">—</span></div>`).join("");
+      });
+      const verdicts = {};
+      root.querySelectorAll(".doc-verdict").forEach(el => { verdicts[el.dataset.verdict] = el; });
+
+      function paint(kind, results) {
+        const rows = traces[kind].querySelectorAll(".doc-step");
+        let evaluated = 0, boom = null;
+        results.forEach((res, i) => {
+          const row = rows[i], bdg = row.querySelector(".doc-bdg");
+          bdg.className = "doc-bdg " + res.state;
+          bdg.textContent = LABEL[res.state];
+          row.classList.toggle("skipped", res.state === "s");
+          row.classList.toggle("boom", res.state === "b");
+          if (res.state !== "s") evaluated++;
+          if (res.state === "b") boom = res.crash;
+        });
+        const el = verdicts[kind];
+        el.classList.toggle("boom", Boolean(boom));
+        const ok = results.every(r => r.state === "t");
+        el.innerHTML = (boom
+            ? `<span><strong>${escapeHtml(boom)}</strong></span>`
+            : `<span>вернула <strong>${ok ? "True" : "False"}</strong></span>`)
+          + `<span class="vc">вычислено: ${evaluated} из ${STEPS.length}</span>`;
+      }
+
+      const chips = root.querySelector(".doc-chips");
+      chips.innerHTML = CASES.map((c, i) =>
+        `<button type="button" class="doc-chip" data-i="${i}" aria-pressed="false">` +
+        `${escapeHtml(c.code === "" ? '""' : '"' + c.code + '"')}` +
+        `<span class="cw">${escapeHtml(c.why)}</span></button>`).join("");
+      function select(i) {
+        chips.querySelectorAll(".doc-chip").forEach((b, j) =>
+          b.setAttribute("aria-pressed", String(j === i)));
+        paint("list", evalList(CASES[i].code));
+        paint("chain", evalChain(CASES[i].code));
+      }
+      chips.addEventListener("click", e => {
+        const b = e.target.closest(".doc-chip");
+        if (b) select(+b.dataset.i);
+      });
+      select(0);
+    }
+  };
+
+  function openDoc(doc) {
+    panelTitle.textContent = doc.title;
+    panelBody.innerHTML = doc.html;
+    document.querySelector(".panel").classList.add("wide");
+    /* код в статьях хранится текстом — подсвечиваем тем же highlightPython */
+    panelBody.querySelectorAll("pre[data-py]").forEach(pre => {
+      pre.innerHTML = highlightPython(pre.textContent.replace(/\n+$/, ""));
+    });
+    const init = doc.interactive && DOC_INIT[doc.interactive];
+    if (init) init(panelBody.querySelector(".doc-article") || panelBody);
+    lastFocused = document.activeElement;
+    overlay.classList.add("open");
+    document.getElementById("panel-close").focus();
+  }
+
+  (function renderDocs() {
+    const host = document.getElementById("doc-list");
+    if (!DOCS.length) {
+      host.innerHTML = `<p class="doc-empty">Статей пока нет.</p>`;
+      return;
+    }
+    host.innerHTML = DOCS.map((d, i) =>
+      `<button type="button" class="doc-cardlink" data-i="${i}">` +
+      `<span class="dc-top"><span class="dc-title">${escapeHtml(d.title)}</span>` +
+      `<span class="dc-open">читать ›</span></span>` +
+      `<span class="dc-sub">${escapeHtml(d.subtitle || "")}</span>` +
+      `<span class="dc-meta">${escapeHtml([d.date, d.tag].filter(Boolean).join(" · "))}</span>` +
+      `</button>`).join("");
+    host.addEventListener("click", e => {
+      const b = e.target.closest(".doc-cardlink");
+      if (b) openDoc(DOCS[+b.dataset.i]);
+    });
+  })();
+
   document.getElementById("panel-close").addEventListener("click", closeNote);
   overlay.addEventListener("click", e => { if (e.target === overlay) closeNote(); });
   document.addEventListener("keydown", e => {
