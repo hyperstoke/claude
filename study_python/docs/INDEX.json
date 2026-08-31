@@ -9,6 +9,15 @@
       "tag": "логические операции",
       "file": "study_python/docs/all_vs_and.html",
       "interactive": "allVsAnd"
+    },
+    {
+      "id": "bubble-sort",
+      "title": "Сортировка пузырьком",
+      "subtitle": "Как работает пузырёк, четыре варианта записи — от наивного до шейкерного — и пошаговый визуализатор с подсветкой активной строки кода.",
+      "date": "2026-09-01",
+      "tag": "алгоритмы · сортировка",
+      "file": "study_python/docs/bubble_sort.html",
+      "interactive": "bubbleSort"
     }
   ]
 }

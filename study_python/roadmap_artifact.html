@@ -590,6 +590,126 @@
   .doc-trap .doc-when { color: var(--late); }
   .doc-rule { background: var(--accent-soft); border: var(--hairline); border-radius: 10px; padding: 0.85rem 1rem; font-size: 0.9rem; color: var(--ink-dim); margin-top: 1rem; }
 
+  /* Таблицы внутри статей */
+  .doc-tablewrap { overflow-x: auto; border: var(--hairline); border-radius: 10px; margin: 0 0 0.7rem; }
+  .doc-article table.doc-table { border-collapse: collapse; width: 100%; font-size: 0.83rem; }
+  .doc-article table.doc-table th,
+  .doc-article table.doc-table td { padding: 0.5rem 0.75rem; text-align: left; border-bottom: var(--hairline); white-space: nowrap; }
+  .doc-article table.doc-table thead th {
+    font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.05em;
+    text-transform: uppercase; color: var(--ink-faint); background: var(--inset);
+  }
+  .doc-article table.doc-table tbody tr:last-child td { border-bottom: 0; }
+  .doc-article table.doc-table td { color: var(--ink-dim); font-variant-numeric: tabular-nums; }
+  .doc-article table.doc-table td:first-child { color: var(--ink); font-weight: 600; }
+
+  /* ── Документация · визуализатор пузырька (DOC_INIT.bubbleSort) ── */
+  .bsv { margin: 0.5rem 0 0.9rem; }
+  .bsv:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 8px; }
+  .bsv-seg { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 0.7rem; }
+  .bsv-seg button {
+    font: inherit; font-family: var(--font-mono); font-size: 0.74rem; cursor: pointer;
+    padding: 0.32rem 0.6rem; border-radius: 7px; border: var(--hairline);
+    background: var(--panel); color: var(--ink-dim);
+    transition: border-color 0.15s ease, color 0.15s ease;
+  }
+  .bsv-seg button:hover { color: var(--ink); }
+  .bsv-seg button[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+
+  .bsv-main { display: grid; grid-template-columns: minmax(0,1fr) minmax(280px,360px); gap: 0.9rem; align-items: start; }
+  @media (max-width: 760px) { .bsv-main { grid-template-columns: 1fr; } }
+  .bsv-left, .bsv-right { min-width: 0; }
+
+  .bsv-stage { height: 190px; display: flex; align-items: flex-end; gap: clamp(3px, 1.1vw, 8px); padding: 0 2px; }
+  .bsv-col { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .bsv-tag, .bsv-sub {
+    font-family: var(--font-mono); font-size: 0.62rem; font-weight: 700; line-height: 1.1;
+    min-height: 1.1em; white-space: nowrap; text-align: center; font-variant-numeric: tabular-nums;
+  }
+  .bsv-tag { color: transparent; }
+  .bsv-tag.on { color: var(--now); }
+  .bsv-tag.on.swap { color: var(--late); }
+  .bsv-sub { color: var(--ink-faint); font-weight: 500; }
+  .bsv-sub.strong { color: var(--now); font-weight: 700; }
+  .bsv-bar {
+    width: 100%; background: var(--border-strong); border-radius: 5px 5px 2px 2px;
+    transition: height 0.26s cubic-bezier(.4,0,.2,1), background-color 0.18s;
+  }
+  .bsv-bar.is-cmp { background: var(--now); }
+  .bsv-bar.is-swap { background: var(--late); }
+  .bsv-bar.is-done { background: var(--accent); }
+  .bsv-val { font-family: var(--font-mono); font-size: 0.72rem; color: var(--ink-dim); font-variant-numeric: tabular-nums; }
+
+  .bsv-track { height: 3px; background: var(--inset); border-radius: 2px; margin: 0.7rem 2px 0; overflow: hidden; }
+  .bsv-track > i { display: block; height: 100%; width: 0; background: var(--accent); transition: width 0.2s ease; }
+
+  .bsv-vars {
+    font-family: var(--font-mono); font-size: 0.74rem; color: var(--ink);
+    background: var(--bg); border: var(--hairline); border-radius: 7px;
+    padding: 0.4rem 0.6rem; margin: 0.6rem 2px 0; overflow-x: auto; white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .bsv-status { font-family: var(--font-mono); font-size: 0.76rem; color: var(--ink-dim); margin: 0.5rem 2px 0; min-height: 1.5em; font-variant-numeric: tabular-nums; }
+  .bsv-status .d { color: var(--ink); }
+  .bsv-status.done .d { color: var(--accent); font-weight: 650; }
+
+  .bsv-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; margin-top: 0.7rem; }
+  .bsv-btn {
+    font: inherit; font-size: 0.78rem; cursor: pointer; padding: 0.4rem 0.7rem; border-radius: 7px;
+    border: var(--hairline); background: var(--inset); color: var(--ink); transition: border-color 0.15s ease;
+  }
+  .bsv-btn:hover { border-color: var(--accent); }
+  .bsv-btn.bsv-primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); font-weight: 600; }
+  .bsv-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .bsv-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .bsv-speed { display: flex; align-items: center; gap: 0.4rem; font-size: 0.74rem; color: var(--ink-faint); margin-left: auto; }
+  .bsv-speed input { accent-color: var(--accent); }
+  @media (max-width: 520px) { .bsv-speed { margin-left: 0; width: 100%; } }
+
+  .bsv-data { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; margin-top: 0.5rem; }
+  .bsv-data input[type="text"] {
+    font-family: var(--font-mono); font-size: 0.78rem; background: var(--bg); color: var(--ink);
+    border: var(--hairline); border-radius: 7px; padding: 0.4rem 0.6rem; width: min(220px, 52vw);
+  }
+  .bsv-data input[type="text"]:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .bsv-chip {
+    font: inherit; font-family: var(--font-mono); font-size: 0.72rem; cursor: pointer;
+    padding: 0.32rem 0.6rem; border-radius: 999px; border: var(--hairline);
+    background: var(--panel); color: var(--ink-dim); transition: border-color 0.15s ease, color 0.15s ease;
+  }
+  .bsv-chip:hover { color: var(--ink); border-color: var(--accent); }
+  .bsv-chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .bsv-hint { width: 100%; margin: 0.1rem 0 0; font-size: 0.74rem; color: var(--late); min-height: 0; }
+
+  .bsv-legend { display: flex; flex-wrap: wrap; gap: 0.5rem 0.9rem; margin-top: 0.8rem; font-size: 0.74rem; color: var(--ink-dim); }
+  .bsv-legend span { display: flex; align-items: center; gap: 0.35rem; }
+  .bsv-sw { width: 11px; height: 11px; border-radius: 3px; flex-shrink: 0; display: inline-block; }
+  .bsv-i-idle { background: var(--border-strong); }
+  .bsv-i-cmp { background: var(--now); }
+  .bsv-i-swap { background: var(--late); }
+  .bsv-i-done { background: var(--accent); }
+
+  .bsv-codewrap {
+    background: var(--bg); border: var(--hairline); border-radius: 10px;
+    padding: 0.7rem 0.3rem 0.7rem 0.55rem; overflow-x: auto;
+    scrollbar-width: thin; scrollbar-color: var(--border) transparent;
+  }
+  .bsv-codewrap::-webkit-scrollbar { height: 7px; }
+  .bsv-codewrap::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+  .panel-body .doc-article pre.bsv-code {
+    font-family: var(--font-mono); font-size: 0.72rem; line-height: 1.6; margin: 0;
+    white-space: pre; background: transparent; border: 0; padding: 0; color: var(--ink); overflow: visible; max-height: none;
+  }
+  .bsv-cl { display: block; padding: 0 0.5rem; margin: 0 -0.15rem; border-radius: 4px; }
+  .bsv-cl.on { background: var(--accent-soft); box-shadow: inset 3px 0 0 var(--accent); }
+  .bsv-side { font-family: var(--font-mono); font-size: 0.7rem; line-height: 1.5; color: var(--ink-faint); margin: 0.5rem 2px 0; }
+
+  .bsv-keys { display: flex; flex-wrap: wrap; gap: 0.35rem 1rem; margin: 0.7rem 0 0; font-size: 0.75rem; color: var(--ink-faint); }
+  .bsv-keys kbd {
+    font-family: var(--font-mono); font-size: 0.72rem; background: var(--inset);
+    border: var(--hairline); border-bottom-width: 2px; border-radius: 4px; padding: 0.05rem 0.35rem; color: var(--ink-dim);
+  }
+
   /* ── Modal ─────────────────────────────────────────────── */
   .overlay {
     position: fixed; inset: 0; background: rgba(10,6,20,0.55); display: flex; align-items: flex-start;
@@ -1389,7 +1509,7 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
     }
   };
 
-                                                                                                                                                              /* @gen:start — генерируется scripts/build_site.py из coach/*.json, вручную не править */
+                                                                                                                                                                /* @gen:start — генерируется scripts/build_site.py из coach/*.json, вручную не править */
   const TRACKING_SINCE = "2026-07-11";
   const ACTIVITY = {
   "2026-07-11": {
@@ -2771,6 +2891,15 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
     "tag": "логические операции",
     "interactive": "allVsAnd",
     "html": "<!-- Статья для раздела «Документация». Вшивается в roadmap_artifact.html\n     скриптом build_site.py, открывается в панели сайта.\n     Код в <pre data-py> хранится обычным текстом — подсветку наводит\n     highlightPython() из скрипта сайта. -->\n<div class=\"doc-article\" data-doc=\"all-vs-and\">\n\n  <p class=\"doc-lede\">Две записи «выполнено всё сразу» дают одинаковый ответ, но по-разному\n    относятся к работе: <b>список внутри <code>all()<\/code> вычисляется целиком<\/b>, а\n    <b><code>and<\/code> останавливается на первом <code>False<\/code><\/b>. Пока условия\n    независимы, разницы нет. Как только одно защищает другое — разница становится разницей\n    между ответом и падением.<\/p>\n\n  <h3>Четыре строки, из которых всё следует<\/h3>\n  <p>В <code>all()<\/code> нет ничего волшебного: это обычный цикл с ранним выходом. Вот её\n    полный эквивалент — и эквивалент сестры <code>any()<\/code>.<\/p>\n\n  <div class=\"doc-two\">\n    <div class=\"doc-card\">\n      <div class=\"doc-card-head\"><span class=\"doc-mono\">all(iterable)<\/span><span class=\"doc-tag\">все ли истинны<\/span><\/div>\n      <pre class=\"doc-code\" data-py>def all(iterable):\n    for element in iterable:\n        if not element:\n            return False   # нашли ложный — обрываем цикл\n    return True            # дошли до конца, ложных нет<\/pre>\n    <\/div>\n    <div class=\"doc-card\">\n      <div class=\"doc-card-head\"><span class=\"doc-mono\">any(iterable)<\/span><span class=\"doc-tag\">есть ли хоть один<\/span><\/div>\n      <pre class=\"doc-code\" data-py>def any(iterable):\n    for element in iterable:\n        if element:\n            return True    # нашли истинный — обрываем цикл\n    return False           # дошли до конца, истинных нет<\/pre>\n    <\/div>\n  <\/div>\n\n  <ul class=\"doc-facts\">\n    <li><b>Аргумент один, и по нему идёт цикл.<\/b> <code>for element in iterable<\/code> — внутрь\n      подаётся одна последовательность: список, строка, кортеж, генератор, <code>range<\/code>.\n      Поэтому <code>all(a, b, c)<\/code> через запятую — ошибка, а <code>all([a, b, c])<\/code> — нет.<\/li>\n    <li><b>Останавливается сама.<\/b> <code>return False<\/code> внутри цикла обрывает его\n      немедленно. Ленивость у <code>all()<\/code> есть всегда — теряется она раньше, на\n      построении списка, который ей передают.<\/li>\n    <li><b>Проверяет истинность, а не равенство <code>True<\/code>.<\/b> В коде стоит\n      <code>if not element<\/code>, поэтому ложными считаются <code>0<\/code>, <code>\"\"<\/code>,\n      <code>[]<\/code>, <code>None<\/code> — всё пустое. <code>all([1, \"текст\", [0]])<\/code> →\n      <code>True<\/code>, а <code>all([1, 0, 3])<\/code> → <code>False<\/code>.<\/li>\n    <li><b>Пустой вход даёт <code>True<\/code>.<\/b> Тело цикла не выполнится ни разу, управление\n      сразу дойдёт до <code>return True<\/code>. У <code>any([])<\/code> по той же причине\n      <code>False<\/code>.<\/li>\n  <\/ul>\n\n  <h3>Одна проверка, две конструкции<\/h3>\n  <p>Слева — версия со списком, справа — цепочка. Условия те же самые, в том же порядке;\n    отличается только то, чем они склеены. Выбери артикул — увидишь, что вычислилось.<\/p>\n\n  <div class=\"doc-chips\" role=\"group\" aria-label=\"Артикул для разбора\"><\/div>\n\n  <div class=\"doc-two\">\n    <div class=\"doc-card\">\n      <div class=\"doc-card-head\"><span class=\"doc-mono\">all([...])<\/span><span class=\"doc-tag\">вычисляет всё<\/span><\/div>\n      <pre class=\"doc-code\" data-py>return all([\n    len(code) == 7,\n    code[:2].isalpha(),\n    code[:2].isupper(),\n    code[2] == \"-\",      # нужен len >= 3\n    code[3:].isdigit(),\n    int(code[3:]) > 0    # нужны цифры\n])<\/pre>\n      <div class=\"doc-trace\" data-trace=\"list\"><\/div>\n      <div class=\"doc-verdict\" data-verdict=\"list\"><\/div>\n    <\/div>\n    <div class=\"doc-card\">\n      <div class=\"doc-card-head\"><span class=\"doc-mono\">and<\/span><span class=\"doc-tag\">останавливается<\/span><\/div>\n      <pre class=\"doc-code\" data-py>return (len(code) == 7\n        and code[:2].isalpha()\n        and code[:2].isupper()\n        and code[2] == \"-\"\n        and code[3:].isdigit()\n        and int(code[3:]) > 0)<\/pre>\n      <div class=\"doc-trace\" data-trace=\"chain\"><\/div>\n      <div class=\"doc-verdict\" data-verdict=\"chain\"><\/div>\n    <\/div>\n  <\/div>\n\n  <ul class=\"doc-facts\">\n    <li><b>\"AB-1234\"<\/b> — корректный. Обе версии проходят все шесть условий и отвечают\n      <code>True<\/code>. Здесь конструкции неразличимы.<\/li>\n    <li><b>\"1B-1234\"<\/b> — цифра вместо буквы. Ответ у обеих <code>False<\/code>, но список после\n      провала на втором условии вычислил ещё четыре впустую. Ошибки нет — есть лишняя работа.<\/li>\n    <li><b>\"\"<\/b> — пустая строка. Цепочка останавливается на длине. Список продолжает\n      собираться и добирается до <code>code[2]<\/code>, которого не существует, —\n      <code>IndexError<\/code>.<\/li>\n    <li><b>\"AB-a234\"<\/b> — буква в номере. Цепочка останавливается на <code>isdigit()<\/code>.\n      Список доходит до <code>int(\"a234\")<\/code> — <code>ValueError<\/code>. Проверка отработала\n      правильно и всё равно не спасла: её результат никого не остановил.<\/li>\n  <\/ul>\n\n  <h3>Почему в «Good password» список был уместен<\/h3>\n  <p>Тот же <code>all([...])<\/code>, и там он не был ошибкой — потому что ни одно из четырёх\n    условий не зависит от остальных.<\/p>\n\n  <div class=\"doc-card\">\n    <div class=\"doc-card-head\"><span class=\"doc-mono\">is_password_good<\/span><span class=\"doc-tag\">условия независимы<\/span><\/div>\n    <pre class=\"doc-code\" data-py>return all([\n    len(password) >= 8,                     # не упадёт никогда\n    any(ch.isupper() for ch in password),   # цикл по пустой строке = False\n    any(ch.islower() for ch in password),   # индексов нет — падать не на чем\n    any(ch.isdigit() for ch in password)    # порядок можно тасовать как угодно\n])<\/pre>\n  <\/div>\n\n  <p>Ни одно условие не обращается к символу по индексу и не превращает строку в число. Любое\n    из них можно вычислить на любом входе, включая <code>\"\"<\/code>. В артикуле всё иначе:\n    <code>code[2]<\/code> имеет смысл <b>только если<\/b> длина уже проверена, а <code>int()<\/code>\n    — <b>только если<\/b> уже известно, что там цифры. Появилась зависимость — список перестал\n    годиться.<\/p>\n\n  <h3>Когда что писать<\/h3>\n\n  <div class=\"doc-case\">\n    <div class=\"doc-case-head\"><span class=\"doc-tool\">and<\/span><span class=\"doc-when\">Одно условие защищает следующее<\/span><\/div>\n    <pre class=\"doc-code\" data-py>return (len(code) == 7\n        and code[3:].isdigit()\n        and int(code[3:]) > 0)<\/pre>\n    <p class=\"doc-why\"><b>Почему только так:<\/b> <code>and<\/code> — единственная конструкция,\n      которая физически не выполняет то, что правее первого <code>False<\/code>. Список сюда не\n      годится ни в каком виде.<\/p>\n  <\/div>\n\n  <div class=\"doc-case\">\n    <div class=\"doc-case-head\"><span class=\"doc-tool\">all(... for ...)<\/span><span class=\"doc-when\">Условие одно, объектов много<\/span><\/div>\n    <pre class=\"doc-code\" data-py>def is_prime(num):\n    return num > 1 and all(num % i != 0\n                           for i in range(2, int(num ** 0.5) + 1))<\/pre>\n    <p class=\"doc-why\"><b>Почему не <code>and<\/code>:<\/b> делителей заранее неизвестно сколько —\n      цепочку руками не напишешь. <b>Почему без <code>[]<\/code>:<\/b> список заставил бы перебрать\n      весь диапазон даже после того, как делитель нашёлся.<\/p>\n  <\/div>\n\n  <div class=\"doc-case\">\n    <div class=\"doc-case-head\"><span class=\"doc-tool\">all([...])<\/span><span class=\"doc-when\">Несколько независимых условий, написанных руками<\/span><\/div>\n    <pre class=\"doc-code\" data-py>return all([\n    len(password) >= 8,\n    any(ch.isupper() for ch in password),\n    any(ch.islower() for ch in password),\n    any(ch.isdigit() for ch in password)\n])<\/pre>\n    <p class=\"doc-why\"><b>Здесь это вопрос вкуса:<\/b> цепочка <code>and<\/code> дала бы тот же\n      результат и не вычисляла бы лишнего. Список выигрывает читаемостью — четыре требования\n      стоят столбиком, как в условии задачи.<\/p>\n  <\/div>\n\n  <div class=\"doc-case\">\n    <div class=\"doc-case-head\"><span class=\"doc-tool\">all() по данным<\/span><span class=\"doc-when\">Число условий заранее неизвестно<\/span><\/div>\n    <pre class=\"doc-code\" data-py>required = [\"host\", \"port\", \"user\"]\n\ndef config_is_full(config):\n    return all(key in config for key in required)<\/pre>\n    <p class=\"doc-why\"><b>Почему только так:<\/b> список требований может прийти из файла или\n      вырасти завтра. <code>and<\/code> пишется руками, значит число звеньев зафиксировано в\n      момент написания кода — здесь это невозможно.<\/p>\n  <\/div>\n\n  <div class=\"doc-case doc-trap\">\n    <div class=\"doc-case-head\"><span class=\"doc-tool\">ловушка<\/span><span class=\"doc-when\">and возвращает операнд, а не True/False<\/span><\/div>\n    <pre class=\"doc-code\" data-py>name = \"\"\nname and name.isupper()   # -> '' , а не False\n\norders = []\nall(o[\"paid\"] for o in orders)   # -> True: «все оплачены»,\n                                 #    хотя заказов нет вовсе<\/pre>\n    <p class=\"doc-why\"><b>Два разных сюрприза.<\/b> <code>and<\/code> возвращает значение операнда,\n      на котором остановился, — функция с аннотацией <code>-&gt; bool<\/code> вернёт строку.\n      <code>all()<\/code> всегда даёт строгий <code>True<\/code>/<code>False<\/code>, но на пустом\n      входе этот <code>True<\/code> ничего не гарантирует.<\/p>\n  <\/div>\n\n  <div class=\"doc-rule\">\n    <b>Проверочный вопрос перед тем, как написать <code>all([...])<\/code>:<\/b> могу ли я поменять\n    условия местами и ничего не сломать? Да — список уместен, выбирай по читаемости. Нет —\n    условия зависят друг от друга, и нужен <code>and<\/code>.\n  <\/div>\n\n<\/div>\n"
+  },
+  {
+    "id": "bubble-sort",
+    "title": "Сортировка пузырьком",
+    "subtitle": "Как работает пузырёк, четыре варианта записи — от наивного до шейкерного — и пошаговый визуализатор с подсветкой активной строки кода.",
+    "date": "2026-09-01",
+    "tag": "алгоритмы · сортировка",
+    "interactive": "bubbleSort",
+    "html": "<!-- Статья для раздела «Документация». Вшивается в roadmap_artifact.html\n     скриптом build_site.py, открывается в панели сайта.\n     Код в <pre data-py> хранится обычным текстом — подсветку наводит\n     highlightPython() из скрипта сайта. Интерактивный визуализатор —\n     DOC_INIT.bubbleSort (ключ interactive в docs/INDEX.json). -->\n<div class=\"doc-article\" data-doc=\"bubble-sort\">\n\n  <p class=\"doc-lede\">Пузырёк — самый простой алгоритм сортировки: сравнить двух соседей,\n    при необходимости поменять местами, повторять. Визуализатор ниже показывает, какая\n    строка кода выполняется на каждом шаге; дальше — четыре способа записать пузырёк,\n    от наивного до шейкерного.<\/p>\n\n  <h3>Идея за минуту<\/h3>\n  <p>Идём по массиву слева направо и смотрим на пары соседних элементов — <code>left<\/code>\n    и <code>right<\/code>. Если <code>left<\/code> больше — меняем их местами. За один\n    <b>проход<\/b> самый большой элемент «всплывает» в конец, как пузырёк, — отсюда название.\n    Повторяем проходы; когда за целый проход не случилось ни одного обмена, массив уже\n    упорядочен.<\/p>\n\n  <h3>Визуализатор<\/h3>\n  <p>Столбик — число. Переключай варианты кнопками сверху; панель справа подсветит активную\n    строку. Над сравниваемой парой — имена из кода (<code>left<\/code> / <code>right<\/code>)\n    и индексы (<code>i<\/code> / <code>i + 1<\/code>); у шейкерной снизу отмечены границы\n    <code>start<\/code> и <code>end<\/code> — докуда дошёл ещё не отсортированный кусок.<\/p>\n\n  <div class=\"bsv\" data-bsv>\n    <div class=\"bsv-seg\" data-bsv-seg role=\"group\" aria-label=\"Вариант алгоритма\"><\/div>\n    <div class=\"bsv-main\">\n      <div class=\"bsv-left\">\n        <div class=\"bsv-stage\" data-bsv-bars role=\"img\" aria-label=\"Массив столбиков\"><\/div>\n        <div class=\"bsv-track\"><i data-bsv-track><\/i><\/div>\n        <p class=\"bsv-vars\" data-bsv-vars>&nbsp;<\/p>\n        <p class=\"bsv-status\" data-bsv-status><span class=\"d\">—<\/span><\/p>\n        <div class=\"bsv-controls\">\n          <button type=\"button\" class=\"bsv-btn\" data-bsv-act=\"first\">⏮ в начало<\/button>\n          <button type=\"button\" class=\"bsv-btn\" data-bsv-act=\"back\">◀ шаг<\/button>\n          <button type=\"button\" class=\"bsv-btn bsv-primary\" data-bsv-act=\"play\" data-bsv-play>▶ играть<\/button>\n          <button type=\"button\" class=\"bsv-btn\" data-bsv-act=\"next\">шаг ▶<\/button>\n          <label class=\"bsv-speed\">скорость\n            <input type=\"range\" min=\"1\" max=\"10\" value=\"6\" data-bsv-speed aria-label=\"Скорость воспроизведения\">\n          <\/label>\n        <\/div>\n        <div class=\"bsv-data\">\n          <input type=\"text\" inputmode=\"numeric\" autocomplete=\"off\" placeholder=\"5 8 2 6 3 7 4 1\"\n                 data-bsv-input aria-label=\"Свой массив чисел\">\n          <button type=\"button\" class=\"bsv-chip\" data-bsv-gen=\"apply\">взять свой<\/button>\n          <button type=\"button\" class=\"bsv-chip\" data-bsv-gen=\"shuffle\">перемешать<\/button>\n          <button type=\"button\" class=\"bsv-chip\" data-bsv-gen=\"almost\">почти отсортирован<\/button>\n          <button type=\"button\" class=\"bsv-chip\" data-bsv-gen=\"reverse\">обратный порядок<\/button>\n          <p class=\"bsv-hint\" data-bsv-hint role=\"status\"><\/p>\n        <\/div>\n        <div class=\"bsv-legend\">\n          <span><i class=\"bsv-sw bsv-i-idle\"><\/i>ждёт<\/span>\n          <span><i class=\"bsv-sw bsv-i-cmp\"><\/i>сравниваются<\/span>\n          <span><i class=\"bsv-sw bsv-i-swap\"><\/i>меняются местами<\/span>\n          <span><i class=\"bsv-sw bsv-i-done\"><\/i>на своём месте<\/span>\n        <\/div>\n      <\/div>\n      <div class=\"bsv-right\">\n        <div class=\"bsv-codewrap\"><pre class=\"bsv-code\" data-bsv-code><\/pre><\/div>\n        <p class=\"bsv-side\" data-bsv-side><\/p>\n      <\/div>\n    <\/div>\n    <p class=\"bsv-keys\"><kbd>←<\/kbd> <kbd>→<\/kbd> шаг · <kbd>Пробел<\/kbd> играть / пауза\n      <span>(когда виджет в фокусе)<\/span><\/p>\n  <\/div>\n\n  <h3>Четыре варианта<\/h3>\n  <p>Идея одна; отличается только объём лишней работы. Первые три — тот же пузырёк с\n    постепенной экономией, четвёртый носит собственное имя.<\/p>\n\n  <div class=\"doc-card\">\n    <div class=\"doc-card-head\"><span class=\"doc-mono\">1 · базовый<\/span><span class=\"doc-tag\">два вложенных цикла<\/span><\/div>\n    <pre class=\"doc-code\" data-py>def bubble_sort(numbers):\n    length = len(numbers)\n    for _ in range(length - 1):\n        for i in range(length - 1):\n            left = numbers[i]\n            right = numbers[i + 1]\n            if left > right:\n                numbers[i], numbers[i + 1] = right, left\n    return numbers<\/pre>\n  <\/div>\n  <p>Внешний цикл — <code>length − 1<\/code> проход, внутренний каждый раз идёт по всему\n    массиву. Даже если данные уже отсортированы, делает все <code>(length − 1)²<\/code>\n    сравнений. Отправная точка, дальше — три улучшения.<\/p>\n\n  <div class=\"doc-card\">\n    <div class=\"doc-card-head\"><span class=\"doc-mono\">2 · не трогаем хвост<\/span><span class=\"doc-tag\">range(… − placed)<\/span><\/div>\n    <pre class=\"doc-code\" data-py>def bubble_sort(numbers):\n    length = len(numbers)\n    for placed in range(length - 1):\n        for i in range(length - 1 - placed):\n            left = numbers[i]\n            right = numbers[i + 1]\n            if left > right:\n                numbers[i], numbers[i + 1] = right, left\n    return numbers<\/pre>\n  <\/div>\n  <p>После прохода номер <code>placed<\/code> столько же наибольших элементов уже стоят в\n    конце на своих местах — сравнивать их снова незачем. Одна цифра в <code>range<\/code>,\n    сравнений почти вдвое меньше: <code>length·(length − 1) / 2<\/code>. В визуализаторе\n    видно, как хвост подсвечивается «на месте».<\/p>\n\n  <div class=\"doc-card\">\n    <div class=\"doc-card-head\"><span class=\"doc-mono\">3 · флаг раннего выхода<\/span><span class=\"doc-tag\">по умолчанию — так<\/span><\/div>\n    <pre class=\"doc-code\" data-py>def bubble_sort(numbers):\n    length = len(numbers)\n    for placed in range(length - 1):\n        swapped = False\n        for i in range(length - 1 - placed):\n            left = numbers[i]\n            right = numbers[i + 1]\n            if left > right:\n                numbers[i], numbers[i + 1] = right, left\n                swapped = True\n        if not swapped:\n            break\n    return numbers<\/pre>\n  <\/div>\n  <p>Флаг <code>swapped<\/code>: если за целый проход не было ни одного обмена, массив\n    упорядочен и <code>break<\/code> прекращает работу. На отсортированном входе — один\n    проход, <code>O(n)<\/code> вместо <code>O(n²)<\/code>. Канонический вариант: по умолчанию\n    пиши так.<\/p>\n\n  <div class=\"doc-card\">\n    <div class=\"doc-card-head\"><span class=\"doc-mono\">4 · шейкерная<\/span><span class=\"doc-tag\">cocktail sort<\/span><\/div>\n    <pre class=\"doc-code\" data-py>def cocktail_sort(numbers):\n    start = 0\n    end = len(numbers) - 1\n    swapped = True\n    while swapped:\n        swapped = False\n        for i in range(start, end):\n            left = numbers[i]\n            right = numbers[i + 1]\n            if left > right:\n                numbers[i], numbers[i + 1] = right, left\n                swapped = True\n        end -= 1\n        for i in range(end, start, -1):\n            left = numbers[i - 1]\n            right = numbers[i]\n            if left > right:\n                numbers[i - 1], numbers[i] = right, left\n                swapped = True\n        start += 1\n    return numbers<\/pre>\n  <\/div>\n  <p>Обычный пузырёк быстро гонит большие элементы вправо, а маленькие ползут влево по\n    одному за проход — их называют «черепахами». Шейкер после прохода вправо идёт обратно\n    влево и утаскивает мелкие к началу. На данных с «черепахами» заметно быстрее; в худшем\n    случае — та же <code>O(n²)<\/code>. Формально это уже отдельный алгоритм, но вырастает\n    прямо из пузырька.<\/p>\n\n  <h3>Сколько работы на массиве из 8 чисел<\/h3>\n  <div class=\"doc-tablewrap\">\n    <table class=\"doc-table\">\n      <thead>\n        <tr><th>Вариант<\/th><th>Уже отсортирован<\/th><th>Обратный порядок (худший)<\/th><\/tr>\n      <\/thead>\n      <tbody>\n        <tr><td>Базовый<\/td><td>49 сравн. · 0 обм. · 7 проходов<\/td><td>49 сравн. · 28 обм. · 7 проходов<\/td><\/tr>\n        <tr><td>Не трогаем хвост<\/td><td>28 сравн. · 0 обм. · 7 проходов<\/td><td>28 сравн. · 28 обм. · 7 проходов<\/td><\/tr>\n        <tr><td>Флаг раннего выхода<\/td><td>7 сравн. · 0 обм. · 1 проход<\/td><td>28 сравн. · 28 обм. · 7 проходов<\/td><\/tr>\n      <\/tbody>\n    <\/table>\n  <\/div>\n\n  <h3>Сложность<\/h3>\n  <div class=\"doc-tablewrap\">\n    <table class=\"doc-table\">\n      <thead>\n        <tr><th>Реализация<\/th><th>Лучший<\/th><th>Средний<\/th><th>Худший<\/th><th>Память<\/th><\/tr>\n      <\/thead>\n      <tbody>\n        <tr><td>Базовый · хвост<\/td><td>O(n²)<\/td><td>O(n²)<\/td><td>O(n²)<\/td><td>O(1)<\/td><\/tr>\n        <tr><td>С флагом<\/td><td>O(n)<\/td><td>O(n²)<\/td><td>O(n²)<\/td><td>O(1)<\/td><\/tr>\n      <\/tbody>\n    <\/table>\n  <\/div>\n  <p>Пузырёк <b>устойчивый<\/b>: равные элементы не перепрыгивают друг через друга, потому\n    что обмен происходит только при строгом <code>&gt;<\/code>. Память <code>O(1)<\/code> —\n    сортируем на месте, без второго массива.<\/p>\n\n  <h3>Когда пузырёк уместен<\/h3>\n  <ul class=\"doc-facts\">\n    <li><b>Почти отсортированные данные.<\/b> С флагом раннего выхода — один-два прохода,\n      быстрее многих «умных» сортировок с их накладными расходами.<\/li>\n    <li><b>Крошечные массивы и учебные задачи.<\/b> На десятке элементов разница с\n      <code>O(n log n)<\/code> незаметна, а кода — четыре строки.<\/li>\n    <li><b>В реальном коде — не он.<\/b> <code>sorted(x)<\/code> и <code>x.sort()<\/code>\n      используют TimSort — гибрид вставок и слияния, устойчивый, <code>O(n log n)<\/code>\n      в худшем случае. Пузырёк пишут, чтобы понять, как сортировка устроена изнутри.<\/li>\n  <\/ul>\n\n  <div class=\"doc-rule\">\n    <b>Существует ещё рекурсивная запись:<\/b> один проход пузырька плюс вызов функции для\n    массива на элемент короче. Та же работа тем же способом, просто цикл заменён рекурсией.\n    Вернёшься к ней после темы «рекурсия».\n  <\/div>\n\n<\/div>\n"
   }
 ];
   /* @gen:end */
@@ -3536,6 +3665,349 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
         if (b) select(+b.dataset.i);
       });
       select(0);
+    },
+
+    /* «Сортировка пузырьком»: пошаговый визуализатор + подсветка активной строки кода */
+    bubbleSort(root) {
+      const box = root.querySelector("[data-bsv]");
+      if (!box) return;
+      const reduce = typeof window.matchMedia === "function"
+        && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const swap = (a, x, y) => { const t = a[x]; a[x] = a[y]; a[y] = t; };
+
+      const VARIANTS = [
+        { id: "base", label: "1 · базовый", pass: "проход",
+          code: [
+            "def bubble_sort(numbers):",
+            "    length = len(numbers)",
+            "    for _ in range(length - 1):",
+            "        for i in range(length - 1):",
+            "            left = numbers[i]",
+            "            right = numbers[i + 1]",
+            "            if left > right:",
+            "                numbers[i], numbers[i + 1] = right, left",
+            "    return numbers"
+          ],
+          gen(src) {
+            const a = src.slice(), n = a.length, F = []; let comps = 0, swaps = 0;
+            F.push({ arr: a.slice(), a: -1, b: -1, lo: 0, hi: n - 1, pass: 0, comps, swaps, line: 1, note: "старт" });
+            for (let i = 0; i < n - 1; i++) {
+              F.push({ arr: a.slice(), a: -1, b: -1, lo: 0, hi: n - 1, pass: i + 1, comps, swaps, line: 2, note: "новый проход" });
+              for (let j = 0; j < n - 1; j++) {
+                comps++;
+                F.push({ arr: a.slice(), a: j, b: j + 1, iv: j, cmp: true, swap: false, lo: 0, hi: n - 1, pass: i + 1, comps, swaps, line: 6 });
+                if (a[j] > a[j + 1]) { swap(a, j, j + 1); swaps++;
+                  F.push({ arr: a.slice(), a: j, b: j + 1, iv: j, cmp: true, swap: true, lo: 0, hi: n - 1, pass: i + 1, comps, swaps, line: 7 }); }
+              }
+            }
+            F.push({ arr: a.slice(), a: -1, b: -1, lo: 0, hi: -1, pass: n - 1, comps, swaps, line: 8, done: true, note: "готово" });
+            return F;
+          }
+        },
+        { id: "tail", label: "2 · короткий хвост", pass: "проход",
+          code: [
+            "def bubble_sort(numbers):",
+            "    length = len(numbers)",
+            "    for placed in range(length - 1):",
+            "        for i in range(length - 1 - placed):",
+            "            left = numbers[i]",
+            "            right = numbers[i + 1]",
+            "            if left > right:",
+            "                numbers[i], numbers[i + 1] = right, left",
+            "    return numbers"
+          ],
+          gen(src) {
+            const a = src.slice(), n = a.length, F = []; let comps = 0, swaps = 0;
+            F.push({ arr: a.slice(), a: -1, b: -1, lo: 0, hi: n - 1, pass: 0, comps, swaps, line: 1, note: "старт" });
+            for (let i = 0; i < n - 1; i++) {
+              const hi = n - 1 - i;
+              F.push({ arr: a.slice(), a: -1, b: -1, lo: 0, hi, pass: i + 1, comps, swaps, line: 2, note: "новый проход" });
+              for (let j = 0; j < n - 1 - i; j++) {
+                comps++;
+                F.push({ arr: a.slice(), a: j, b: j + 1, iv: j, cmp: true, swap: false, lo: 0, hi, pass: i + 1, comps, swaps, line: 6 });
+                if (a[j] > a[j + 1]) { swap(a, j, j + 1); swaps++;
+                  F.push({ arr: a.slice(), a: j, b: j + 1, iv: j, cmp: true, swap: true, lo: 0, hi, pass: i + 1, comps, swaps, line: 7 }); }
+              }
+              F.push({ arr: a.slice(), a: -1, b: -1, lo: 0, hi: hi - 1, pass: i + 1, comps, swaps, line: 3, note: "хвост зафиксирован" });
+            }
+            F.push({ arr: a.slice(), a: -1, b: -1, lo: 0, hi: -1, pass: n - 1, comps, swaps, line: 8, done: true, note: "готово" });
+            return F;
+          }
+        },
+        { id: "flag", label: "3 · флаг выхода", pass: "проход",
+          code: [
+            "def bubble_sort(numbers):",
+            "    length = len(numbers)",
+            "    for placed in range(length - 1):",
+            "        swapped = False",
+            "        for i in range(length - 1 - placed):",
+            "            left = numbers[i]",
+            "            right = numbers[i + 1]",
+            "            if left > right:",
+            "                numbers[i], numbers[i + 1] = right, left",
+            "                swapped = True",
+            "        if not swapped:",
+            "            break",
+            "    return numbers"
+          ],
+          gen(src) {
+            const a = src.slice(), n = a.length, F = []; let comps = 0, swaps = 0;
+            F.push({ arr: a.slice(), a: -1, b: -1, lo: 0, hi: n - 1, pass: 0, comps, swaps, line: 1, note: "старт" });
+            for (let i = 0; i < n - 1; i++) {
+              const hi = n - 1 - i; let swapped = false;
+              F.push({ arr: a.slice(), a: -1, b: -1, lo: 0, hi, pass: i + 1, comps, swaps, line: 3, note: "swapped = False" });
+              for (let j = 0; j < n - 1 - i; j++) {
+                comps++;
+                F.push({ arr: a.slice(), a: j, b: j + 1, iv: j, cmp: true, swap: false, lo: 0, hi, pass: i + 1, comps, swaps, line: 7 });
+                if (a[j] > a[j + 1]) { swap(a, j, j + 1); swaps++; swapped = true;
+                  F.push({ arr: a.slice(), a: j, b: j + 1, iv: j, cmp: true, swap: true, lo: 0, hi, pass: i + 1, comps, swaps, line: 8 }); }
+              }
+              F.push({ arr: a.slice(), a: -1, b: -1, lo: 0, hi: hi - 1, pass: i + 1, comps, swaps, line: 10, note: swapped ? "были обмены — идём дальше" : "обменов не было" });
+              if (!swapped) {
+                F.push({ arr: a.slice(), a: -1, b: -1, lo: 0, hi: -1, pass: i + 1, comps, swaps, line: 11, note: "break — выходим" });
+                F.push({ arr: a.slice(), a: -1, b: -1, lo: 0, hi: -1, pass: i + 1, comps, swaps, line: 12, done: true, note: "готово" });
+                return F;
+              }
+            }
+            F.push({ arr: a.slice(), a: -1, b: -1, lo: 0, hi: -1, pass: n - 1, comps, swaps, line: 12, done: true, note: "готово" });
+            return F;
+          }
+        },
+        { id: "cocktail", label: "4 · шейкерная", pass: "круг",
+          code: [
+            "def cocktail_sort(numbers):",
+            "    start = 0",
+            "    end = len(numbers) - 1",
+            "    swapped = True",
+            "    while swapped:",
+            "        swapped = False",
+            "        for i in range(start, end):",
+            "            left = numbers[i]",
+            "            right = numbers[i + 1]",
+            "            if left > right:",
+            "                numbers[i], numbers[i + 1] = right, left",
+            "                swapped = True",
+            "        end -= 1",
+            "        for i in range(end, start, -1):",
+            "            left = numbers[i - 1]",
+            "            right = numbers[i]",
+            "            if left > right:",
+            "                numbers[i - 1], numbers[i] = right, left",
+            "                swapped = True",
+            "        start += 1",
+            "    return numbers"
+          ],
+          gen(src) {
+            const a = src.slice(), n = a.length, F = []; let comps = 0, swaps = 0;
+            let lo = 0, hi = n - 1, swapped = true, round = 0, guard = 0;
+            F.push({ arr: a.slice(), a: -1, b: -1, lo, hi, pass: 0, comps, swaps, line: 3, note: "старт" });
+            while (swapped && guard++ < n + 2) {
+              round++; swapped = false;
+              F.push({ arr: a.slice(), a: -1, b: -1, lo, hi, pass: round, comps, swaps, line: 5, note: "проход вправо" });
+              for (let j = lo; j < hi; j++) {
+                comps++;
+                F.push({ arr: a.slice(), a: j, b: j + 1, iv: j, cmp: true, swap: false, lo, hi, pass: round, comps, swaps, line: 9 });
+                if (a[j] > a[j + 1]) { swap(a, j, j + 1); swaps++; swapped = true;
+                  F.push({ arr: a.slice(), a: j, b: j + 1, iv: j, cmp: true, swap: true, lo, hi, pass: round, comps, swaps, line: 10 }); }
+              }
+              hi--;
+              F.push({ arr: a.slice(), a: -1, b: -1, lo, hi, pass: round, comps, swaps, line: 12, note: "end -= 1 — правый край зафиксирован" });
+              if (hi <= lo) break;
+              F.push({ arr: a.slice(), a: -1, b: -1, lo, hi, pass: round, comps, swaps, line: 13, note: "проход влево" });
+              for (let k = hi; k > lo; k--) {
+                comps++;
+                F.push({ arr: a.slice(), a: k - 1, b: k, iv: k, back: true, cmp: true, swap: false, lo, hi, pass: round, comps, swaps, line: 16 });
+                if (a[k] < a[k - 1]) { swap(a, k, k - 1); swaps++; swapped = true;
+                  F.push({ arr: a.slice(), a: k - 1, b: k, iv: k, back: true, cmp: true, swap: true, lo, hi, pass: round, comps, swaps, line: 17 }); }
+              }
+              lo++;
+              F.push({ arr: a.slice(), a: -1, b: -1, lo, hi, pass: round, comps, swaps, line: 19, note: "start += 1 — левый край зафиксирован" });
+            }
+            F.push({ arr: a.slice(), a: -1, b: -1, lo: 0, hi: -1, pass: round, comps, swaps, line: 20, done: true, note: "готово" });
+            return F;
+          }
+        }
+      ];
+
+      const DEFAULT = [5, 8, 2, 6, 3, 7, 4, 1];
+      let base = DEFAULT.slice();
+      let vi = 2, frames = [], f = 0, timer = null;
+
+      const q = s => box.querySelector(s);
+      const elSeg = q("[data-bsv-seg]"), elBars = q("[data-bsv-bars]"), elTrack = q("[data-bsv-track]");
+      const elVars = q("[data-bsv-vars]"), elStatus = q("[data-bsv-status]"), elCode = q("[data-bsv-code]");
+      const elSide = q("[data-bsv-side]"), elPlay = q("[data-bsv-play]"), elSpeed = q("[data-bsv-speed]");
+      const elInput = q("[data-bsv-input]"), elHint = q("[data-bsv-hint]");
+
+      VARIANTS.forEach((v, idx) => {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.dataset.i = idx;
+        b.textContent = v.label;
+        b.setAttribute("aria-pressed", idx === vi ? "true" : "false");
+        elSeg.appendChild(b);
+      });
+      elSeg.addEventListener("click", e => {
+        const b = e.target.closest("button");
+        if (b) selectVariant(+b.dataset.i);
+      });
+
+      let bars = [];
+      function buildBars(n) {
+        elBars.innerHTML = "";
+        bars = [];
+        for (let i = 0; i < n; i++) {
+          const col = document.createElement("div"); col.className = "bsv-col";
+          const tag = document.createElement("div"); tag.className = "bsv-tag";
+          const bar = document.createElement("div"); bar.className = "bsv-bar";
+          const val = document.createElement("div"); val.className = "bsv-val";
+          const sub = document.createElement("div"); sub.className = "bsv-sub";
+          col.appendChild(tag); col.appendChild(bar); col.appendChild(val); col.appendChild(sub);
+          elBars.appendChild(col);
+          bars.push({ bar, val, tag, sub });
+        }
+      }
+
+      function renderCode() {
+        elCode.innerHTML = VARIANTS[vi].code.map((ln, i) =>
+          `<span class="bsv-cl" data-i="${i}">${highlightPython(ln) || "&nbsp;"}</span>`).join("");
+      }
+
+      function rebuild() {
+        stop();
+        frames = VARIANTS[vi].gen(base);
+        f = 0;
+        buildBars(base.length);
+        renderCode();
+        render();
+      }
+
+      function selectVariant(idx) {
+        vi = idx;
+        Array.from(elSeg.children).forEach((b, i) => b.setAttribute("aria-pressed", i === idx ? "true" : "false"));
+        rebuild();
+      }
+
+      function render() {
+        const fr = frames[f], V = VARIANTS[vi];
+        const mx = Math.max(...fr.arr);
+        const leftName = fr.back ? "i - 1" : "i";
+        const rightName = fr.back ? "i" : "i + 1";
+        for (let i = 0; i < bars.length; i++) {
+          const val = fr.arr[i];
+          bars[i].bar.style.height = (12 + (val / mx) * 118).toFixed(1) + "px";
+          bars[i].val.textContent = val;
+          let cls = "bsv-bar", tag = "", tagCls = "bsv-tag", sub = "", subCls = "bsv-sub";
+          const compared = (i === fr.a || i === fr.b);
+          if (compared) cls += fr.swap ? " is-swap" : " is-cmp";
+          else if (i < fr.lo || i > fr.hi) cls += " is-done";
+          if (vi === 3 && !fr.done && !compared) {
+            if (i === fr.lo) sub = "start";
+            if (i === fr.hi) sub = sub ? "start / end" : "end";
+          }
+          if (compared && i === fr.a) { tag = "left"; sub = leftName; tagCls += fr.swap ? " on swap" : " on"; subCls += " strong"; }
+          if (compared && i === fr.b) { tag = "right"; sub = rightName; tagCls += fr.swap ? " on swap" : " on"; subCls += " strong"; }
+          bars[i].bar.className = cls;
+          bars[i].tag.className = tagCls; bars[i].tag.textContent = tag;
+          bars[i].sub.className = subCls; bars[i].sub.textContent = sub;
+        }
+        Array.from(elCode.children).forEach(sp => sp.classList.toggle("on", +sp.dataset.i === fr.line));
+        elTrack.style.width = (f / (frames.length - 1) * 100) + "%";
+
+        let doing;
+        if (fr.done) doing = "✓ отсортировано";
+        else if (fr.cmp) {
+          if (fr.swap) doing = "left ⟷ right — поменял местами";
+          else {
+            const nf = frames[f + 1];
+            const willSwap = nf && nf.swap && nf.a === fr.a && nf.b === fr.b;
+            doing = "сравниваю left и right — " + (willSwap ? "left больше, нужен обмен" : "порядок не нарушен");
+          }
+        } else doing = fr.note || "";
+        elStatus.classList.toggle("done", !!fr.done);
+        elStatus.innerHTML = `<span class="d">${doing}</span>  ·  ${V.pass} ${fr.pass}  ·  сравнений ${fr.comps}  ·  обменов ${fr.swaps}`;
+
+        let vars;
+        if (fr.cmp && fr.swap) vars = `i = ${fr.iv}     numbers[${leftName}] ⟷ numbers[${rightName}]     теперь: ${fr.arr[fr.a]}, ${fr.arr[fr.b]}`;
+        else if (fr.cmp) vars = `i = ${fr.iv}     left = numbers[${leftName}] → ${fr.arr[fr.a]}     right = numbers[${rightName}] → ${fr.arr[fr.b]}`;
+        else if (vi === 3 && !fr.done) vars = `start = ${fr.lo}     end = ${fr.hi}${fr.note ? "     ·  " + fr.note : ""}`;
+        else vars = fr.note || " ";
+        elVars.textContent = vars;
+
+        const line = V.code[fr.line] ? V.code[fr.line].trim() : "";
+        elSide.textContent = line ? ("Сейчас выполняется:  " + line) : "Готово.";
+        elBars.setAttribute("aria-label", "Массив: " + fr.arr.join(", ") + (fr.done ? " — отсортирован" : ""));
+
+        box.querySelector('[data-bsv-act="back"]').disabled = f === 0;
+        box.querySelector('[data-bsv-act="first"]').disabled = f === 0;
+        box.querySelector('[data-bsv-act="next"]').disabled = f === frames.length - 1;
+        if (f === frames.length - 1) stop();
+      }
+
+      function step(d) { f = Math.max(0, Math.min(frames.length - 1, f + d)); render(); }
+      const delay = () => 520 - elSpeed.value * 46;
+      function play() {
+        if (timer) return;
+        if (f === frames.length - 1) f = 0;
+        elPlay.textContent = "⏸ пауза";
+        timer = setInterval(() => {
+          if (!box.isConnected) { clearInterval(timer); timer = null; return; }
+          if (f >= frames.length - 1) { stop(); return; }
+          f++; render();
+        }, reduce ? 260 : delay());
+      }
+      function stop() { if (timer) { clearInterval(timer); timer = null; } elPlay.textContent = "▶ играть"; }
+      function toggle() { timer ? stop() : play(); }
+
+      box.querySelectorAll("[data-bsv-act]").forEach(b => {
+        b.addEventListener("click", () => {
+          const act = b.dataset.bsvAct;
+          if (act === "play") toggle();
+          else { stop(); if (act === "first") { f = 0; render(); } else step(act === "next" ? 1 : -1); }
+        });
+      });
+      elSpeed.addEventListener("input", () => { if (timer) { stop(); play(); } });
+
+      const shuffle = n => {
+        const a = []; for (let i = 1; i <= n; i++) a.push(i);
+        for (let k = a.length - 1; k > 0; k--) { const m = Math.floor(Math.random() * (k + 1)); swap(a, k, m); }
+        return a;
+      };
+      const almost = n => {
+        const a = []; for (let i = 1; i <= n; i++) a.push(i);
+        swap(a, 1, 2); swap(a, n - 2, n - 4 > 0 ? n - 4 : 0);
+        return a;
+      };
+      function setBase(arr, msg) {
+        base = arr.slice();
+        elInput.value = base.join(" ");
+        elHint.textContent = msg || "";
+        rebuild();
+      }
+      box.querySelectorAll("[data-bsv-gen]").forEach(b => {
+        b.addEventListener("click", () => {
+          const g = b.dataset.bsvGen;
+          if (g === "shuffle") setBase(shuffle(8));
+          else if (g === "almost") setBase(almost(8));
+          else if (g === "reverse") { const a = []; for (let i = 8; i >= 1; i--) a.push(i); setBase(a); }
+          else if (g === "apply") {
+            const nums = (elInput.value.match(/-?\d+/g) || []).map(Number).filter(x => x >= 1 && x <= 99);
+            if (nums.length < 3) { elHint.textContent = "нужно хотя бы 3 числа от 1 до 99"; return; }
+            setBase(nums.slice(0, 12), nums.length > 12 ? "взял первые 12" : "");
+          }
+        });
+      });
+
+      box.setAttribute("tabindex", "0");
+      box.addEventListener("keydown", e => {
+        if (e.target.tagName === "INPUT") return;
+        if (e.key === "ArrowRight") { e.preventDefault(); stop(); step(1); }
+        else if (e.key === "ArrowLeft") { e.preventDefault(); stop(); step(-1); }
+        else if (e.key === " ") { e.preventDefault(); toggle(); }
+      });
+
+      elInput.value = base.join(" ");
+      rebuild();
     }
   };
 

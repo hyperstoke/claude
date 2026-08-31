@@ -1,0 +1,203 @@
+<!-- Статья для раздела «Документация». Вшивается в roadmap_artifact.html
+     скриптом build_site.py, открывается в панели сайта.
+     Код в <pre data-py> хранится обычным текстом — подсветку наводит
+     highlightPython() из скрипта сайта. Интерактивный визуализатор —
+     DOC_INIT.bubbleSort (ключ interactive в docs/INDEX.json). -->
+<div class="doc-article" data-doc="bubble-sort">
+
+  <p class="doc-lede">Пузырёк — самый простой алгоритм сортировки: сравнить двух соседей,
+    при необходимости поменять местами, повторять. Визуализатор ниже показывает, какая
+    строка кода выполняется на каждом шаге; дальше — четыре способа записать пузырёк,
+    от наивного до шейкерного.</p>
+
+  <h3>Идея за минуту</h3>
+  <p>Идём по массиву слева направо и смотрим на пары соседних элементов — <code>left</code>
+    и <code>right</code>. Если <code>left</code> больше — меняем их местами. За один
+    <b>проход</b> самый большой элемент «всплывает» в конец, как пузырёк, — отсюда название.
+    Повторяем проходы; когда за целый проход не случилось ни одного обмена, массив уже
+    упорядочен.</p>
+
+  <h3>Визуализатор</h3>
+  <p>Столбик — число. Переключай варианты кнопками сверху; панель справа подсветит активную
+    строку. Над сравниваемой парой — имена из кода (<code>left</code> / <code>right</code>)
+    и индексы (<code>i</code> / <code>i + 1</code>); у шейкерной снизу отмечены границы
+    <code>start</code> и <code>end</code> — докуда дошёл ещё не отсортированный кусок.</p>
+
+  <div class="bsv" data-bsv>
+    <div class="bsv-seg" data-bsv-seg role="group" aria-label="Вариант алгоритма"></div>
+    <div class="bsv-main">
+      <div class="bsv-left">
+        <div class="bsv-stage" data-bsv-bars role="img" aria-label="Массив столбиков"></div>
+        <div class="bsv-track"><i data-bsv-track></i></div>
+        <p class="bsv-vars" data-bsv-vars>&nbsp;</p>
+        <p class="bsv-status" data-bsv-status><span class="d">—</span></p>
+        <div class="bsv-controls">
+          <button type="button" class="bsv-btn" data-bsv-act="first">⏮ в начало</button>
+          <button type="button" class="bsv-btn" data-bsv-act="back">◀ шаг</button>
+          <button type="button" class="bsv-btn bsv-primary" data-bsv-act="play" data-bsv-play>▶ играть</button>
+          <button type="button" class="bsv-btn" data-bsv-act="next">шаг ▶</button>
+          <label class="bsv-speed">скорость
+            <input type="range" min="1" max="10" value="6" data-bsv-speed aria-label="Скорость воспроизведения">
+          </label>
+        </div>
+        <div class="bsv-data">
+          <input type="text" inputmode="numeric" autocomplete="off" placeholder="5 8 2 6 3 7 4 1"
+                 data-bsv-input aria-label="Свой массив чисел">
+          <button type="button" class="bsv-chip" data-bsv-gen="apply">взять свой</button>
+          <button type="button" class="bsv-chip" data-bsv-gen="shuffle">перемешать</button>
+          <button type="button" class="bsv-chip" data-bsv-gen="almost">почти отсортирован</button>
+          <button type="button" class="bsv-chip" data-bsv-gen="reverse">обратный порядок</button>
+          <p class="bsv-hint" data-bsv-hint role="status"></p>
+        </div>
+        <div class="bsv-legend">
+          <span><i class="bsv-sw bsv-i-idle"></i>ждёт</span>
+          <span><i class="bsv-sw bsv-i-cmp"></i>сравниваются</span>
+          <span><i class="bsv-sw bsv-i-swap"></i>меняются местами</span>
+          <span><i class="bsv-sw bsv-i-done"></i>на своём месте</span>
+        </div>
+      </div>
+      <div class="bsv-right">
+        <div class="bsv-codewrap"><pre class="bsv-code" data-bsv-code></pre></div>
+        <p class="bsv-side" data-bsv-side></p>
+      </div>
+    </div>
+    <p class="bsv-keys"><kbd>←</kbd> <kbd>→</kbd> шаг · <kbd>Пробел</kbd> играть / пауза
+      <span>(когда виджет в фокусе)</span></p>
+  </div>
+
+  <h3>Четыре варианта</h3>
+  <p>Идея одна; отличается только объём лишней работы. Первые три — тот же пузырёк с
+    постепенной экономией, четвёртый носит собственное имя.</p>
+
+  <div class="doc-card">
+    <div class="doc-card-head"><span class="doc-mono">1 · базовый</span><span class="doc-tag">два вложенных цикла</span></div>
+    <pre class="doc-code" data-py>def bubble_sort(numbers):
+    length = len(numbers)
+    for _ in range(length - 1):
+        for i in range(length - 1):
+            left = numbers[i]
+            right = numbers[i + 1]
+            if left > right:
+                numbers[i], numbers[i + 1] = right, left
+    return numbers</pre>
+  </div>
+  <p>Внешний цикл — <code>length − 1</code> проход, внутренний каждый раз идёт по всему
+    массиву. Даже если данные уже отсортированы, делает все <code>(length − 1)²</code>
+    сравнений. Отправная точка, дальше — три улучшения.</p>
+
+  <div class="doc-card">
+    <div class="doc-card-head"><span class="doc-mono">2 · не трогаем хвост</span><span class="doc-tag">range(… − placed)</span></div>
+    <pre class="doc-code" data-py>def bubble_sort(numbers):
+    length = len(numbers)
+    for placed in range(length - 1):
+        for i in range(length - 1 - placed):
+            left = numbers[i]
+            right = numbers[i + 1]
+            if left > right:
+                numbers[i], numbers[i + 1] = right, left
+    return numbers</pre>
+  </div>
+  <p>После прохода номер <code>placed</code> столько же наибольших элементов уже стоят в
+    конце на своих местах — сравнивать их снова незачем. Одна цифра в <code>range</code>,
+    сравнений почти вдвое меньше: <code>length·(length − 1) / 2</code>. В визуализаторе
+    видно, как хвост подсвечивается «на месте».</p>
+
+  <div class="doc-card">
+    <div class="doc-card-head"><span class="doc-mono">3 · флаг раннего выхода</span><span class="doc-tag">по умолчанию — так</span></div>
+    <pre class="doc-code" data-py>def bubble_sort(numbers):
+    length = len(numbers)
+    for placed in range(length - 1):
+        swapped = False
+        for i in range(length - 1 - placed):
+            left = numbers[i]
+            right = numbers[i + 1]
+            if left > right:
+                numbers[i], numbers[i + 1] = right, left
+                swapped = True
+        if not swapped:
+            break
+    return numbers</pre>
+  </div>
+  <p>Флаг <code>swapped</code>: если за целый проход не было ни одного обмена, массив
+    упорядочен и <code>break</code> прекращает работу. На отсортированном входе — один
+    проход, <code>O(n)</code> вместо <code>O(n²)</code>. Канонический вариант: по умолчанию
+    пиши так.</p>
+
+  <div class="doc-card">
+    <div class="doc-card-head"><span class="doc-mono">4 · шейкерная</span><span class="doc-tag">cocktail sort</span></div>
+    <pre class="doc-code" data-py>def cocktail_sort(numbers):
+    start = 0
+    end = len(numbers) - 1
+    swapped = True
+    while swapped:
+        swapped = False
+        for i in range(start, end):
+            left = numbers[i]
+            right = numbers[i + 1]
+            if left > right:
+                numbers[i], numbers[i + 1] = right, left
+                swapped = True
+        end -= 1
+        for i in range(end, start, -1):
+            left = numbers[i - 1]
+            right = numbers[i]
+            if left > right:
+                numbers[i - 1], numbers[i] = right, left
+                swapped = True
+        start += 1
+    return numbers</pre>
+  </div>
+  <p>Обычный пузырёк быстро гонит большие элементы вправо, а маленькие ползут влево по
+    одному за проход — их называют «черепахами». Шейкер после прохода вправо идёт обратно
+    влево и утаскивает мелкие к началу. На данных с «черепахами» заметно быстрее; в худшем
+    случае — та же <code>O(n²)</code>. Формально это уже отдельный алгоритм, но вырастает
+    прямо из пузырька.</p>
+
+  <h3>Сколько работы на массиве из 8 чисел</h3>
+  <div class="doc-tablewrap">
+    <table class="doc-table">
+      <thead>
+        <tr><th>Вариант</th><th>Уже отсортирован</th><th>Обратный порядок (худший)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Базовый</td><td>49 сравн. · 0 обм. · 7 проходов</td><td>49 сравн. · 28 обм. · 7 проходов</td></tr>
+        <tr><td>Не трогаем хвост</td><td>28 сравн. · 0 обм. · 7 проходов</td><td>28 сравн. · 28 обм. · 7 проходов</td></tr>
+        <tr><td>Флаг раннего выхода</td><td>7 сравн. · 0 обм. · 1 проход</td><td>28 сравн. · 28 обм. · 7 проходов</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Сложность</h3>
+  <div class="doc-tablewrap">
+    <table class="doc-table">
+      <thead>
+        <tr><th>Реализация</th><th>Лучший</th><th>Средний</th><th>Худший</th><th>Память</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Базовый · хвост</td><td>O(n²)</td><td>O(n²)</td><td>O(n²)</td><td>O(1)</td></tr>
+        <tr><td>С флагом</td><td>O(n)</td><td>O(n²)</td><td>O(n²)</td><td>O(1)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Пузырёк <b>устойчивый</b>: равные элементы не перепрыгивают друг через друга, потому
+    что обмен происходит только при строгом <code>&gt;</code>. Память <code>O(1)</code> —
+    сортируем на месте, без второго массива.</p>
+
+  <h3>Когда пузырёк уместен</h3>
+  <ul class="doc-facts">
+    <li><b>Почти отсортированные данные.</b> С флагом раннего выхода — один-два прохода,
+      быстрее многих «умных» сортировок с их накладными расходами.</li>
+    <li><b>Крошечные массивы и учебные задачи.</b> На десятке элементов разница с
+      <code>O(n log n)</code> незаметна, а кода — четыре строки.</li>
+    <li><b>В реальном коде — не он.</b> <code>sorted(x)</code> и <code>x.sort()</code>
+      используют TimSort — гибрид вставок и слияния, устойчивый, <code>O(n log n)</code>
+      в худшем случае. Пузырёк пишут, чтобы понять, как сортировка устроена изнутри.</li>
+  </ul>
+
+  <div class="doc-rule">
+    <b>Существует ещё рекурсивная запись:</b> один проход пузырька плюс вызов функции для
+    массива на элемент короче. Та же работа тем же способом, просто цикл заменён рекурсией.
+    Вернёшься к ней после темы «рекурсия».
+  </div>
+
+</div>
