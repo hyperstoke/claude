@@ -1509,7 +1509,7 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
     }
   };
 
-                                                                                                                                                                /* @gen:start — генерируется scripts/build_site.py из coach/*.json, вручную не править */
+                                                                                                                                                                  /* @gen:start — генерируется scripts/build_site.py из coach/*.json, вручную не править */
   const TRACKING_SINCE = "2026-07-11";
   const ACTIVITY = {
   "2026-07-11": {
@@ -2691,6 +2691,62 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
         "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/12_Funktsii/12_02_Vozvraschaemoe_znachenie/beegeek_password.py"
       }
     ]
+  },
+  "2026-09-04": {
+    "level": 3,
+    "tasks": 7,
+    "note": "Возвращаемое значение функции, 7 задач Stepik. Сессия тяжёлая — почти всё со 2-3 версии после подсказок. «Корни уравнения» (solve): return то одного значения, то пары, то None; фикс d==0 откатывался дважды; забыт print. «Звёздный треугольник»: обе формулы смещены (пробелы и 2*i +-1). «Калькулятор доставки»: чисто с первой, одно выражение. «Биномиальный коэффициент»: знаменатель без скобок (приоритет / и *), затем / вместо // (float теряет точность при n>=57). «Искомый месяц»: лишний for, игнорировал аргумент number, сдвиг индекса на 1. «Магические даты»: типы через int(), лишнее [2::], флаг вместо return сравнения. «Панграммы»: all() развёрнут не в ту сторону (символ in алфавит вместо буква in text). Сквозное: не все ветки возвращают одно и то же; готовая операция вместо прямого выражения.",
+    "items": [
+      {
+        "name": "Корни уравнения",
+        "kind": "пройдено",
+        "file": "study_python/practice/12_Funktsii/12_02_Vozvraschaemoe_znachenie/solve.py",
+        "code": "\"\"\"\nЗадача: Корни уравнения\n\nНапишите функцию solve(a, b, c), которая принимает три целых числа\na, b, c — коэффициенты квадратного уравнения a*x**2 + b*x + c = 0 —\nи ВОЗВРАЩАЕТ его корни в порядке возрастания.\n\nПримечание 1: похожая задача уже была раньше.\nПримечание 2: гарантируется, что уравнение имеет хотя бы один корень.\n\nВход: три числа-аргумента, приходят в функцию, input() не нужен\nВыход: функция ничего не печатает, а возвращает два корня\n       (если корень один, он возвращается дважды)\n\nПример вызова:\nprint(solve(1, -4, -5))\nprint(solve(-2, 7, -5))\nprint(solve(1, 2, 1))\n\nВывод:\n\"-1.0 5.0\"\n\"1.0 2.5\"\n\"-1.0 -1.0\"\n# в файле образец показан в кавычках; печатать кавычки не нужно\n# два числа выводятся через пробел в одной строке, по возрастанию\n\"\"\"\nfrom math import sqrt\n\n\ndef solve(a, b, c):\n    d = b ** 2 - 4 * a * c\n    if d == 0:\n        x = - b / (2 * a)\n        return x, x\n    else:\n        x1 = - (b - sqrt(d)) / (2 * a)\n        x2 = - (b + sqrt(d)) / (2 * a)\n        return min(x1, x2), max(x1, x2)\n\n\na, b, c = int(input()), int(input()), int(input())\n\nx1, x2 = solve(a, b, c)\n\nprint(x1, x2)\n",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/12_Funktsii/12_02_Vozvraschaemoe_znachenie/solve.py"
+      },
+      {
+        "name": "Звёздный треугольник",
+        "kind": "пройдено",
+        "file": "study_python/practice/12_Funktsii/12_02_Vozvraschaemoe_znachenie/draw_triangle.py",
+        "code": "\"\"\"\nЗадача: Звёздный треугольник\n\nНапишите функцию draw_triangle(), которая ВЫВОДИТ звёздный равнобедренный\nтреугольник с основанием 15 и высотой 8:\n\n       *\n      ***\n     *****\n    *******\n   *********\n  ***********\n *************\n***************\n\nПримечание 1: для вывода треугольника используйте цикл for.\nПримечание 2: справа от звёздочек пробелов нет.\n\nВход: аргументов нет, input() не нужен\nВыход: функция ничего не возвращает, просто печатает 8 строк\n\nПример вызова:\ndraw_triangle()\n\"\"\"\n\n\ndef draw_triangle():\n    for i in range(1, 9):\n        print(\" \" * (8 - i) + \"*\" * (i + (i - 1)))\n\n\ndraw_triangle()\n",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/12_Funktsii/12_02_Vozvraschaemoe_znachenie/draw_triangle.py"
+      },
+      {
+        "name": "Калькулятор доставки",
+        "kind": "пройдено",
+        "file": "study_python/practice/12_Funktsii/12_02_Vozvraschaemoe_znachenie/get_shipping_cost.py",
+        "code": "\"\"\"\nЗадача: Калькулятор доставки\n\nИнтернет-магазин делает экспресс-доставку: 1000 рублей за первый товар\nи 120 рублей за каждый последующий. Напишите функцию\nget_shipping_cost(quantity), которая принимает натуральное число quantity\n(количество товаров в заказе) и ВОЗВРАЩАЕТ стоимость доставки.\n\nВход: одно число-аргумент quantity (>= 1), input() не нужен\nВыход: функция ничего не печатает, а возвращает стоимость доставки\n\nПример вызова:\nprint(get_shipping_cost(1))\nprint(get_shipping_cost(3))\n\nВывод:\n1000\n1240\n\"\"\"\n\n\ndef get_shipping_cost(quantity):\n    return 1000 + 120 * (quantity - 1)\n\n\nprint(get_shipping_cost(int(input())))\n",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/12_Funktsii/12_02_Vozvraschaemoe_znachenie/get_shipping_cost.py"
+      },
+      {
+        "name": "Биномиальный коэффициент",
+        "kind": "пройдено",
+        "file": "study_python/practice/12_Funktsii/12_02_Vozvraschaemoe_znachenie/compute_binom.py",
+        "code": "\"\"\"\nЗадача: Биномиальный коэффициент\n\nНапишите функцию compute_binom(n, k), которая принимает два натуральных\nчисла n и k и ВОЗВРАЩАЕТ значение биномиального коэффициента:\n\n    n! / (k! * (n - k)!)\n\nФакториал: n! = 1 * 2 * 3 * ... * n.\n\nПримечание: можно завести вспомогательную функцию factorial(n) или взять\nготовую math.factorial. compute_binom(n, k) должна возвращать ЦЕЛОЕ число.\n\nВход: два числа-аргумента n и k (натуральные), input() не нужен\nВыход: функция ничего не печатает, а возвращает целое число\n\nПример вызова:\nprint(compute_binom(5, 2))\nprint(compute_binom(10, 0))\n\nВывод:\n10\n1\n\"\"\"\nimport math\n\n\ndef compute_binom(n, k):\n    return math.factorial(n) // (math.factorial(k) * math.factorial(n - k))\n\n\nn, k = int(input()), int(input())\n\n\nprint(compute_binom(n, k))\n",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/12_Funktsii/12_02_Vozvraschaemoe_znachenie/compute_binom.py"
+      },
+      {
+        "name": "Искомый месяц",
+        "kind": "пройдено",
+        "file": "study_python/practice/12_Funktsii/12_02_Vozvraschaemoe_znachenie/get_month.py",
+        "code": "\"\"\"\nЗадача: Искомый месяц\n\nНапишите функцию get_month(language, number), которая принимает язык\n('ru' или 'en') и номер месяца number (от 1 до 12 включительно) и\nВОЗВРАЩАЕТ название этого месяца на нужном языке.\n\nВход: два аргумента — language ('ru'/'en') и number (1..12), input() не нужен\nВыход: функция ничего не печатает, а возвращает строку с названием месяца\n\nПример вызова:\nprint(get_month('ru', 1))\nprint(get_month('ru', 12))\nprint(get_month('en', 1))\nprint(get_month('en', 10))\n\nВывод:\n\"январь\"\n\"декабрь\"\n\"january\"\n\"october\"\n# в файле образец в кавычках; печатать кавычки не нужно\n\"\"\"\n\n\ndef get_month(language: str, number: int) -> str:\n    lng_ru = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль',\n              'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь']\n    lng_en = ['january', 'february', 'march', 'april', 'may', 'june', 'july',\n              'august', 'september', 'october', 'november', 'december']\n    return lng_ru[number - 1] if language == \"ru\" else lng_en[number - 1]\n\n\nlanguage, number = input(), int(input())\nprint(get_month(language, number))\n",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/12_Funktsii/12_02_Vozvraschaemoe_znachenie/get_month.py"
+      },
+      {
+        "name": "Магические даты",
+        "kind": "пройдено",
+        "file": "study_python/practice/12_Funktsii/12_02_Vozvraschaemoe_znachenie/is_magic.py",
+        "code": "\"\"\"\nЗадача: Магические даты\n\nМагическая дата — это дата, когда день, умноженный на месяц, равен числу,\nобразованному последними двумя цифрами года.\n\nНапишите функцию is_magic(date), которая принимает строковое представление\nкорректной даты (формат 'ДД.ММ.ГГГГ') и ВОЗВРАЩАЕТ True, если дата\nмагическая, иначе False.\n\nВход: один аргумент date — строка вида '10.06.1960', input() не нужен\nВыход: функция ничего не печатает, а возвращает True или False\n\nПример вызова:\nprint(is_magic('10.06.1960'))   # 10 * 6 == 60  -> True\nprint(is_magic('11.06.1960'))   # 11 * 6 == 66  -> False\n\nВывод:\nTrue\nFalse\n\nТесты:\n'10.06.1960' -> True\n'15.03.1945' -> True     # 15 * 3 == 45\n'03.11.2033' -> True     # 3 * 11 == 33\n\"\"\"\n\n\ndef is_magic(date):\n    day, month, year = date.split(\".\")\n    return int(day) * int(month) == int(year[-2:])\n\n\ndate = input()\n\n\nprint(is_magic(date))\n",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/12_Funktsii/12_02_Vozvraschaemoe_znachenie/is_magic.py"
+      },
+      {
+        "name": "Панграммы",
+        "kind": "пройдено",
+        "file": "study_python/practice/12_Funktsii/12_02_Vozvraschaemoe_znachenie/is_pangram.py",
+        "code": "\"\"\"\nЗадача: Панграммы\n\nПанграмма — фраза, содержащая все буквы алфавита (её используют для показа\nшрифтов). Напишите функцию is_pangram(text), которая принимает строку текста\nна английском языке и ВОЗВРАЩАЕТ True, если текст — панграмма, иначе False.\n\nПримечание: гарантируется, что в строке только буквы английского алфавита\nи пробелы (регистр может быть любой).\n\nВход: один аргумент text — строка, input() не нужен\nВыход: функция ничего не печатает, а возвращает True или False\n\nПример вызова:\nprint(is_pangram('Jackdaws love my big sphinx of quartz'))\nprint(is_pangram('The jay pig fox zebra and my wolves quack'))\nprint(is_pangram('Hello world'))\n\nВывод:\nTrue\nTrue\nFalse\n\"\"\"\n\n\ndef is_pangram(text):\n    text = text.lower()\n    return all(letter in text for letter in \"abcdefghijklmnopqrstuvwxyz\")\n\n\nprint(is_pangram(input()))\n",
+        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/12_Funktsii/12_02_Vozvraschaemoe_znachenie/is_pangram.py"
+      }
+    ]
   }
 };
   const PROGRESS = {
@@ -2854,12 +2910,12 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
   {
     "theme": "алгоритмы сортировки",
     "topic": "ручные сортировки: действие, которое происходит один раз за проход (индекс минимума, флаг обмена), а не на каждом сравнении",
-    "reason": "08-08 пузырёк: ранний выход поставлен на уровне пары, флага обмена не было. 08-09 сортировка выбором: переменной-кандидата с индексом минимума не появилось ни в одной из двух попыток; позже воспроизвёл каркас по памяти, но сравнивал с text[i] вместо text[min_index]. Обе задачи собраны по эталону, самостоятельно не решены. Нужна задача-близнец: один проход, один обмен, кандидат в переменной.",
+    "reason": "08-08 пузырёк: ранний выход на уровне пары, флага обмена не было. 08-09 выбором: кандидата с индексом минимума не завёл ни в одной попытке; каркас по эталону, сам не воспроизводит. Нужна близнец: один проход, один обмен, кандидат в переменной. 2026-09-04: выдана settle_leaderboard (пузырёк по убыванию, флаг на проход + ранний выход), пока не решалась.",
     "difficulty": 6,
-    "status": "pending",
-    "file": "study_python/practice/10_Spiski/10_02_Algoritmy_sortirovki/sortirovka_vyborom.py",
-    "code": "\"\"\"\nЗадача: Сортировка выбором\n\nОтсортировать список по возрастанию, реализовав алгоритм сортировки\nвыбором. Список уже задан в коде, вводить ничего не нужно.\n\nВход:\nготовый список a из 100 целых чисел (задан в коде)\n\nВыход:\nодна строка — отсортированный по возрастанию список a\n(печатается через print(a), то есть в виде списка со скобками)\n\nПравила:\n- .sort(), sorted(), min(), max() не использовать — сортировать самому\n- сортировать сам список a на месте, а не собирать новый\n\nПримеры:\n\na = [3, 1, 2]\nвывод: \"[1, 2, 3]\"\n\"\"\"\n\nnumbers = [\n    78, -32, 5, 39, 58, -5, -63, 57, 72, 9, 53, -1, 63, -97, -21, -94, -47, 57, -8,\n    60, -23, -72, -22, -79, 90, 96, -41, -71, -48, 84, 89, -96, 41, -16, 94, -60,\n    -64, -39, 60, -14, -62, -19, -3, 32, 98, 14, 43, 3, -56, 71, -71, -67, 80, 27,\n    92, 92, -64, 0, -77, 2, -26, 41, 3, -31, 48, 39, 20, -30, 35, 32, -58, 2, 63,\n    64, 66, 62, 82, -62, 9, -52, 35, -61, 87, 78, 93, -42, 87, -72, -10, -36, 61,\n    -16, 59, 59, 22, -24, -67, 76, -94, 59\n]\n\nn = len(numbers)\n\nfor i in range(n):\n    min_index = i\n\n    for j in range(i + 1, n):\n        if numbers[j] < numbers[min_index]:\n            min_index = j\n\n    numbers[i], numbers[min_index] = numbers[min_index], numbers[i]\n\n\n\nprint(numbers)\n",
-    "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/10_Spiski/10_02_Algoritmy_sortirovki/sortirovka_vyborom.py"
+    "status": "in_progress",
+    "file": "study_python/practice/coach_tasks/settle_leaderboard.py",
+    "code": "\"\"\"\nЗадача: Устаканить таблицу лидеров\nТема: сортировка пузырьком: флаг обмена и ранний выход  |  Сложность: 6 (сложная)\n\nЛегенда: сервис хранит таблицу лидеров — список очков игроков, отсортированный\nпо УБЫВАНИЮ (первый в списке — лучший). После каждого раунда очки у нескольких\nигроков меняются, но обычно чуть-чуть: таблица остаётся почти упорядоченной.\nГонять полную сортировку каждый раунд накладно, поэтому таблицу «доводят»\nпузырьком с ранним выходом — как только очередной проход прошёл без единого\nобмена, список уже упорядочен и остальные проходы не нужны. Вызывающему коду\nнадо ещё знать, сдвинулось ли хоть что-нибудь: если нет — перерисовывать\nтаблицу на клиенте не надо.\n\nВход:  список целых чисел scores — очки игроков в текущем порядке таблицы.\nВыход: функция settle(scores) сортирует список ПО УБЫВАНИЮ на месте (ничего\nне пересоздавая) и ВОЗВРАЩАЕТ True, если за всю сортировку был хотя бы один\nобмен, иначе False.\n\nПроход — пройти по соседним парам слева направо и поменять местами те, где\nлевый МЕНЬШЕ правого (сортировка по убыванию). После каждого прохода смотрим\nфлаг обмена: если за весь проход не было ни одного обмена — останавливаемся,\nбольше проходов не делаем.\n\nПримеры:\n[30, 10, 20]     -> True    # стало [30, 20, 10]\n[30, 20, 10]     -> False   # уже по убыванию, ни одного обмена\n[10, 20, 30]     -> True    # стало [30, 20, 10]\n[50]             -> False   # один игрок, сравнивать не с чем\n[]               -> False   # пустая таблица\n[15, 15, 15]     -> False   # равные очки, обменов нет\n# в примерах показан аргумент и возвращаемое значение; печатать текст не нужно\n\"\"\"\n\n\ndef settle(scores):\n\n    for placed in range(len(scores) - 1):\n        swap = False\n        for i in range(len(scores) - 1 - placed):\n            if scores[i] > scores[i + 1]:\n                scores[i], scores[i + 1] = scores[i + 1], scores[i]\n                swap = True\n        if not swap:\n            break\n    return swap\n\n\n\nscores = list(map(int, input().split()))\n\nmoved = settle(scores)\n\nprint(*scores)\nprint(moved)\n",
+    "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/coach_tasks/settle_leaderboard.py"
   },
   {
     "theme": "арифметика и ветвление",

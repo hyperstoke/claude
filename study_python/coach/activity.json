@@ -997,6 +997,48 @@
           "file": "study_python/practice/12_Funktsii/12_02_Vozvraschaemoe_znachenie/beegeek_password.py"
         }
       ]
+    },
+    "2026-09-04": {
+      "level": 3,
+      "tasks": 7,
+      "note": "Возвращаемое значение функции, 7 задач Stepik. Сессия тяжёлая — почти всё со 2-3 версии после подсказок. «Корни уравнения» (solve): return то одного значения, то пары, то None; фикс d==0 откатывался дважды; забыт print. «Звёздный треугольник»: обе формулы смещены (пробелы и 2*i +-1). «Калькулятор доставки»: чисто с первой, одно выражение. «Биномиальный коэффициент»: знаменатель без скобок (приоритет / и *), затем / вместо // (float теряет точность при n>=57). «Искомый месяц»: лишний for, игнорировал аргумент number, сдвиг индекса на 1. «Магические даты»: типы через int(), лишнее [2::], флаг вместо return сравнения. «Панграммы»: all() развёрнут не в ту сторону (символ in алфавит вместо буква in text). Сквозное: не все ветки возвращают одно и то же; готовая операция вместо прямого выражения.",
+      "items": [
+        {
+          "name": "Корни уравнения",
+          "kind": "пройдено",
+          "file": "study_python/practice/12_Funktsii/12_02_Vozvraschaemoe_znachenie/solve.py"
+        },
+        {
+          "name": "Звёздный треугольник",
+          "kind": "пройдено",
+          "file": "study_python/practice/12_Funktsii/12_02_Vozvraschaemoe_znachenie/draw_triangle.py"
+        },
+        {
+          "name": "Калькулятор доставки",
+          "kind": "пройдено",
+          "file": "study_python/practice/12_Funktsii/12_02_Vozvraschaemoe_znachenie/get_shipping_cost.py"
+        },
+        {
+          "name": "Биномиальный коэффициент",
+          "kind": "пройдено",
+          "file": "study_python/practice/12_Funktsii/12_02_Vozvraschaemoe_znachenie/compute_binom.py"
+        },
+        {
+          "name": "Искомый месяц",
+          "kind": "пройдено",
+          "file": "study_python/practice/12_Funktsii/12_02_Vozvraschaemoe_znachenie/get_month.py"
+        },
+        {
+          "name": "Магические даты",
+          "kind": "пройдено",
+          "file": "study_python/practice/12_Funktsii/12_02_Vozvraschaemoe_znachenie/is_magic.py"
+        },
+        {
+          "name": "Панграммы",
+          "kind": "пройдено",
+          "file": "study_python/practice/12_Funktsii/12_02_Vozvraschaemoe_znachenie/is_pangram.py"
+        }
+      ]
     }
   }
 }

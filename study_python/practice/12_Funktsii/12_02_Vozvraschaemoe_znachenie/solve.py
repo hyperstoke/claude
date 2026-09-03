@@ -26,22 +26,20 @@ print(solve(1, 2, 1))
 """
 from math import sqrt
 
+
 def solve(a, b, c):
-    d = 0
-    if a != 0:
-        d = b ** 2 - 4 * a * c
-        if d < 0:
-            print("Нет корней")
-        elif d == 0:
-            x = - b / (2 * a)
-            print(x)
-        elif d > 0:
-            x1 = - (b - sqrt(d)) / (2 * a)
-            x2 = - (b + sqrt(d)) / (2 * a)
-            print(min(x1, x2), max(x1, x2), sep="\n")
+    d = b ** 2 - 4 * a * c
+    if d == 0:
+        x = - b / (2 * a)
+        return x, x
     else:
-        print('"a" не должно равняться нулю.')
+        x1 = - (b - sqrt(d)) / (2 * a)
+        x2 = - (b + sqrt(d)) / (2 * a)
+        return min(x1, x2), max(x1, x2)
 
 
 a, b, c = int(input()), int(input()), int(input())
-print(solve(a, b, c))
+
+x1, x2 = solve(a, b, c)
+
+print(x1, x2)
