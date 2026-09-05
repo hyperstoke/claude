@@ -18,6 +18,15 @@
       "tag": "алгоритмы · сортировка",
       "file": "study_python/docs/bubble_sort.html",
       "interactive": "bubbleSort"
+    },
+    {
+      "id": "binary-search",
+      "title": "Бинарный поиск",
+      "subtitle": "Поиск в упорядоченных данных делением пополам: канонический шаблон, визуализатор шагов по массиву, оценка на худший случай ⌊log₂n⌋+1 и типовые баги.",
+      "date": "2026-09-06",
+      "tag": "алгоритмы · поиск",
+      "file": "study_python/docs/binary_search.html",
+      "interactive": "binarySearch"
     }
   ]
 }

@@ -1,0 +1,179 @@
+<!-- Статья для раздела «Документация». Вшивается в roadmap_artifact.html
+     скриптом build_site.py, открывается в панели сайта.
+     Код в <pre data-py> хранится обычным текстом — подсветку наводит
+     highlightPython() из скрипта сайта. Интерактивный визуализатор —
+     DOC_INIT.binarySearch (ключ interactive в docs/INDEX.json). -->
+<div class="doc-article" data-doc="binary-search">
+
+  <p class="doc-lede">Бинарный поиск — искать в упорядоченных данных, каждый раз
+    отбрасывая половину. Миллион элементов — 20 шагов вместо миллиона. Один и тот же
+    механизм работает и для поиска элемента в отсортированном массиве, и для «угадай
+    число». Ниже: канонический шаблон, визуализатор, оценка на худший случай и
+    типовые баги.</p>
+
+  <h3>Идея</h3>
+  <p>Данные должны быть <b>упорядочены</b>. Смотрим на середину; ответ
+    (<code>меньше</code> / <code>больше</code> / <code>равно</code>) сразу говорит,
+    в какой половине искать дальше — вторая отбрасывается целиком.
+    <code>n</code> → <code>n / 2</code> → <code>n / 4</code> → … → 1. Это
+    <code>O(log n)</code>: диапазон в миллион схлопывается за 20 шагов, в миллиард —
+    за 30.</p>
+
+  <h3>Канонический шаблон</h3>
+  <div class="doc-card">
+    <div class="doc-card-head"><span class="doc-mono">bin_search(items, target)</span><span class="doc-tag">индекс или −1</span></div>
+    <pre class="doc-code" data-py>def bin_search(items, target):
+    left, right = 0, len(items) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if items[mid] == target:
+            return mid
+        if items[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return -1</pre>
+  </div>
+  <p><b>Инвариант:</b> если <code>target</code> есть в массиве, он всегда внутри
+    отрезка <code>[left, right]</code>. Цикл идёт, пока отрезок не пуст
+    (<code>left &lt;= right</code>). Проверив <code>mid</code>, границу
+    <b>обязательно</b> сдвигают за него — <code>mid + 1</code> или
+    <code>mid - 1</code>, — иначе отрезок не сузится. Предусловие:
+    <code>items</code> отсортирован по возрастанию.</p>
+
+  <h3>Визуализатор</h3>
+  <p>Отсортированный массив. Выбери, что ищем, и шагай: подсвечены границы
+    <code>L</code> / <code>R</code>, середина <code>mid</code>, отброшенные половины
+    гаснут. Панель справа — активная строка кода.</p>
+
+  <div class="bin" data-bin>
+    <div class="bin-seg" data-bin-seg role="group" aria-label="Длина массива"><span class="bin-seg-lab">длина:</span></div>
+    <div class="bin-main">
+      <div class="bin-left">
+        <div class="bin-cells" data-bin-cells role="img" aria-label="Отсортированный массив"></div>
+        <div class="bin-track"><i data-bin-track></i></div>
+        <p class="bin-vars" data-bin-vars>&nbsp;</p>
+        <p class="bin-status" data-bin-status><span class="d">—</span></p>
+        <div class="bin-controls">
+          <button type="button" class="bin-btn" data-bin-act="first">⏮ в начало</button>
+          <button type="button" class="bin-btn" data-bin-act="back">◀ шаг</button>
+          <button type="button" class="bin-btn bin-primary" data-bin-act="play" data-bin-play>▶ играть</button>
+          <button type="button" class="bin-btn" data-bin-act="next">шаг ▶</button>
+          <label class="bin-speed">скорость
+            <input type="range" min="1" max="10" value="6" data-bin-speed aria-label="Скорость воспроизведения">
+          </label>
+        </div>
+        <div class="bin-data">
+          что ищем:
+          <button type="button" class="bin-chip" data-bin-gen="rand">случайный элемент</button>
+          <button type="button" class="bin-chip" data-bin-gen="worst">худший случай</button>
+          <button type="button" class="bin-chip" data-bin-gen="miss">которого нет</button>
+        </div>
+        <div class="bin-legend">
+          <span><i class="bin-sw bin-i-live"></i>в поиске</span>
+          <span><i class="bin-sw bin-i-mid"></i>середина</span>
+          <span><i class="bin-sw bin-i-out"></i>отброшено</span>
+          <span><i class="bin-sw bin-i-found"></i>найдено</span>
+        </div>
+      </div>
+      <div class="bin-right">
+        <div class="bin-codewrap"><pre class="bin-code" data-bin-code></pre></div>
+        <p class="bin-side" data-bin-side></p>
+      </div>
+    </div>
+    <p class="bin-keys"><kbd>←</kbd> <kbd>→</kbd> шаг · <kbd>Пробел</kbd> играть / пауза
+      <span>(когда виджет в фокусе)</span></p>
+  </div>
+
+  <h3>Худший случай — сколько шагов гарантированно хватит</h3>
+  <p>Каждый шаг сокращает отрезок как минимум вдвое: <code>n</code> →
+    <code>⌊n / 2⌋</code> → … Значит в худшем случае нужно
+    <code>⌊log₂ n⌋ + 1</code> шагов — и это ответ задачи «сколько попыток хватит,
+    чтобы угадать число от 1 до n при оптимальной стратегии».</p>
+  <div class="doc-tablewrap">
+    <table class="doc-table">
+      <thead><tr><th>n</th><th>худший случай</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>1</td></tr>
+        <tr><td>10</td><td>4</td></tr>
+        <tr><td>100</td><td>7</td></tr>
+        <tr><td>1 000</td><td>10</td></tr>
+        <tr><td>1 000 000</td><td>20</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="doc-card">
+    <div class="doc-card-head"><span class="doc-mono">worst_case_steps(n)</span><span class="doc-tag">= ⌊log₂ n⌋ + 1</span></div>
+    <pre class="doc-code" data-py>def worst_case_steps(n):
+    count = 0
+    while n > 0:
+        n //= 2
+        count += 1
+    return count
+
+# то же самое одной строкой стандартной библиотеки:
+# n.bit_length()</pre>
+  </div>
+
+  <div class="doc-case doc-trap">
+    <div class="doc-case-head"><span class="doc-tool">−1</span><span class="doc-when">Промах на единицу в оценке</span></div>
+    <pre class="doc-code" data-py># симулируем и на каждом шаге уходим в ЛЕВУЮ половину:
+right = mid - 1     # ← так остаётся МЕНЬШАЯ половина</pre>
+    <p class="doc-why"><b>Почему недосчёт:</b> при <code>mid = (left + right) // 2</code>
+      верхняя часть <code>[mid + 1, right]</code> не меньше нижней (на 1 больше, когда
+      элементов в отрезке чётное число). Худший случай — когда тебя гонят в
+      <b>бо́льшую</b> половину, то есть двигать надо <code>left</code>, а не
+      <code>right</code>. Для <code>n = 10</code> правильный ответ 4, а «всегда влево»
+      даёт 3.</p>
+  </div>
+
+  <h3>Типовые баги</h3>
+
+  <div class="doc-case">
+    <div class="doc-case-head"><span class="doc-tool">∞</span><span class="doc-when">left = mid вместо left = mid + 1</span></div>
+    <pre class="doc-code" data-py>while left <= right:
+    mid = (left + right) // 2
+    if items[mid] < target:
+        left = mid          # при right == left + 1 mid == left — отрезок не двигается</pre>
+    <p class="doc-why">Границу всегда сдвигают <b>за</b> проверенный <code>mid</code>.
+      Иначе на отрезке из двух элементов <code>mid</code> застревает на
+      <code>left</code> — вечный цикл.</p>
+  </div>
+
+  <div class="doc-case">
+    <div class="doc-case-head"><span class="doc-tool">&lt;</span><span class="doc-when">left &lt; right вместо left &lt;= right</span></div>
+    <pre class="doc-code" data-py>while left < right:   # отрезок из одного элемента не проверяется</pre>
+    <p class="doc-why">С <code>&lt;</code> одноэлементный отрезок
+      <code>[left, left]</code> пропускается, и крайние значения не находятся.
+      Правильно — <code>left &lt;= right</code>.</p>
+  </div>
+
+  <div class="doc-case">
+    <div class="doc-case-head"><span class="doc-tool">?</span><span class="doc-when">Массив не отсортирован</span></div>
+    <pre class="doc-code" data-py>bin_search([5, 1, 9, 3], 9)   # молча вернёт -1 или чужой индекс</pre>
+    <p class="doc-why">Бинарный поиск не проверяет предусловие и на неупорядоченных
+      данных просто врёт. А если сортировать приходится ради одного поиска —
+      сортировка <code>O(n log n)</code> дороже линейного <code>in</code>.</p>
+  </div>
+
+  <h3>В реальном коде — <code>bisect</code></h3>
+  <p>Стандартный модуль: <code>bisect_left(a, x)</code> и <code>bisect_right(a, x)</code>
+    возвращают позицию для вставки <code>x</code>, сохраняющую порядок;
+    <code>insort(a, x)</code> вставляет с поддержанием сортировки. Написано на C,
+    крайние случаи учтены.</p>
+  <div class="doc-card">
+    <div class="doc-card-head"><span class="doc-mono">contains(a, x)</span><span class="doc-tag">есть ли x в отсортированном a</span></div>
+    <pre class="doc-code" data-py>from bisect import bisect_left
+
+def contains(a, x):
+    i = bisect_left(a, x)
+    return i < len(a) and a[i] == x</pre>
+  </div>
+
+  <div class="doc-rule">
+    Бинарный поиск окупается на упорядоченных данных, которые редко меняются. Если
+    данные постоянно обновляются и держать их отсортированными дорого — быстрее
+    <code>set</code> / <code>dict</code> с доступом за <code>O(1)</code>.
+  </div>
+
+</div>
