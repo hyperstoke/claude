@@ -19,3 +19,20 @@
 "50", "1.8"  ->  "Недостаточная масса"  # ИМТ ~ 15.43
 "90", "1.7"  ->  "Избыточная масса"     # ИМТ ~ 31.14
 """
+
+
+def body_mass_index(mass: float, height: float) -> float:
+    return mass / (height * height)
+
+
+def bmi_assessment(bmi: float) -> str:
+    if 18.5 <= bmi <= 25:
+        return "Оптимальная масса"
+    elif bmi < 18.5:
+        return "Недостаточная масса"
+    else:
+        return "Избыточная масса"
+
+
+m, h = float(input()), float(input())
+print(bmi_assessment(body_mass_index(m, h)))
