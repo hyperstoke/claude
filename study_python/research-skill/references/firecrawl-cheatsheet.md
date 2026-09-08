@@ -1,9 +1,8 @@
 # Firecrawl CLI — шпаргалка (проверено на v1.19.26, 2026-07-15)
 
 Установлен глобально через npm (`npm install -g firecrawl-cli`).
-Ключ берётся из `FIRECRAWL_API_KEY`. На ПК (Windows) node/npm лежат в
-`%LOCALAPPDATA%\Programs\nodejs` и `%APPDATA%\npm` — оба в user PATH;
-если свежезапущенный процесс их не видит, добавить в PATH вручную.
+Ключ берётся из `FIRECRAWL_API_KEY`. Node стоит вручную в
+`~/.local/nodejs` (Homebrew нет); PATH и ключ прописаны в `~/.zshrc`.
 
 ## search — поиск (основная команда)
 

@@ -1,17 +1,24 @@
 ---
 name: python-interpreter-path
-description: "Где на ПК (Windows) лежит рабочий Python — системный `python` не работает"
-metadata: 
+description: "Как запускать Python в проекте: только python3, команды `python` в PATH нет; машина одна — MacBook"
+metadata:
   node_type: memory
   type: reference
   originSessionId: bb5d3451-d1e7-4b92-9f52-a7b5ac18a590
+  modified: 2026-09-08T21:06:03.069Z
 ---
 
-На ПК пользователя (Windows 11) команда `python` в PATH — это Store-заглушка
-Microsoft, которая падает с «Python was not found». `py` launcher тоже нет.
+Работа идёт только на MacBook — других машин у пользователя нет
+(подтверждено 2026-09-09).
 
-Рабочий интерпретатор (через uv):
-`C:\Users\Admin\AppData\Roaming\uv\python\cpython-3.14.4-windows-x86_64-none\python.exe`
+Рабочий интерпретатор — `python3`
+(`/Library/Frameworks/Python.framework/Versions/3.14/bin/python3`, 3.14.6).
+Команды `python` в PATH **нет**, вызов без тройки падает. `uv` установлен
+в `~/.local/bin/uv`.
 
-Использовать полный путь, когда нужно запустить Python-скрипт из Bash/PowerShell
-для служебных задач. Связано с [[chatgpt-export-processed]].
+Служебные скрипты проекта запускать из корня репозитория:
+`python3 study_python/coach-skill/scripts/update_schedule.py due`.
+
+До 2026-09-09 здесь была записана раскладка второго устройства (ПК с
+Windows 11, интерпретатор внутри uv). Второго устройства нет — факт был
+ошибочным. Связано с [[project-github-sync]].

@@ -1,6 +1,6 @@
-- [GitHub sync](project_github_sync.md) — папка claude/ = git-репо, приватный remote hyperstoke/claude; pull/push по просьбе; gh в ~/.local/bin
+- [GitHub sync](project_github_sync.md) — папка claude/ = git-репо, приватный remote hyperstoke/claude; push по просьбе (бэкап, не синхронизация); gh в ~/.local/bin
 - [Mac node/firecrawl](project_mac_node_firecrawl.md) — на Mac нет Homebrew; node в ~/.local/nodejs, firecrawl CLI + ключ настроены; PATH/ключ в ~/.zshrc
-- [Python interpreter path](python-interpreter-path.md) — рабочий Python на ПК лежит в uv, системный `python` не работает
+- [Python interpreter path](python-interpreter-path.md) — машина одна (MacBook); запускать только `python3`, команды `python` в PATH нет
 - [Honest review verdict](feedback-honest-review-verdict.md) — «чисто» только если с первой версии и оптимально; оценка описывает всю сессию
 - [Task docstring format](feedback-task-docstring-format.md) — условие coach-задач оформлять `"""..."""`, не `#`; примеры в кавычках + `#`-пояснения
 - [Task docstring no indent](feedback_task_docstring_no_indent.md) — многострочные блоки докстринга (Примеры и т.п.) без отступов, flush-left
