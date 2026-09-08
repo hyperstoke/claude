@@ -21,9 +21,9 @@
     --today: #CBBBFF;
     --shadow: none;
     --shadow-lg: 0 16px 48px rgba(0,0,0,0.55);
-    --heat-0: #1A1622;
-    --heat-1: #3A2E5C;
-    --heat-2: #5B44A0;
+    --heat-0: #262035;
+    --heat-1: #4C3A82;
+    --heat-2: #6B4FC4;
     --heat-3: #7C5CE6;
     --heat-4: #A78BFF;
     --font-sans: -apple-system, "SF Pro Text", "Segoe UI", Helvetica, Arial, sans-serif;
@@ -119,12 +119,6 @@
     transition: background 0.12s ease, color 0.12s ease;
   }
 
-  .nav-btn .idx {
-    font-size: 0.68rem;
-    color: var(--ink-faint);
-    width: 1.1em;
-  }
-
   .nav-btn:hover {
     background: var(--inset);
     color: var(--ink);
@@ -135,8 +129,6 @@
     color: var(--ink);
     border-color: var(--border-strong);
   }
-
-  .nav-btn.active .idx { color: var(--accent); }
 
   .nav-btn:focus-visible {
     outline: 2px solid var(--accent);
@@ -231,6 +223,9 @@
     gap: 1.8rem;
     margin-bottom: 1.9rem;
   }
+
+  /* на «Обзоре» пять плиток — держим их в одну строку */
+  #view-overview .stat-grid { grid-template-columns: repeat(5, 1fr); }
 
   .tile { padding: 0; }
 
@@ -377,7 +372,20 @@
     content: ""; width: 11px; height: 11px; border-radius: 3px; background: var(--lvl, var(--accent)); flex-shrink: 0;
   }
   .dd-metric .m-cap { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-faint); }
-  .dd-note { font-size: 0.88rem; color: var(--ink-dim); border-top: 1px dashed var(--border); padding-top: 0.75rem; }
+  .dd-note-wrap { border-top: 1px dashed var(--border); padding-top: 0.75rem; margin-top: 0.1rem; }
+  .dd-note { font-size: 0.88rem; color: var(--ink-dim); position: relative; }
+  .dd-note p { margin: 0 0 0.5rem; }
+  .dd-note p:last-child { margin-bottom: 0; }
+  .dd-note.clamped { max-height: 4.6em; overflow: hidden; }
+  .dd-note.clamped::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2.2em;
+    background: linear-gradient(to bottom, transparent, var(--raised));
+  }
+  .dd-note-toggle {
+    font: inherit; font-size: 0.76rem; margin-top: 0.5rem; padding: 0;
+    background: none; border: none; color: var(--accent); cursor: pointer;
+  }
+  .dd-note-toggle:hover { text-decoration: underline; }
   .dd-empty { font-size: 0.88rem; color: var(--ink-faint); }
   .level-chip {
     display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.72rem;
@@ -435,6 +443,14 @@
   .feed-task:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
   .feed-task.static { cursor: default; }
   .feed-task.static:hover { border-color: var(--border); background: var(--inset); }
+  .feed-loadmore {
+    font: inherit; font-size: 0.8rem; margin-top: 0.95rem;
+    background: var(--inset); border: 1px solid var(--border); border-radius: 8px;
+    padding: 0.4rem 0.9rem; color: var(--ink-dim); cursor: pointer;
+    transition: border-color 0.15s ease, color 0.15s ease;
+  }
+  .feed-loadmore:hover { border-color: var(--accent); color: var(--ink); }
+  .feed-loadmore:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   .kind-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; display: block; }
   .kdot-done    { background: var(--accent); }
   .kdot-learn   { background: #6FE3D2; }
@@ -521,6 +537,14 @@
   .doc-cardlink .dc-sub { display: block; font-size: 0.86rem; color: var(--ink-dim); margin-top: 0.3rem; }
   .doc-cardlink .dc-meta { display: block; font-family: var(--font-mono); font-size: 0.72rem; color: var(--ink-faint); margin-top: 0.5rem; }
   .doc-empty { color: var(--ink-faint); font-size: 0.9rem; }
+  .doc-back {
+    font: inherit; font-size: 0.82rem; background: none; border: 1px solid var(--border-strong);
+    color: var(--ink-dim); border-radius: 7px; padding: 0.3rem 0.7rem; cursor: pointer;
+    margin-bottom: 1rem; transition: border-color 0.15s ease, color 0.15s ease;
+  }
+  .doc-back:hover { border-color: var(--accent); color: var(--ink); }
+  .doc-back:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  #doc-reader-body.panel-body { max-width: 780px; }
 
   /* Статья внутри панели (разметка приходит из study_python/docs/) */
   .panel.wide { max-width: 940px; }
@@ -941,7 +965,7 @@
   .pq-code { margin-top: 0.7rem; }
 
   /* ── Плитка-кнопка (переход к «ждут решения») ──────────── */
-  .tile-btn { font: inherit; text-align: left; cursor: pointer; display: block; width: 100%; appearance: none; -webkit-appearance: none; background: var(--accent-soft); }
+  .tile-btn { font: inherit; text-align: left; cursor: pointer; display: block; width: 100%; appearance: none; -webkit-appearance: none; background: none; border: 1px solid transparent; padding: 0; }
   .tile-btn:hover { border-color: var(--accent); }
   .tile-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   .tile-btn .t-cap { color: var(--accent); }
@@ -973,6 +997,7 @@
   }
   .hardest:hover { border-color: var(--now); }
   .hardest:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .ov-hardest-hint { font-size: 0.8rem; color: var(--ink-faint); margin: -0.2rem 0 0.7rem; max-width: 60ch; }
   .hardest .h-topic { font-size: 0.98rem; font-weight: 620; color: var(--ink); }
   .hardest .h-reason { font-size: 0.86rem; color: var(--ink-dim); margin: 0.35rem 0 0; }
   .hardest .h-foot {
@@ -1051,7 +1076,8 @@
     .side-streak .row { gap: 0.4rem; }
     .side-streak .num { font-size: 1.1rem; }
     .main { padding: 1.6rem 1.3rem 3rem; }
-    .stat-grid { grid-template-columns: repeat(2, 1fr); }
+    .stat-grid,
+    #view-overview .stat-grid { grid-template-columns: repeat(2, 1fr); }
     .cal-grid { grid-template-columns: 1fr; }
     .day-detail { position: static; }
     .feed-day { grid-template-columns: 1fr; gap: 0.35rem; }
@@ -1067,11 +1093,11 @@
     </div>
 
     <nav class="nav" aria-label="Разделы">
-      <button class="nav-btn active" data-view="overview"><span class="idx">01</span>Обзор</button>
-      <button class="nav-btn" data-view="calendar"><span class="idx">02</span>Календарь</button>
-      <button class="nav-btn" data-view="roadmap"><span class="idx">03</span>Дорожная карта</button>
-      <button class="nav-btn" data-view="practice"><span class="idx">04</span>Закрепление</button>
-      <button class="nav-btn" data-view="docs"><span class="idx">05</span>Документация</button>
+      <button class="nav-btn active" data-view="overview">Обзор</button>
+      <button class="nav-btn" data-view="calendar">Календарь</button>
+      <button class="nav-btn" data-view="roadmap">Дорожная карта</button>
+      <button class="nav-btn" data-view="practice">Закрепление</button>
+      <button class="nav-btn" data-view="docs">Документация</button>
     </nav>
 
     <div class="side-streak">
@@ -1136,6 +1162,7 @@
           <span class="card-title">Далось труднее всего</span>
           <span class="status-pill" id="ov-hardest-pill">—</span>
         </div>
+        <p class="ov-hardest-hint">Тема, которая далась тяжелее всего. Справа — закрыта она задачей-закреплением или ещё нет.</p>
         <button class="hardest" id="ov-hardest" type="button"></button>
       </section>
 
@@ -1440,11 +1467,18 @@
 
     <!-- ── Документация ────────────────────────────── -->
     <section class="view" id="view-docs" hidden>
-      <div class="eyebrow">разборы</div>
-      <h1 class="view-title">Документация</h1>
-      <p class="view-sub">Разборы тем, которые пришлось объяснять отдельно. Открываются здесь же, без ухода со страницы — можно вернуться к любой в любой момент.</p>
-      <div class="doc-list" id="doc-list"></div>
-      <footer class="note" style="border: none; text-align: left; margin-top: 1.5rem;">статьи лежат в <code>study_python/docs/</code> и вшиваются в страницу при сборке</footer>
+      <div id="doc-list-view">
+        <div class="eyebrow">разборы</div>
+        <h1 class="view-title">Документация</h1>
+        <p class="view-sub">Разбираем темы глубже и нагляднее, чем на курсе: интерактивные визуализаторы, схемы, разбор типовых багов. Открываются здесь же, без ухода со страницы.</p>
+        <div class="doc-list" id="doc-list"></div>
+        <footer class="note" style="border: none; text-align: left; margin-top: 1.5rem;">статьи лежат в <code>study_python/docs/</code> и вшиваются в страницу при сборке</footer>
+      </div>
+      <div id="doc-reader" hidden>
+        <button type="button" id="doc-back" class="doc-back">← назад</button>
+        <h1 class="view-title" id="doc-reader-title"></h1>
+        <div class="panel-body" id="doc-reader-body"></div>
+      </div>
     </section>
 
   </main>
@@ -1605,7 +1639,7 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
     }
   };
 
-                                                                                                                                                                        /* @gen:start — генерируется scripts/build_site.py из coach/*.json, вручную не править */
+                                                                                                                                                                            /* @gen:start — генерируется scripts/build_site.py из coach/*.json, вручную не править */
   const TRACKING_SINCE = "2026-07-11";
   const ACTIVITY = {
   "2026-07-11": {
@@ -2881,8 +2915,7 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
         "name": "Заголовок программы",
         "kind": "пройдено",
         "file": "study_python/practice/13_Modul_random/zagolovok_programmy.py",
-        "code": "\"\"\"\nЗадача: Заголовок программы\n\nПервый шаг программы «числовая угадайка»:\n1. подключить модуль random;\n2. сгенерировать случайное целое число от 1 до 100 (включительно) и\n   сохранить его — оно понадобится на следующих шагах;\n3. вывести приветствие: Добро пожаловать в числовую угадайку\n\nВход: ничего\nВыход: одна строка приветствия\n\nВывод:\n\"Добро пожаловать в числовую угадайку\"\n# образец показан в кавычках; печатать кавычки не нужно\n# само загаданное число на этом шаге не выводится\n\"\"\"\n\nimport random\n\nnum = random.randint(1, 100)\n\nprint(num)\n\n\n",
-        "github": "https://github.com/hyperstoke/claude/blob/main/study_python/practice/13_Modul_random/zagolovok_programmy.py"
+        "code": null
       }
     ]
   }
@@ -3242,6 +3275,35 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
   })();
   const detail = document.getElementById("day-detail");
   let selectedKey = null;
+  /* заметку дня разбиваем на абзацы по границам предложений */
+  function ddNoteParas(note) {
+    return String(note)
+      .split(/(?<=[.;])\s+(?=[«"(A-ZА-ЯЁ0-9])/)
+      .map(s => s.trim())
+      .filter(Boolean)
+      .map(s => `<p>${escapeHtml(s)}</p>`)
+      .join("");
+  }
+  /* длинную заметку сворачиваем до нескольких строк с кнопкой «развернуть» */
+  function setupDdNote(root) {
+    const note = root.querySelector(".dd-note");
+    if (!note) return;
+    note.classList.add("clamped");
+    if (note.scrollHeight - note.clientHeight < 6) {
+      note.classList.remove("clamped");
+      return;
+    }
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "dd-note-toggle";
+    btn.textContent = "развернуть";
+    btn.addEventListener("click", () => {
+      const clamped = note.classList.toggle("clamped");
+      btn.textContent = clamped ? "развернуть" : "свернуть";
+    });
+    note.after(btn);
+  }
+
   function selectDay(key) {
     if (selectedKey) {
       const prev = calGrid.querySelector(`.hm-cell[data-date="${selectedKey}"]`);
@@ -3261,6 +3323,9 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
           : `<div class="dd-item static">${chip}${nm}</div>`;
       }).join("");
       const itemsBlock = itemsHtml ? `<div class="dd-items">${itemsHtml}</div>` : "";
+      const noteBlock = day.note
+        ? `<div class="dd-note-wrap"><div class="dd-note">${ddNoteParas(day.note)}</div></div>`
+        : "";
       detail.innerHTML = `
         <div class="dd-date">${key === todayKey ? "сегодня" : "день занятий"}</div>
         <div class="dd-head">${dateStr}</div>
@@ -3268,8 +3333,9 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
           <div class="dd-metric"><div class="m-num">${day.tasks}</div><div class="m-cap">задач</div></div>
           <div class="dd-metric"><div class="m-word" style="--lvl: var(--heat-${day.level})">${LEVEL_LABEL[day.level]}</div><div class="m-cap">интенсивность</div></div>
         </div>
-        <div class="dd-note">${day.note}</div>
+        ${noteBlock}
         ${itemsBlock}`;
+      if (day.note) setupDdNote(detail);
     } else {
       const reason = key < TRACKING_SINCE
         ? "До 11 июля занятия шли прямо на Stepik — этих данных у панели нет."
@@ -3292,10 +3358,9 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
   /* пере-рендер календаря, когда он виден (у скрытого блока ширина 0) */
   function renderCalendar() {
     renderHeatmap(calGrid, GRID_START, { months: calMonths, clickable: true, fill: true });
-    if (selectedKey) {
-      const cur = calGrid.querySelector(`.hm-cell[data-date="${selectedKey}"]`);
-      if (cur) cur.classList.add("selected");
-    }
+    /* перерисовываем деталь дня уже видимой — иначе замер высоты заметки даёт 0
+       и сворачивание не срабатывает */
+    if (selectedKey) selectDay(selectedKey);
   }
   let calResizeT;
   window.addEventListener("resize", () => {
@@ -3600,17 +3665,39 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
       const inner = tasks || `<span style="color: var(--ink-faint); font-size: 0.8rem;">—</span>`;
       return `<div class="feed-day"><div class="feed-date">${d}<span class="feed-level">${LEVEL_LABEL[day.level]}</span></div><div class="feed-items">${inner}</div></div>`;
     }).join("");
-    feed.addEventListener("click", e => {
-      const btn = e.target.closest(".feed-task");
-      if (!btn || btn.classList.contains("static")) return;
-      const day = ACTIVITY[btn.dataset.day];
-      const item = day && day.items && day.items[+btn.dataset.idx];
-      if (item) openCode(item);
-    });
+    if (feed.dataset.bound !== "1") {
+      feed.dataset.bound = "1";
+      feed.addEventListener("click", e => {
+        const btn = e.target.closest(".feed-task");
+        if (!btn || btn.classList.contains("static")) return;
+        const day = ACTIVITY[btn.dataset.day];
+        const item = day && day.items && day.items[+btn.dataset.idx];
+        if (item) openCode(item);
+      });
+    }
     if (totalEl) totalEl.textContent = activeDays.length + " дней";
   }
   renderFeed(document.getElementById("ov-feed"), 3, null);
-  renderFeed(document.getElementById("cal-feed"), null, document.getElementById("cal-feed-total"));
+
+  /* Лента «Календаря»: показываем порциями, кнопка «Загрузить ещё» */
+  const CAL_FEED_STEP = 7;
+  let calFeedShown = CAL_FEED_STEP;
+  const calFeed = document.getElementById("cal-feed");
+  const calFeedTotal = document.getElementById("cal-feed-total");
+  const calFeedMore = document.createElement("button");
+  calFeedMore.type = "button";
+  calFeedMore.className = "feed-loadmore";
+  calFeedMore.textContent = "Загрузить ещё";
+  if (calFeed) calFeed.after(calFeedMore);
+  calFeedMore.addEventListener("click", () => {
+    calFeedShown += CAL_FEED_STEP;
+    renderCalFeed();
+  });
+  function renderCalFeed() {
+    renderFeed(calFeed, calFeedShown, calFeedTotal);
+    calFeedMore.hidden = calFeedShown >= activeDays.length;
+  }
+  renderCalFeed();
 
   /* ── Повторения по расписанию (SM-2) во вкладке «Закрепление» ───── */
   function renderReviewLog(el, totalEl) {
@@ -3655,7 +3742,7 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
     const solved = !PQ_STATUS[h.status]?.active;
     const pill = document.getElementById("ov-hardest-pill");
     pill.className = "status-pill " + (solved ? "done" : "active");
-    pill.textContent = solved ? "решено" : "ждёт";
+    pill.textContent = solved ? "закреплено" : "ждёт закрепления";
     const hasCode = h.code != null || h.file;
     box.innerHTML = `
       <div class="h-topic">${escapeHtml(h.topic)}</div>
@@ -3684,6 +3771,14 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
     if (location.hash.slice(1) !== name) history.replaceState(null, "", "#" + name);
     document.querySelector(".main").scrollTo(0, 0);
     window.scrollTo(0, 0);
+    if (name !== "docs") {
+      const dr = document.getElementById("doc-reader");
+      if (dr && !dr.hidden) {
+        dr.hidden = true;
+        document.getElementById("doc-list-view").hidden = false;
+        document.getElementById("doc-reader-body").innerHTML = "";
+      }
+    }
     if (name === "calendar") renderCalendar();
   }
   navBtns.forEach(b => b.addEventListener("click", () => showView(b.dataset.view)));
@@ -4432,20 +4527,42 @@ neg = list(filter(lambda x: x &lt; 0, nums))</code></pre>
     }
   };
 
+  /* Статьи «Документации» открываются на месте раздела, не в модалке */
+  const docListView = document.getElementById("doc-list-view");
+  const docReader = document.getElementById("doc-reader");
+  const docReaderTitle = document.getElementById("doc-reader-title");
+  const docReaderBody = document.getElementById("doc-reader-body");
+  let docLastFocused = null;
+
   function openDoc(doc) {
-    panelTitle.textContent = doc.title;
-    panelBody.innerHTML = doc.html;
-    document.querySelector(".panel").classList.add("wide");
+    docReaderTitle.textContent = doc.title;
+    docReaderBody.innerHTML = doc.html;
     /* код в статьях хранится текстом — подсвечиваем тем же highlightPython */
-    panelBody.querySelectorAll("pre[data-py]").forEach(pre => {
+    docReaderBody.querySelectorAll("pre[data-py]").forEach(pre => {
       pre.innerHTML = highlightPython(pre.textContent.replace(/\n+$/, ""));
     });
     const init = doc.interactive && DOC_INIT[doc.interactive];
-    if (init) init(panelBody.querySelector(".doc-article") || panelBody);
-    lastFocused = document.activeElement;
-    overlay.classList.add("open");
-    document.getElementById("panel-close").focus();
+    if (init) init(docReaderBody.querySelector(".doc-article") || docReaderBody);
+    docLastFocused = document.activeElement;
+    docListView.hidden = true;
+    docReader.hidden = false;
+    document.querySelector(".main").scrollTo(0, 0);
+    window.scrollTo(0, 0);
+    document.getElementById("doc-back").focus();
   }
+
+  function closeDoc() {
+    if (docReader.hidden) return;
+    docReader.hidden = true;
+    docListView.hidden = false;
+    docReaderBody.innerHTML = "";
+    if (docLastFocused && docLastFocused.isConnected) docLastFocused.focus();
+  }
+
+  document.getElementById("doc-back").addEventListener("click", closeDoc);
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape" && !docReader.hidden) closeDoc();
+  });
 
   (function renderDocs() {
     const host = document.getElementById("doc-list");
