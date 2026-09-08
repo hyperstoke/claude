@@ -141,6 +141,16 @@
       "ease": 2.3,
       "last_seen": "2026-09-04",
       "next_review": "2026-09-07"
+    },
+    "модуль random / сборка программы из функций": {
+      "attempts": 1,
+      "grades": [
+        4
+      ],
+      "interval_days": 1,
+      "ease": 2.5,
+      "last_seen": "2026-09-08",
+      "next_review": "2026-09-09"
     }
   }
 }
