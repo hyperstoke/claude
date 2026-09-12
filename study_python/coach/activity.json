@@ -15,68 +15,263 @@
         "weight": 20,
         "status": "current",
         "sub_pct": 84,
-        "deadline": "2026-09-15"
+        "deadline": "2026-09-15",
+        "desc": "Курс Stepik «Python для начинающих» — раздел 13 «Модуль random» в процессе. Функции (12.1–12.2) пройдены. Параллельно начат курс 2 «для продвинутых» — с раздела 08 «Числовые типы».",
+        "topics": [
+          {
+            "label": "типы данных",
+            "state": "covered",
+            "note": "types"
+          },
+          {
+            "label": "ветвления",
+            "state": "covered",
+            "note": "branching"
+          },
+          {
+            "label": "циклы",
+            "state": "covered",
+            "note": "loops"
+          },
+          {
+            "label": "строки",
+            "state": "covered",
+            "note": "strings"
+          },
+          {
+            "label": "списки / кортежи",
+            "state": "seen",
+            "note": "collections"
+          },
+          {
+            "label": "словари",
+            "state": "seen",
+            "note": "collections"
+          },
+          {
+            "label": "функции",
+            "state": "covered",
+            "note": null
+          },
+          {
+            "label": "исключения",
+            "state": "pending"
+          },
+          {
+            "label": "файлы",
+            "state": "pending"
+          }
+        ],
+        "note": "Через ChatGPT (май–июль) забежал вперёд программы: списки, словари, comprehensions, map/lambda — «знаком, не закреплено». Уверенно спрашивает про асимптотику O(1)/O(n)/O(n²)."
       },
       {
         "name": "ООП и продвинутый Python",
         "weight": 14,
         "status": "todo",
-        "deadline": "2026-10-31"
+        "deadline": "2026-10-31",
+        "desc": "Дополняем Stepik своими материалами, если курс не закроет глубоко.",
+        "topics": [
+          {
+            "label": "классы",
+            "state": "pending"
+          },
+          {
+            "label": "comprehensions",
+            "state": "seen",
+            "note": "advanced"
+          },
+          {
+            "label": "декораторы",
+            "state": "pending"
+          },
+          {
+            "label": "генераторы",
+            "state": "seen",
+            "note": "advanced"
+          },
+          {
+            "label": "context manager'ы",
+            "state": "pending"
+          },
+          {
+            "label": "itertools / functools",
+            "state": "pending"
+          }
+        ]
       },
       {
         "name": "Git и контроль версий",
         "weight": 5,
         "status": "todo",
-        "deadline": "2026-11-15"
+        "deadline": "2026-11-15",
+        "desc": "Стартует сейчас, параллельно с разделом 10: история коммитов копится месяцами, к отбору должна быть за полгода.",
+        "topics": [
+          {
+            "label": "коммиты",
+            "state": "pending"
+          },
+          {
+            "label": "ветки",
+            "state": "pending"
+          },
+          {
+            "label": "история",
+            "state": "pending"
+          },
+          {
+            "label": "GitHub",
+            "state": "pending"
+          }
+        ]
       },
       {
         "name": "SQL и базы данных",
         "weight": 13,
         "status": "todo",
-        "deadline": "2026-11-30"
+        "deadline": "2026-11-30",
+        "desc": "SQLite → PostgreSQL.",
+        "topics": [
+          {
+            "label": "CRUD",
+            "state": "pending"
+          },
+          {
+            "label": "проектирование схем",
+            "state": "pending"
+          },
+          {
+            "label": "JOIN'ы",
+            "state": "pending"
+          }
+        ]
       },
       {
         "name": "Тестирование",
         "weight": 6,
         "status": "todo",
-        "deadline": "2026-12-15"
+        "deadline": "2026-12-15",
+        "desc": "pytest — привычка тестировать код с ранних практик.",
+        "topics": [
+          {
+            "label": "pytest",
+            "state": "pending"
+          }
+        ]
       },
       {
         "name": "Алгоритмы и подготовка к отбору",
         "weight": 8,
         "status": "todo",
         "deadline": "2027-03-31",
-        "parallel": true
+        "parallel": true,
+        "desc": "Главный фильтр стажировки — алгоритмический онлайн-тест на время. Идёт параллельно с SQL и тестированием, старт — январь 2027.",
+        "topics": [
+          {
+            "label": "сложность O(n)",
+            "state": "pending"
+          },
+          {
+            "label": "два указателя",
+            "state": "pending"
+          },
+          {
+            "label": "хеш-таблицы",
+            "state": "pending"
+          },
+          {
+            "label": "бинарный поиск",
+            "state": "pending"
+          },
+          {
+            "label": "рекурсия",
+            "state": "pending"
+          },
+          {
+            "label": "решение на время",
+            "state": "pending"
+          }
+        ]
       },
       {
         "name": "Backend-фреймворк",
         "weight": 16,
         "status": "todo",
-        "deadline": "2027-02-05"
+        "deadline": "2027-02-05",
+        "desc": "FastAPI сначала (типизация, async/await, asyncio, чище объясняет REST), затем Django при необходимости.",
+        "topics": [
+          {
+            "label": "FastAPI",
+            "state": "pending"
+          },
+          {
+            "label": "Django",
+            "state": "pending"
+          }
+        ]
       },
       {
         "name": "REST API и аутентификация",
         "weight": 10,
         "status": "todo",
-        "deadline": "2027-02-05"
+        "deadline": "2027-02-05",
+        "desc": "Проектирование API, авторизация пользователей.",
+        "topics": [
+          {
+            "label": "REST design",
+            "state": "pending"
+          },
+          {
+            "label": "JWT / OAuth",
+            "state": "pending"
+          }
+        ]
       },
       {
         "name": "Docker",
         "weight": 4,
         "status": "todo",
-        "deadline": "2027-03-15"
+        "deadline": "2027-03-15",
+        "desc": "Контейнеризация простого приложения.",
+        "topics": [
+          {
+            "label": "Docker",
+            "state": "pending"
+          }
+        ]
       },
       {
         "name": "Кэширование и фоновые задачи",
         "weight": 2,
         "status": "todo",
-        "deadline": null
+        "deadline": null,
+        "desc": "Ознакомительно.",
+        "topics": [
+          {
+            "label": "Redis",
+            "state": "pending"
+          },
+          {
+            "label": "Celery / RQ",
+            "state": "pending"
+          }
+        ]
       },
       {
         "name": "Деплой и CI/CD",
         "weight": 2,
         "status": "todo",
-        "deadline": "2027-03-15"
+        "deadline": "2027-03-15",
+        "desc": "Ознакомительно, не глубоко.",
+        "topics": [
+          {
+            "label": "GitHub Actions",
+            "state": "pending"
+          },
+          {
+            "label": "облако",
+            "state": "pending"
+          }
+        ]
       }
     ]
   },
@@ -1071,6 +1266,67 @@
           "name": "Заголовок программы",
           "kind": "пройдено",
           "file": "study_python/practice/13_Modul_random/zagolovok_programmy.py"
+        }
+      ]
+    },
+    "2026-09-09": {
+      "level": 2,
+      "tasks": 4,
+      "note": "Старт курса 2, раздел 08 «Числовые типы» (Stepik «для продвинутых»). Три задачи решены самостоятельно, ревью в рамках этой сессии не проводилось (оценок нет). «Индекс массы тела»: две функции, деление и цепочка сравнений 18.5 <= bmi <= 25. «Количество слов»: text.split() без аргумента сам схлопывает пробелы по краям и между словами, count — через len(). «Стоимость строки»: len(text) * 60 копеек, перевод в рубли и копейки через // и % (аналог divmod), результат — f-строкой. «Математические операции»: семь операций по условию — арифметика, // и % отдельно от /, math.sqrt суммы 10-х степеней.",
+      "items": [
+        {
+          "name": "Индекс массы тела",
+          "kind": "пройдено",
+          "file": "study_python/practice/course2/08_Chislovye_tipy/indeks_massy_tela.py"
+        },
+        {
+          "name": "Количество слов",
+          "kind": "пройдено",
+          "file": "study_python/practice/course2/08_Chislovye_tipy/kolichestvo_slov.py"
+        },
+        {
+          "name": "Стоимость строки",
+          "kind": "пройдено",
+          "file": "study_python/practice/course2/08_Chislovye_tipy/stoimost_stroki.py"
+        },
+        {
+          "name": "Математические операции",
+          "kind": "пройдено",
+          "file": "study_python/practice/course2/08_Chislovye_tipy/matematicheskie_operatsii.py"
+        }
+      ]
+    },
+    "2026-09-10": {
+      "level": 1,
+      "tasks": 2,
+      "note": "Раздел 08 «Числовые типы», курс 2. Две задачи решены самостоятельно, ревью в этой сессии не проводилось (оценок нет). «Переворот числа»: для 5 цифр — срез [::-1], для 6 — первая цифра остаётся на месте, num[:0:-1] разворачивает остальное; int() убирает ведущие нули. Условие ограничено длиной 5 и 6, другие длины не обрабатываются. «Зодиак»: список животных плюс индексация по year % 12 без единого if — остаток по модулю сам подбирает животное для любого года.",
+      "items": [
+        {
+          "name": "Переворот числа",
+          "kind": "пройдено",
+          "file": "study_python/practice/course2/08_Chislovye_tipy/perevorot_chisla.py"
+        },
+        {
+          "name": "Зодиак",
+          "kind": "пройдено",
+          "file": "study_python/practice/course2/08_Chislovye_tipy/zodiak.py"
+        }
+      ]
+    },
+    "2026-09-12": {
+      "level": 2,
+      "tasks": 2,
+      "note": "Раздел 08 «Числовые типы», курс 2. Две задачи решены самостоятельно, ревью в этой сессии не проводилось (оценок нет). «Иосиф Флавий»: круг смоделирован списком, выбывающий ищется как (start + kill - 1) % len(wheel), del по индексу, счёт продолжается с места удаления — while len(wheel) > 1. «Standard American Convention»: одна строка f\"{int(input()):,}\" — разделитель разрядов через мини-язык format spec. Добавлена статья «Фигурные скобки» (мини-язык внутри {}: выравнивание, нули, разделители разрядов, проценты, системы счисления) — вторая задача прямо на неё опирается.",
+      "items": [
+        {
+          "name": "Иосиф Флавий",
+          "kind": "пройдено",
+          "file": "study_python/practice/course2/08_Chislovye_tipy/iosif_flavij.py"
+        },
+        {
+          "name": "Standard American Convention",
+          "kind": "пройдено",
+          "file": "study_python/practice/course2/08_Chislovye_tipy/standard_american_convention.py"
         }
       ]
     }

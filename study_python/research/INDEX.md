@@ -20,6 +20,7 @@ TTL по типам:
 
 - [Тренды Python-backend](python-backend-trends_2026-07-15.md) — 2026-07-15, TTL: 30 дней — **⚠️ просрочено с 14 августа**, обновлять при следующем запросе про тренды/вакансии — фреймворки (FastAPI/Django/Flask), рынок РФ, uv+Ruff; выжимка в `coach/trends.md`
 - [Русскоязычные статьи про set](python-set-tutorial-ru_2026-07-27.md) — 2026-07-27, TTL: бессрочно — PythonWorld (полное), Skillbox (для новичков), proproprogs.ru (с видео); для задач хватает `set()`/`.add()`/`in`
+- [Оркестрация субагентов (Anthropic)](orchestrator_anthropic_2026-09-13.md) — 2026-09-13, TTL: бессрочно (до смены доков) — паттерны (orchestrator-workers, routing, parallelization, evaluator-optimizer), масштаб 1/2-4/10+ агентов, Opus-лид+Sonnet-субагенты, `model:`/`tools:` во frontmatter, частые ошибки; чек-лист перенесён в корневой CLAUDE.md
 
 ## Архив: ручное QA (ветка отклонена 2026-07-26)
 

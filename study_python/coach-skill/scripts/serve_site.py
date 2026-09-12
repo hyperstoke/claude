@@ -6,8 +6,8 @@
 его добавляет скелет claude.ai при публикации. Поэтому здесь тот же
 сервер, но с явным UTF-8 в Content-Type для .html.
 
-Запуск (рабочий Python через uv на ПК):
-  <uv-python> study_python/coach-skill/scripts/serve_site.py [порт]
+Запуск:
+  python3 study_python/coach-skill/scripts/serve_site.py [порт]
 
 Страница: http://127.0.0.1:8737/roadmap_artifact.html
 """

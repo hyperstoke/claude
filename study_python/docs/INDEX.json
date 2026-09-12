@@ -27,6 +27,15 @@
       "tag": "алгоритмы · поиск",
       "file": "study_python/docs/binary_search.html",
       "interactive": "binarySearch"
+    },
+    {
+      "id": "format-spec",
+      "title": "Фигурные скобки",
+      "subtitle": "Мини-язык внутри {}: выравнивание, ведущие нули, разделители разрядов, проценты и системы счисления — с песочницей и разбором, где это нужно в рабочем коде.",
+      "date": "2026-09-12",
+      "tag": "строки · форматирование",
+      "file": "study_python/docs/format_spec.html",
+      "interactive": "formatSpec"
     }
   ]
 }

@@ -12,25 +12,30 @@
   3. Читает docs/INDEX.json и вшивает html каждой статьи (раздел
      «Документация»).
   4. Генерирует JS-константы TRACKING_SINCE, ACTIVITY, PROGRESS,
-     PRACTICE_QUEUE, DOCS и вставляет их в roadmap_artifact.html между
-     маркерами /* @gen:start ... */ и /* @gen:end */.
+     PRACTICE_QUEUE, DOCS, REVIEW_TOPICS и вставляет их в
+     roadmap_artifact.html между маркерами /* @gen:start ... */ и
+     /* @gen:end */.
+  5. Генерирует разметку карточек «Дорожной карты» из progress.stages
+     (desc/topics/note) и вставляет её между маркерами
+     <!-- @gen-stages:start --> и <!-- @gen-stages:end -->.
 
 Даты этапов живут в progress.stages[].deadline (источник правды —
 PLAN_TO_OFFER.md) и проходят в PROGRESS насквозь, без отдельной обработки.
 
-Запуск (рабочий Python через uv на ПК):
-  <uv-python> study_python/coach-skill/scripts/build_site.py
+Запуск:
+  python3 study_python/coach-skill/scripts/build_site.py
 
 После сборки — передеплоить артефакт на тот же URL и (при обычном пуше)
 выгрузить на GitHub. Дневные пуши так несут актуальный прогресс.
 """
 
+import html as html_mod
 import json
 import re
 import sys
 from pathlib import Path
 
-# Консоль на ПК — cp1251; выводим в UTF-8, чтобы не падать на «→» и кириллице.
+# На всякий случай, если запустят не из-под UTF-8-консоли — не падать на «→» и кириллице.
 try:
     sys.stdout.reconfigure(encoding="utf-8")
 except (AttributeError, ValueError):
@@ -39,12 +44,16 @@ except (AttributeError, ValueError):
 REPO_ROOT = Path(__file__).resolve().parents[3]
 ACTIVITY_JSON = REPO_ROOT / "study_python" / "coach" / "activity.json"
 QUEUE_JSON = REPO_ROOT / "study_python" / "coach" / "practice_queue.json"
+PROGRESS_JSON = REPO_ROOT / "study_python" / "coach" / "progress.json"
 DOCS_JSON = REPO_ROOT / "study_python" / "docs" / "INDEX.json"
 HTML = REPO_ROOT / "study_python" / "roadmap_artifact.html"
 GITHUB_BASE = "https://github.com/hyperstoke/claude/blob/main/"
 
 START = "/* @gen:start"
 END = "/* @gen:end */"
+STAGES_START = "<!-- @gen-stages:start -->"
+STAGES_END = "<!-- @gen-stages:end -->"
+STATUS_LABEL = {"done": "пройдено", "current": "в процессе", "todo": "впереди"}
 
 
 def load_json(path: Path) -> dict:
@@ -121,6 +130,52 @@ def js_const(name: str, value) -> str:
     return f"  const {name} = {dumped};\n"
 
 
+def render_topic(t: dict) -> str:
+    label = html_mod.escape(t["label"])
+    state = t.get("state", "pending")
+    note = t.get("note")
+    cls = f"topic-btn {state}" + (" has-note" if note else "")
+    if note:
+        return f'<li><button class="{cls}" data-topic="{note}">{label}<span class="chevron">▾</span></button></li>'
+    return f'<li><button class="{cls}" disabled>{label}</button></li>'
+
+
+def render_stage(i: int, s: dict) -> str:
+    status = s["status"]
+    stage_cls = "stage progress" if status == "current" else "stage done" if status == "done" else "stage"
+    collapsible = status not in ("current", "done")
+    card_tag, head_tag = ("details class=\"card stage-card\"", "summary class=\"card-head\"") if collapsible else ("div class=\"card\"", "div class=\"card-head\"")
+    card_close, head_close = ("details", "summary") if collapsible else ("div", "div")
+    topics = "\n".join("      " + render_topic(t) for t in s.get("topics", []))
+    note_html = f'<div class="note">{html_mod.escape(s["note"])}</div>' if s.get("note") else ""
+    return (
+        f'<div class="{stage_cls}">\n  <div class="stage-node">{i}</div>\n  <{card_tag}>\n'
+        f'    <{head_tag}>\n      <span class="card-title">{html_mod.escape(s["name"])}</span>\n'
+        f'      <span class="status-pill {status}">{STATUS_LABEL[status]}</span>\n    </{head_close}>\n'
+        f'    <p class="card-desc">{html_mod.escape(s.get("desc", ""))}</p>\n'
+        f'    <ul class="topics">\n{topics}\n    </ul>\n{note_html}  </{card_close}>\n</div>'
+    )
+
+
+def build_stages_block(progress: dict) -> str:
+    stages_html = "\n\n".join(render_stage(i, s) for i, s in enumerate(progress.get("stages", [])))
+    updated = progress.get("updated", "")
+    footer = (f'<footer class="note" style="border: none; text-align: left; margin-top: 1.5rem;">'
+              f'обновлено {updated} · пет-проект стартует после этапа 1</footer>')
+    return f"{STAGES_START}\n{stages_html}\n{footer}\n{STAGES_END}"
+
+
+def build_review_topics() -> list[dict]:
+    """Просроченные SM-2-повторения (coach/progress.json) для плитки на Обзоре."""
+    if not PROGRESS_JSON.exists():
+        return []
+    sm2 = load_json(PROGRESS_JSON)
+    return [
+        {"topic": name, "next_review": t["next_review"], "last_seen": t["last_seen"]}
+        for name, t in sm2.get("topics", {}).items()
+    ]
+
+
 def build_block(activity: dict, queue: dict) -> str:
     days, embedded, warnings = enrich_items(activity)
     pq = []
@@ -147,6 +202,7 @@ def build_block(activity: dict, queue: dict) -> str:
         + js_const("PROGRESS", progress)
         + js_const("PRACTICE_QUEUE", pq)
         + js_const("DOCS", docs)
+        + js_const("REVIEW_TOPICS", build_review_topics())
         + f"  {END}"
     )
     return block, embedded, len(docs), warnings
@@ -156,25 +212,36 @@ def main() -> None:
     activity = load_json(ACTIVITY_JSON)
     queue = load_json(QUEUE_JSON)
     block, embedded, n_docs, warnings = build_block(activity, queue)
+    stages_block = build_stages_block(activity.get("progress", {}))
 
     html = HTML.read_text(encoding="utf-8")
     pattern = re.compile(
         re.escape(START) + r".*?" + re.escape(END), re.DOTALL
+    )
+    stages_pattern = re.compile(
+        re.escape(STAGES_START) + r".*?" + re.escape(STAGES_END), re.DOTALL
     )
     if not pattern.search(html):
         sys.exit(
             "Не найдены маркеры /* @gen:start ... @gen:end */ в "
             f"{HTML.name} — добавь их вокруг блока констант."
         )
+    if not stages_pattern.search(html):
+        sys.exit(
+            "Не найдены маркеры <!-- @gen-stages:start ... @gen-stages:end --> в "
+            f"{HTML.name} — добавь их вокруг карточек «Дорожной карты»."
+        )
     html = pattern.sub(lambda _: block, html, count=1)
+    html = stages_pattern.sub(lambda _: stages_block, html, count=1)
     HTML.write_text(html, encoding="utf-8")
 
     for w in warnings:
         print("  ! " + w)
     n_days = len(activity["days"])
+    n_stages = len(activity.get("progress", {}).get("stages", []))
     print(
         f"OK: {n_days} дней, вшито файлов кода: {embedded}, "
-        f"статей: {n_docs} → {HTML.name}"
+        f"статей: {n_docs}, этапов дорожной карты: {n_stages} → {HTML.name}"
     )
 
 

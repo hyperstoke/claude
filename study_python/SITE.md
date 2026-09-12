@@ -61,15 +61,25 @@
 по просьбе ученика, `data-theme` из скелета игнорируется).
 
 **Сборка — только через скрипт, не руками.** Константы `ACTIVITY`,
-`PRACTICE_QUEUE`, `PROGRESS`, `TRACKING_SINCE`, `DOCS` в HTML
-**генерируются** `coach-skill/scripts/build_site.py` из `coach/activity.json` и
-`coach/practice_queue.json` (между маркерами `/* @gen:start … @gen:end */`,
-их не трогать). Скрипт заодно **вшивает код** каждой задачи в страницу (в т.ч.
+`PRACTICE_QUEUE`, `PROGRESS`, `TRACKING_SINCE`, `DOCS`, `REVIEW_TOPICS` в HTML
+**генерируются** `coach-skill/scripts/build_site.py` из `coach/activity.json`,
+`coach/practice_queue.json` и `coach/progress.json` (между маркерами
+`/* @gen:start … @gen:end */`, их не трогать). `REVIEW_TOPICS` — просроченные
+SM-2-повторения из `progress.json`, для плитки «повторения» на Обзоре.
+Скрипт заодно **вшивает код** каждой задачи в страницу (в т.ч.
 код задач очереди закрепления по полю `file`) —
 опубликованный артефакт на claude.ai не имеет доступа к локальным `.py`,
 поэтому код должен лежать прямо в HTML. Порядок: `git pull` → правим JSON →
 запускаем `build_site.py` (рабочим Python из [[python-interpreter-path]]) →
 редеплой на тот же URL (не создавать новый артефакт; favicon 🐍 не менять).
+
+**Карточки «Дорожной карты»** генерируются тем же скриптом из
+`progress.stages[]` (между маркерами `<!-- @gen-stages:start … -->`, их не
+трогать) — HTML руками не писать. У каждого этапа: `desc` (текст карточки),
+`topics` (список `{label, state, note}` — `state` ∈ `covered|seen|pending`,
+`note` — ключ конспекта из `NOTES` в JS или отсутствует), необязательный
+`note` (текст блока-сноски под темами). Этапы со статусом не `current`/`done`
+рендерятся свёрнутыми (`<details>/<summary>`), раскрываются кликом.
 
 **Перезаливка — с `force: true`, без вычитывания опубликованной страницы**
 (разрешение дано пользователем 2026-08-27, действует постоянно). Причина:
